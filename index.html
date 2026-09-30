@@ -1,3 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Isaac Meyer (Finny): author, musician, and filmmaker. Reel, catalogue, books, music, and resume.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Isaac Meyer (Finny) | Author, Musician, Filmmaker">
+<meta property="og:description" content="Reel, video catalogue, books, music, and resume.">
+<meta property="og:image" content="https://finnydot.github.io/creativeemporium/FINNY%20HERO.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='40' fill='%23e01b1b'/%3E%3C/svg%3E">
+<title>Isaac Meyer (Finny) | Author, Musician, Filmmaker</title>
+<style>
+:root{--bg:#000;--panel:#0c0c0c;--ink:#fff;--mute:#b4b4b4;--line:#2a2a2a;--red:#e01b1b;
+--serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;--sans:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.6 var(--sans);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit}
+a:focus-visible{outline:2px solid var(--red);outline-offset:3px}
+.wrap{max-width:1040px;margin:0 auto;padding:0 clamp(20px,5vw,48px)}
+nav{display:flex;gap:22px;justify-content:flex-end;padding:22px 0;font-size:14px;color:var(--mute)}
+nav a{text-decoration:none}
+nav a:hover{color:var(--ink);text-decoration:underline;text-decoration-color:var(--red);text-decoration-thickness:2px;text-underline-offset:6px}
+.hero{position:relative;padding:clamp(48px,11vw,120px) 0 clamp(56px,9vw,96px);overflow:hidden}
+.hero::before{content:"";position:absolute;right:-10%;top:-8%;width:62%;aspect-ratio:1;border-radius:50%;
+background:radial-gradient(closest-side,rgba(224,27,27,.22),rgba(224,27,27,0) 72%);filter:blur(6px);animation:drift 14s ease-in-out infinite alternate}
+@keyframes drift{to{transform:translate(-6%,7%) scale(1.08)}}
+h1{position:relative;font:400 clamp(40px,min(8vw,15vh),100px)/.95 var(--serif);letter-spacing:-.025em;margin:0 0 18px;animation:rise .9s cubic-bezier(.2,.7,.2,1) both}
+@keyframes rise{from{opacity:0;transform:translateY(18px)}}
+.tag{position:relative;font:400 clamp(17px,2vw,22px)/1.35 var(--serif);color:var(--mute);max-width:26em;margin:0 0 24px;animation:rise .9s .15s cubic-bezier(.2,.7,.2,1) both}
+.tag b{font-weight:400;color:var(--ink)}
+.btns{position:relative;display:flex;flex-wrap:wrap;gap:14px;animation:rise .9s .3s cubic-bezier(.2,.7,.2,1) both}
+.btn{display:inline-block;padding:10px 20px;border-radius:999px;text-decoration:none;font-weight:600;font-size:14px}
+.btn.p{background:var(--red);color:#fff}
+.btn.s{border:1px solid var(--line)}
+.btn:hover{filter:brightness(1.1)}
+section{padding:clamp(48px,8vw,88px) 0;border-top:1px solid var(--line)}
+h2{font:400 clamp(26px,3.4vw,36px)/1.1 var(--serif);margin:0 0 10px}
+.lede{color:var(--mute);max-width:36em;margin:0 0 34px}
+
+/* Hard 16:9 Reel Styling */
+.reel{width:100%;max-width:min(100%,calc(60vh * 16 / 9));aspect-ratio:16/9;background:var(--panel);border:1px solid var(--line);border-radius:14px;display:grid;place-items:center;padding:0;overflow:hidden;margin:0 auto}
+.reel iframe{width:100%;height:100%;border:0;display:block}
+
+.disc{display:grid;grid-template-columns:minmax(150px,240px) 1fr;gap:clamp(20px,5vw,64px);padding:34px 0;border-top:1px solid var(--line)}
+.disc:first-of-type{border-top:0;padding-top:0}
+.disc h3{font:400 22px/1.2 var(--serif);margin:0;color:var(--ink)}.disc h3 em{font-style:normal;text-decoration:underline;text-decoration-color:var(--red);text-decoration-thickness:2px;text-underline-offset:8px}
+.disc h3 small{display:block;font:400 14px/1.5 var(--sans);color:var(--mute);margin-top:6px}
+.item{margin:0 0 14px}
+.item:last-child{margin:0}
+.item h4{margin:0 0 2px;font:600 15px/1.35 var(--sans)}
+.item h4 span{font-weight:400;color:var(--mute);font-size:12.5px;margin-left:8px}
+.item p{margin:0;color:#d6d6d6;font-size:14px;max-width:40em}
+.about{display:grid;grid-template-columns:200px 1fr 1fr;gap:clamp(24px,5vw,64px)}
+.about p{margin:0 0 16px;max-width:34em}
+.contact{font:400 clamp(22px,3vw,30px)/1.3 var(--serif)}
+.contact a{text-decoration:none;border-bottom:1px solid var(--red)}
+footer{padding:36px 0 56px;color:var(--mute);font-size:14px;border-top:1px solid var(--line)}
+
+body{overflow:hidden;height:100vh;height:100dvh}
+.lineup{position:relative;display:flex;flex-wrap:wrap;gap:12px;margin-top:30px}
+.chip{display:flex;align-items:center;gap:10px;padding:10px 16px;border:1px solid var(--line);border-radius:12px;text-decoration:none;background:var(--panel);transition:transform .25s,border-color .25s,box-shadow .25s}
+.chip span{font-size:14px}.chip svg{width:22px;height:22px;fill:none;stroke:var(--red);stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;transition:transform .25s}
+.chip:hover,.chip:focus-visible{transform:translateY(-6px);border-color:var(--red);box-shadow:0 12px 26px -12px rgba(224,27,27,.6)}
+.chip:hover svg,.chip:focus-visible svg{transform:translateY(-2px) rotate(-6deg)}
+.chip.l,nav a:nth-child(odd){animation:fromL 1s cubic-bezier(.2,.8,.2,1) backwards}
+.chip.r,nav a:nth-child(even){animation:fromR 1s cubic-bezier(.2,.8,.2,1) backwards}
+.chip:nth-child(1){animation-delay:.35s}.chip:nth-child(2){animation-delay:.5s}.chip:nth-child(3){animation-delay:.65s}.chip:nth-child(4){animation-delay:.8s}
+nav a:nth-child(1){animation-delay:.1s}nav a:nth-child(2){animation-delay:.2s}nav a:nth-child(3){animation-delay:.3s}nav a:nth-child(4){animation-delay:.4s}
+@keyframes fromL{from{opacity:0;transform:translateX(-70vw) rotate(-8deg)}}
+@keyframes fromR{from{opacity:0;transform:translateX(70vw) rotate(8deg)}}
+.item{transition:transform .25s}.item:hover{transform:translateY(-4px)}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:5;padding:20px clamp(20px,5vw,48px);background:linear-gradient(#000 40%,rgba(0,0,0,0))}
+.progress{position:fixed;left:0;bottom:0;width:100%;height:3px;background:#1a1a1a;z-index:5}
+.progress i{display:block;height:100%;width:0;background:var(--red)}
+.track{display:flex;height:100vh;height:100dvh;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;scroll-behavior:smooth;outline:none;scrollbar-width:none}
+.track::-webkit-scrollbar{display:none}
+.panel{flex:0 0 100vw;height:100vh;height:100dvh;scroll-snap-align:start;overflow-y:auto;display:flex;align-items:center;padding:84px 0 48px;border-top:0}
+.hero.panel{overflow:hidden}
+.in{width:100%;max-width:1040px;margin:0 auto;padding:0 clamp(20px,5vw,48px)}
+.panel.disc{display:grid;align-content:start;border:0;padding:100px max(clamp(20px,5vw,48px),calc((100vw - 1040px)/2)) 56px}
+.foot{margin:44px 0 0;color:var(--mute);font-size:14px}
+
+.arrow{position:fixed;top:calc(50% - 22px);z-index:4;width:44px;height:44px;border-radius:50%;border:1px solid var(--line);background:rgba(0,0,0,.65);display:grid;place-items:center;cursor:pointer;padding:0;transition:transform .25s,border-color .25s,box-shadow .25s,opacity .3s}
+.arrow.prev{left:14px}.arrow.next{right:14px}
+.arrow svg{width:22px;height:22px;fill:none;stroke:var(--red);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.arrow:hover,.arrow:focus-visible{transform:translateY(-5px);border-color:var(--red);box-shadow:0 12px 24px -12px rgba(224,27,27,.65);outline:none}
+.arrow.off{opacity:0;pointer-events:none}
+
+.slot{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;text-align:center;width:100%;aspect-ratio:var(--ar,16/9);border:2px dashed var(--red);background:rgba(224,27,27,.07);border-radius:8px;padding:6px;color:var(--ink);overflow:hidden;font-size:11px;line-height:1.3}
+.slot b{color:var(--red);font-size:11px}.slot span{font-weight:600}.slot small{color:var(--mute);font-size:10px}
+.item.has{display:grid;grid-template-columns:var(--w,150px) 1fr;gap:18px;align-items:start}
+.thumbs{display:grid;gap:8px}
+.hero .in{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,.75fr);column-gap:40px;align-items:center}
+.hero .in>*{grid-column:1}
+.hero .in>.slot{grid-column:2;grid-row:1/span 4;justify-self:end;width:auto;height:min(62vh,520px)}
+.about .slot{max-width:200px}
+.files{margin-top:28px;max-width:340px}
+
+/* Real Photo Styling for Slots */
+.slot img{width:100%;height:100%;object-fit:cover;border-radius:6px;display:block}
+
+/* Catalogue Grid Styling with Inline Play */
+.catalogue-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:18px;margin-top:10px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:10px;overflow:hidden;display:flex;flex-direction:column;justify-content:space-between;transition:border-color .25s,transform .25s}
+.card:hover{border-color:var(--red);transform:translateY(-2px)}
+.card-media{position:relative;width:100%;aspect-ratio:16/9;background:#111;cursor:pointer;overflow:hidden}
+.card-media img{width:100%;height:100%;object-fit:cover;display:block;transition:opacity .25s}
+.card-media iframe{position:absolute;inset:0;width:100%;height:100%;border:0;display:none}
+.card.playing .card-media img{opacity:0;pointer-events:none}
+.card.playing .card-media iframe{display:block}
+.play-overlay{position:absolute;inset:0;display:grid;place-items:center;background:rgba(0,0,0,.3);transition:background .25s}
+.card-media:hover .play-overlay{background:rgba(224,27,27,.35)}
+.play-overlay svg{width:40px;height:40px;fill:var(--red);filter:drop-shadow(0 2px 4px rgba(0,0,0,.8));transition:transform .25s}
+.card-media:hover .play-overlay svg{transform:scale(1.15)}
+.card.playing .play-overlay{display:none}
+
+.card-content{padding:14px 16px;display:flex;flex-direction:column;flex-grow:1;justify-content:space-between}
+.card h4{font:600 14px/1.35 var(--sans);margin:0 0 4px;color:var(--ink)}
+.card .meta{font-size:12px;color:var(--mute);margin-bottom:0}
+
+/* Mobile Responsiveness Overrides */
+@media(max-width:900px){
+  .hero .in{display:block}
+  .hero .in>.slot{display:none}
+}
+@media(max-width:720px){
+  .arrow{display:none}
+  .disc,.about{grid-template-columns:1fr}
+  nav{justify-content:flex-start;flex-wrap:wrap;padding:15px 20px}
+  .track{scroll-snap-type:y mandatory}
+  body{overflow:auto;height:auto}
+  .panel{height:auto;min-height:100vh;padding:90px 20px 40px}
+  .bookgrid{grid-template-columns:repeat(3,minmax(0,1fr));gap:12px 10px}
+}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;scroll-behavior:auto}}
+.slot.photo{border:0;background:none;padding:0}
+
+/* Clean Book Grid CSS */
+.bookgrid{display:grid;grid-template-columns:repeat(6,minmax(0,108px));gap:18px 14px;align-content:start}
+.book-card{display:flex;flex-direction:column;gap:8px;transition:transform .25s}
+.book-card:hover{transform:translateY(-4px)}
+.book-cover{position:relative;aspect-ratio:2/3;border:1px solid var(--line);border-radius:8px;background:var(--panel);overflow:hidden;display:block}
+.book-cover img{width:100%;height:100%;object-fit:cover;display:block}
+.book-info{font-size:12px;line-height:1.35;color:var(--mute)}
+.book-info b{display:block;color:var(--ink);font-weight:600}
+</style>
+</head>
+<body>
+<div class="progress"><i></i></div>
+<nav aria-label="Sections"><a href="#reel">Reel</a><a href="#about">About</a><a href="#d-books">Books</a><a href="#d-resume">Resume</a><a href="#d-catalogue">Catalogue</a><a href="#contact">Contact</a></nav>
+<button class="arrow prev off" type="button" aria-label="Previous panel"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
+<button class="arrow next" type="button" aria-label="Next panel"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
+<main class="track" id="track" tabindex="0" aria-label="Portfolio">
+
+<header class="panel hero" id="top"><div class="in">
+<h1>Isaac Meyer</h1>
+<p class="tag">Author, musician, and filmmaker, working as <b>Finny</b>. I build whole worlds, then write them, score them, and put them on screen.</p>
+<div class="btns"><a class="btn p" href="#reel">Watch the reel</a><a class="btn s" href="#d-catalogue">Explore catalogue</a></div>
+<div class="lineup" aria-label="Disciplines"><a class="chip l" href="#d-catalogue"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M8 5v14M16 5v14M3 10h5M3 14h5M16 10h5M16 14h5"/></svg><span>Video Catalogue</span></a><a class="chip r" href="#d-resume"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h13a1 1 0 0 1 1 1v14H6a2 2 0 0 0-2 2V5a1 1 0 0 1 1-1z"/></svg><span>Resume</span></a></div>
+<div class="slot photo" data-slot="hero-still" style="--ar:4/5"><img src="FINNY%20HERO.jpg" alt="Finny hero portrait"></div></div></header>
+
+<section class="panel" id="reel"><div class="in">
+<h2>The reel</h2>
+<p class="lede">A short cut of my film and music video work. It ends with Finny’s Creative Emporium, a 30-second original spec commercial.</p>
+<div class="reel">
+  <iframe width="100%" height="100%" src="https://www.youtube.com/embed/4ZozYCie1jI" title="Finny Reel" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>
+</div></section>
+
+<section class="panel" id="about"><div class="in">
+<h2>About</h2>
+<div class="about">
+<div class="slot photo" data-slot="about-portrait" style="--ar:4/5"><img src="https://finnydot.github.io/creativeemporium/finny1.jpg" alt="Isaac Meyer full-length portrait"></div>
+<div><p>I build stories from the ground up, whether that means mapping out multi-book sci-fi sagas, writing and producing the tracks behind them, or directing the visual worlds that bring them to life. For me, the medium is just a different tool for the same job.</p>
+<p>When I'm creating under the moniker Finny, the workflow is hands-on and obsessive—handling everything from the narrative structure down to the final master.</p></div>
+<div><p>I lean into modern tools across AI video, multi-track audio, and prose to execute ideas quickly and uncompromisingly. If a world is worth building, it's worth seeing all the way through to the final cut.</p></div>
+</div>
+</div></section>
+
+<!-- BOOKS PANEL -->
+<section class="panel disc" id="d-books">
+  <h3><em>Books</em><small>Specimen 884: a nine-book science fiction saga on the planet Asylia that spans over an eon, plus side stories</small></h3>
+  <div class="bookgrid">
+    <div class="book-card"><a class="book-cover" href="#"><img src="https://finnydot.github.io/creativeemporium/Specimen%20884%20-%20Book%201.jpeg" alt="Book 1 cover"></a><div class="book-info"><b>Book 1</b>The Salt, The Spine, and the Re-Engine</div></div>
+    <div class="book-card"><a class="book-cover" href="#"><img src="https://finnydot.github.io/creativeemporium/Specimen%20884%20-%20Book%202.jpeg" alt="Book 2 cover"></a><div class="book-info"><b>Book 2</b>The Re-Engine Corps</div></div>
+    <div class="book-card"><a class="book-cover" href="#"><img src="https://finnydot.github.io/creativeemporium/Specimen%20884%20-%20Book%203.jpeg" alt="Book 3 cover"></a><div class="book-info"><b>Book 3</b>The War of Years</div></div>
+    <div class="book-card"><a class="book-cover" href="#"><img src="https://finnydot.github.io/creativeemporium/the-brink.jpeg" alt="Book 4 cover"></a><div class="book-info"><b>Book 4</b>The Brink</div></div>
+    <div class="book-card"><a class="book-cover" href="#"><img src="https://finnydot.github.io/creativeemporium/the-black-corridors.jpeg" alt="Book 5 cover"></a><div class="book-info"><b>Book 5</b>The Black Corridors</div></div>
+    <div class="book-card"><a class="book-cover" href="#"><img src="https://finnydot.github.io/creativeemporium/the-bloom.jpeg" alt="Book 6 cover"></a><div class="book-info"><b>Book 6</b>The Bloom</div></div>
+    <div class="book-card"><a class="book-cover" href="#"><img src="https://finnydot.github.io/creativeemporium/SPECIMEN_884_BOOK_7_LOCKED.jpg" alt="Book 7 cover"></a><div class="book-info"><b>Book 7</b>C.E. -79</div></div>
+    <div class="book-card"><a class="book-cover" href="#"><img src="https://finnydot.github.io/creativeemporium/SPECIMEN_884_BOOK_8_CE_MINUS_64_LOCKED.jpg" alt="Book 8 cover"></a><div class="book-info"><b>Book 8</b>C.E. -64</div></div>
+    <div class="book-card"><a class="book-cover" href="#"><img src="https://finnydot.github.io/creativeemporium/SPECIMEN_884_BOOK_9_LOCKED.jpg" alt="Book 9 cover"></a><div class="book-info"><b>Book 9</b>C.E. +200</div></div>
+    <div class="book-card"><a class="book-cover" href="#"><img src="https://finnydot.github.io/creativeemporium/The_Last_Thing_We_Keep_Cover.jpg" alt="Side story cover"></a><div class="book-info"><b>Side story</b>The Last Thing We Keep</div></div>
+    <div class="book-card"><a class="book-cover" href="#"><img src="https://finnydot.github.io/creativeemporium/THE%20LAST%20WAR.jpg" alt="Side story cover"></a><div class="book-info"><b>Side story</b>The Last War</div></div>
+    <div class="book-card"><a class="book-cover" href="#"><img src="https://finnydot.github.io/creativeemporium/VAELEN-KHOR.jpg" alt="Graphic novel cover"></a><div class="book-info"><b>Graphic novel</b>Vaelen-Khor</div></div>
+  </div>
+</section>
+
+<!-- RESUME PANEL -->
+<section class="panel disc" id="d-resume">
+  <h3><em>Resume</em><small>Professional background &amp; competencies</small></h3>
+  <div>
+    <div class="item">
+      <h4>Core Capabilities</h4>
+      <p>Singer, songwriter, music producer, and recording engineer. Narrative architecture, voice performance, audio editing, client communication, and customer support. CompTIA A+ certified.</p>
+    </div>
+    <div class="item">
+      <h4>Independent Music Production <span>24 Years Experience</span></h4>
+      <p><strong>Independent / We Go Far 2 (Wichita, KS):</strong> Singer, songwriter, producer, and recording engineer with 24 years of self-directed recording experience (signed in 2021). Managed end-to-end studio production, mixing, and mastering, including the <em>Call Me Finny EP</em> (2021) and the <em>Lord Forgive Me EP</em> (February 2026).</p>
+    </div>
+    <div class="item">
+      <h4>eSource <span>2007–Present</span></h4>
+      <p><strong>Orem, UT:</strong> Contract creative and web support for an open-source development group, including audio editing and creative input.</p>
+    </div>
+    <div class="item">
+      <h4>Assistant Manager <span>2013–2015</span></h4>
+      <p><strong>Wendy’s, Kansas City, MO:</strong> Promoted from crew to shift manager within four months. Led shifts, scheduling, and cash handling, and kept customers happy.</p>
+    </div>
+    <div class="item">
+      <h4>Head of Customer Service <span>2012–2013</span></h4>
+      <p><strong>Virpus Networks, Kansas City, MO:</strong> Led customer support, sales, and billing for a hosting company and supported the owner on day-to-day operations.</p>
+    </div>
+    <div class="item">
+      <h4>Cosentry <span>2011–2012</span></h4>
+      <p><strong>Kansas City, MO:</strong> Supported enterprise clients including Hewlett-Packard and Ford while monitoring data-center operations and security.</p>
+    </div>
+    <div class="item">
+      <h4>Earlier customer support <span>2007–2011</span></h4>
+      <p><strong>Server Plus, ISPN, Teleperformance USA, Bluehost.com:</strong> Support by phone, chat, and email across internet service, hardware, and web hosting; trained newer teammates.</p>
+    </div>
+  </div>
+</section>
+
 <!-- CATALOGUE PANEL (INLINE PLAY) -->
 <section class="panel disc" id="d-catalogue">
   <h3><em>Catalogue</em><small>Complete finished video log (Newest to Oldest)</small></h3>
@@ -175,3 +412,42 @@
     </div>
   </div>
 </section>
+
+<section class="panel" id="contact"><div class="in">
+<h2>Let's talk</h2>
+<p class="lede">Available for commercial, voice, and on-camera work.</p>
+<p class="contact"><a href="mailto:isaacesource@gmail.com">isaacesource@gmail.com</a><br><a href="tel:8163286654">816-328-6654</a></p>
+<p class="foot">© Isaac Meyer. Finny's Creative Emporium is an original spec sample.</p></div></section>
+
+</main>
+<script>
+(function(){
+var MODE='step'; /* 'step' = one panel per wheel notch, 'glide' = continuous sideways scroll */
+var t=document.getElementById('track'),b=document.querySelector('.progress i'),lock=false;
+if(window.innerWidth<=720) return; /* Allow native vertical scroll on mobile */
+if(MODE==='glide'){t.style.scrollSnapType='none';t.style.scrollBehavior='auto'}
+function bar(){var m=t.scrollWidth-t.clientWidth;b.style.width=(m?t.scrollLeft/m*100:0)+'%'}
+t.addEventListener('scroll',bar,{passive:true});bar();
+t.addEventListener('wheel',function(e){
+if(window.innerWidth<=720)return;
+if(Math.abs(e.deltaX)>Math.abs(e.deltaY))return;
+var p=e.target.closest('.panel');
+if(p&&getComputedStyle(p).overflowY==='auto'&&p.scrollHeight>p.clientHeight+1){
+var top=p.scrollTop<=0,end=p.scrollTop+p.clientHeight>=p.scrollHeight-1;
+if((e.deltaY<0&&!top)||(e.deltaY>0&&!end))return}
+e.preventDefault();
+if(MODE==='glide'){t.scrollLeft+=e.deltaY;return}
+if(lock)return;lock=true;
+var i=Math.round(t.scrollLeft/t.clientWidth)+(e.deltaY>0?1:-1);
+i=Math.max(0,Math.min(i,Math.round((t.scrollWidth-t.clientWidth)/t.clientWidth)));
+t.scrollTo({left:i*t.clientWidth,behavior:'smooth'});
+setTimeout(function(){lock=false},600)},{passive:false});
+var pv=document.querySelector('.arrow.prev'),nx=document.querySelector('.arrow.next');
+function edge(){var m=t.scrollWidth-t.clientWidth;pv.classList.toggle('off',t.scrollLeft<4);nx.classList.toggle('off',t.scrollLeft>m-4)}
+function go(d){var n=Math.round((t.scrollWidth-t.clientWidth)/t.clientWidth);var i=Math.max(0,Math.min(Math.round(t.scrollLeft/t.clientWidth)+d,n));t.scrollTo({left:i*t.clientWidth,behavior:'smooth'})}
+pv.onclick=function(){go(-1)};nx.onclick=function(){go(1)};
+t.addEventListener('scroll',edge,{passive:true});edge();
+})();
+</script>
+</body>
+</html>
