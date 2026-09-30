@@ -35,7 +35,7 @@ h2{font:400 clamp(26px,3.4vw,36px)/1.1 var(--serif);margin:0 0 10px}
 
 /* Hard 16:9 Reel Styling */
 .reel{width:100%;max-width:min(100%,calc(60vh * 16 / 9));aspect-ratio:16/9;background:var(--panel);border:1px solid var(--line);border-radius:14px;display:grid;place-items:center;padding:0;overflow:hidden;margin:0 auto}
-.reel video{width:100%;height:100%;object-fit:cover;display:block}
+.reel iframe{width:100%;height:100%;border:0;display:block}
 
 .disc{display:grid;grid-template-columns:minmax(150px,240px) 1fr;gap:clamp(20px,5vw,64px);padding:34px 0;border-top:1px solid var(--line)}
 .disc:first-of-type{border-top:0;padding-top:0}
@@ -129,10 +129,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:5;padding:20px clamp(20px,5vw,48
 <h2>The reel</h2>
 <p class="lede">A short cut of my film and music video work, ending with an original voice sample.</p>
 <div class="reel">
-  <video controls playsinline preload="metadata">
-    <source src="reel.mp4" type="video/mp4">
-    Your browser does not support the video tag.
-  </video>
+  <iframe width="100%" height="100%" src="https://www.youtube.com/embed/4ZozYCie1jI" title="Finny Reel" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 </div>
 </div></section>
 
