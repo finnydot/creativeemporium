@@ -103,15 +103,24 @@ nav{position:fixed;top:0;left:0;right:0;z-index:5;padding:20px clamp(20px,5vw,48
 /* Real Photo Styling for Slots */
 .slot img{width:100%;height:100%;object-fit:cover;border-radius:6px;display:block}
 
-/* Catalogue Grid Styling */
+/* Catalogue Grid Styling with Inline Play */
 .catalogue-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:18px;margin-top:10px}
 .card{background:var(--panel);border:1px solid var(--line);border-radius:10px;overflow:hidden;display:flex;flex-direction:column;justify-content:space-between;transition:border-color .25s,transform .25s}
 .card:hover{border-color:var(--red);transform:translateY(-2px)}
-.card img{width:100%;aspect-ratio:16/9;object-fit:cover;display:block;background:#111}
+.card-media{position:relative;width:100%;aspect-ratio:16/9;background:#111;cursor:pointer;overflow:hidden}
+.card-media img{width:100%;height:100%;object-fit:cover;display:block;transition:opacity .25s}
+.card-media iframe{position:absolute;inset:0;width:100%;height:100%;border:0;display:none}
+.card.playing .card-media img{opacity:0;pointer-events:none}
+.card.playing .card-media iframe{display:block}
+.play-overlay{position:absolute;inset:0;display:grid;place-items:center;background:rgba(0,0,0,.3);transition:background .25s}
+.card-media:hover .play-overlay{background:rgba(224,27,27,.35)}
+.play-overlay svg{width:40px;height:40px;fill:var(--red);filter:drop-shadow(0 2px 4px rgba(0,0,0,.8));transition:transform .25s}
+.card-media:hover .play-overlay svg{transform:scale(1.15)}
+.card.playing .play-overlay{display:none}
+
 .card-content{padding:14px 16px;display:flex;flex-direction:column;flex-grow:1;justify-content:space-between}
 .card h4{font:600 14px/1.35 var(--sans);margin:0 0 4px;color:var(--ink)}
-.card .meta{font-size:12px;color:var(--mute);margin-bottom:12px}
-.card a{display:inline-block;padding:6px 14px;background:var(--red);color:#fff;text-decoration:none;border-radius:999px;font-size:12px;font-weight:600;align-self:flex-start}
+.card .meta{font-size:12px;color:var(--mute);margin-bottom:0}
 
 @media(max-width:900px){.hero .in{display:block}.hero .in>.slot{display:none}}
 @media(max-width:720px){.arrow{display:none}.disc,.about{grid-template-columns:1fr}nav{justify-content:flex-start;flex-wrap:wrap}}
@@ -215,139 +224,178 @@ nav{position:fixed;top:0;left:0;right:0;z-index:5;padding:20px clamp(20px,5vw,48
   </div>
 </section>
 
-<!-- CATALOGUE PANEL (NEWEST TO OLDEST) -->
+<!-- CATALOGUE PANEL (INLINE PLAY) -->
 <section class="panel disc" id="d-catalogue">
   <h3><em>Catalogue</em><small>Complete finished video log (Newest to Oldest)</small></h3>
   <div>
     <div class="catalogue-grid">
-        <div class="card">
-            <img src="https://img.youtube.com/vi/yw80nu0nl90/hqdefault.jpg" alt="Bad Days thumbnail" loading="lazy">
+        <div class="card" onclick="this.classList.add('playing');var f=this.querySelector('iframe');f.src=f.dataset.src+'?autoplay=1';">
+            <div class="card-media">
+                <img src="https://img.youtube.com/vi/yw80nu0nl90/hqdefault.jpg" alt="Bad Days thumbnail" loading="lazy">
+                <div class="play-overlay"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+                <iframe data-src="https://www.youtube.com/embed/yw80nu0nl90" title="Bad Days" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
             <div class="card-content">
                 <div>
                     <h4>Bad Days</h4>
                     <div class="meta">Aug 28, 2026 · 3:11</div>
                 </div>
-                <a href="https://youtu.be/yw80nu0nl90" target="_blank">Watch</a>
             </div>
         </div>
-        <div class="card">
-            <img src="https://img.youtube.com/vi/GhyD1aCg7tk/hqdefault.jpg" alt="INFINITY THA RELLIK - COME HOME thumbnail" loading="lazy">
+        <div class="card" onclick="this.classList.add('playing');var f=this.querySelector('iframe');f.src=f.dataset.src+'?autoplay=1';">
+            <div class="card-media">
+                <img src="https://img.youtube.com/vi/GhyD1aCg7tk/hqdefault.jpg" alt="INFINITY THA RELLIK - COME HOME thumbnail" loading="lazy">
+                <div class="play-overlay"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+                <iframe data-src="https://www.youtube.com/embed/GhyD1aCg7tk" title="INFINITY THA RELLIK - COME HOME" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
             <div class="card-content">
                 <div>
                     <h4>INFINITY THA RELLIK - COME HOME</h4>
                     <div class="meta">Jul 31, 2026 · 3:07</div>
                 </div>
-                <a href="https://youtu.be/GhyD1aCg7tk" target="_blank">Watch</a>
             </div>
         </div>
-        <div class="card">
-            <img src="https://img.youtube.com/vi/0gCzHF7JdLo/hqdefault.jpg" alt="INFINITY THA RELLIK - LONG ROAD thumbnail" loading="lazy">
+        <div class="card" onclick="this.classList.add('playing');var f=this.querySelector('iframe');f.src=f.dataset.src+'?autoplay=1';">
+            <div class="card-media">
+                <img src="https://img.youtube.com/vi/0gCzHF7JdLo/hqdefault.jpg" alt="INFINITY THA RELLIK - LONG ROAD thumbnail" loading="lazy">
+                <div class="play-overlay"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+                <iframe data-src="https://www.youtube.com/embed/0gCzHF7JdLo" title="INFINITY THA RELLIK - LONG ROAD" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
             <div class="card-content">
                 <div>
                     <h4>INFINITY THA RELLIK - LONG ROAD</h4>
                     <div class="meta">Jul 30, 2026 · 2:25</div>
                 </div>
-                <a href="https://youtu.be/0gCzHF7JdLo" target="_blank">Watch</a>
             </div>
         </div>
-        <div class="card">
-            <img src="https://img.youtube.com/vi/4pX1mM7I0qU/hqdefault.jpg" alt="The Bloomknot | Short Film thumbnail" loading="lazy">
+        <div class="card" onclick="this.classList.add('playing');var f=this.querySelector('iframe');f.src=f.dataset.src+'?autoplay=1';">
+            <div class="card-media">
+                <img src="https://img.youtube.com/vi/4pX1mM7I0qU/hqdefault.jpg" alt="The Bloomknot | Short Film thumbnail" loading="lazy">
+                <div class="play-overlay"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+                <iframe data-src="https://www.youtube.com/embed/4pX1mM7I0qU" title="The Bloomknot | Short Film" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
             <div class="card-content">
                 <div>
                     <h4>The Bloomknot | Short Film</h4>
                     <div class="meta">Jul 26, 2026 · 8:33</div>
                 </div>
-                <a href="https://youtu.be/4pX1mM7I0qU" target="_blank">Watch</a>
             </div>
         </div>
-        <div class="card">
-            <img src="https://img.youtube.com/vi/70Trj71-EaA/hqdefault.jpg" alt="1983 — The Finale | Original Trilogy thumbnail" loading="lazy">
+        <div class="card" onclick="this.classList.add('playing');var f=this.querySelector('iframe');f.src=f.dataset.src+'?autoplay=1';">
+            <div class="card-media">
+                <img src="https://img.youtube.com/vi/70Trj71-EaA/hqdefault.jpg" alt="1983 — The Finale | Original Trilogy thumbnail" loading="lazy">
+                <div class="play-overlay"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+                <iframe data-src="https://www.youtube.com/embed/70Trj71-EaA" title="1983 — The Finale | Original Trilogy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
             <div class="card-content">
                 <div>
                     <h4>1983 — The Finale | Original Trilogy</h4>
                     <div class="meta">May 25, 2026 · 3:02</div>
                 </div>
-                <a href="https://youtu.be/70Trj71-EaA" target="_blank">Watch</a>
             </div>
         </div>
-        <div class="card">
-            <img src="https://img.youtube.com/vi/ghpBKlSoi_w/hqdefault.jpg" alt="1983 — Chapter 2 | Trilogy Finale thumbnail" loading="lazy">
+        <div class="card" onclick="this.classList.add('playing');var f=this.querySelector('iframe');f.src=f.dataset.src+'?autoplay=1';">
+            <div class="card-media">
+                <img src="https://img.youtube.com/vi/ghpBKlSoi_w/hqdefault.jpg" alt="1983 — Chapter 2 | Trilogy Finale thumbnail" loading="lazy">
+                <div class="play-overlay"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+                <iframe data-src="https://www.youtube.com/embed/ghpBKlSoi_w" title="1983 — Chapter 2 | Trilogy Finale" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
             <div class="card-content">
                 <div>
                     <h4>1983 — Chapter 2 | Trilogy Finale</h4>
                     <div class="meta">May 18, 2026 · 1:26</div>
                 </div>
-                <a href="https://youtu.be/ghpBKlSoi_w" target="_blank">Watch</a>
             </div>
         </div>
-        <div class="card">
-            <img src="https://img.youtube.com/vi/LW5qAzvUWm8/hqdefault.jpg" alt="1983 — Chapter 1 | Trilogy Finale thumbnail" loading="lazy">
+        <div class="card" onclick="this.classList.add('playing');var f=this.querySelector('iframe');f.src=f.dataset.src+'?autoplay=1';">
+            <div class="card-media">
+                <img src="https://img.youtube.com/vi/LW5qAzvUWm8/hqdefault.jpg" alt="1983 — Chapter 1 | Trilogy Finale thumbnail" loading="lazy">
+                <div class="play-overlay"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+                <iframe data-src="https://www.youtube.com/embed/LW5qAzvUWm8" title="1983 — Chapter 1 | Trilogy Finale" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
             <div class="card-content">
                 <div>
                     <h4>1983 — Chapter 1 | Trilogy Finale</h4>
                     <div class="meta">May 17, 2026 · 2:22</div>
                 </div>
-                <a href="https://youtu.be/LW5qAzvUWm8" target="_blank">Watch</a>
             </div>
         </div>
-        <div class="card">
-            <img src="https://img.youtube.com/vi/AU04cRJpxVA/hqdefault.jpg" alt="1981: The Weight of the Blade thumbnail" loading="lazy">
+        <div class="card" onclick="this.classList.add('playing');var f=this.querySelector('iframe');f.src=f.dataset.src+'?autoplay=1';">
+            <div class="card-media">
+                <img src="https://img.youtube.com/vi/AU04cRJpxVA/hqdefault.jpg" alt="1981: The Weight of the Blade thumbnail" loading="lazy">
+                <div class="play-overlay"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+                <iframe data-src="https://www.youtube.com/embed/AU04cRJpxVA" title="1981: The Weight of the Blade" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
             <div class="card-content">
                 <div>
                     <h4>1981: The Weight of the Blade</h4>
                     <div class="meta">May 14, 2026 · 3:10</div>
                 </div>
-                <a href="https://youtu.be/AU04cRJpxVA" target="_blank">Watch</a>
             </div>
         </div>
-        <div class="card">
-            <img src="https://img.youtube.com/vi/itDSQ4IPHSc/hqdefault.jpg" alt="1981 - Chapter 2: The Truth Beneath thumbnail" loading="lazy">
+        <div class="card" onclick="this.classList.add('playing');var f=this.querySelector('iframe');f.src=f.dataset.src+'?autoplay=1';">
+            <div class="card-media">
+                <img src="https://img.youtube.com/vi/itDSQ4IPHSc/hqdefault.jpg" alt="1981 - Chapter 2: The Truth Beneath thumbnail" loading="lazy">
+                <div class="play-overlay"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+                <iframe data-src="https://www.youtube.com/embed/itDSQ4IPHSc" title="1981 - Chapter 2: The Truth Beneath" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
             <div class="card-content">
                 <div>
                     <h4>1981 - Chapter 2: The Truth Beneath</h4>
                     <div class="meta">May 11, 2026 · 1:30</div>
                 </div>
-                <a href="https://youtu.be/itDSQ4IPHSc" target="_blank">Watch</a>
             </div>
         </div>
-        <div class="card">
-            <img src="https://img.youtube.com/vi/SWEhb16rxsM/hqdefault.jpg" alt="1981: Chapter 1 — Wide Awake thumbnail" loading="lazy">
+        <div class="card" onclick="this.classList.add('playing');var f=this.querySelector('iframe');f.src=f.dataset.src+'?autoplay=1';">
+            <div class="card-media">
+                <img src="https://img.youtube.com/vi/SWEhb16rxsM/hqdefault.jpg" alt="1981: Chapter 1 — Wide Awake thumbnail" loading="lazy">
+                <div class="play-overlay"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+                <iframe data-src="https://www.youtube.com/embed/SWEhb16rxsM" title="1981: Chapter 1 — Wide Awake" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
             <div class="card-content">
                 <div>
                     <h4>1981: Chapter 1 — Wide Awake</h4>
                     <div class="meta">May 10, 2026 · 2:11</div>
                 </div>
-                <a href="https://youtu.be/SWEhb16rxsM" target="_blank">Watch</a>
             </div>
         </div>
-        <div class="card">
-            <img src="https://img.youtube.com/vi/Zda1iO5VTdc/hqdefault.jpg" alt="1979 - The Reunion thumbnail" loading="lazy">
+        <div class="card" onclick="this.classList.add('playing');var f=this.querySelector('iframe');f.src=f.dataset.src+'?autoplay=1';">
+            <div class="card-media">
+                <img src="https://img.youtube.com/vi/Zda1iO5VTdc/hqdefault.jpg" alt="1979 - The Reunion thumbnail" loading="lazy">
+                <div class="play-overlay"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+                <iframe data-src="https://www.youtube.com/embed/Zda1iO5VTdc" title="1979 - The Reunion" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
             <div class="card-content">
                 <div>
                     <h4>1979 - The Reunion</h4>
                     <div class="meta">May 5, 2026 · 2:17</div>
                 </div>
-                <a href="https://youtu.be/Zda1iO5VTdc" target="_blank">Watch</a>
             </div>
         </div>
-        <div class="card">
-            <img src="https://img.youtube.com/vi/k_XYTOcR-vs/hqdefault.jpg" alt="1979: Everything Ends Tomorrow thumbnail" loading="lazy">
+        <div class="card" onclick="this.classList.add('playing');var f=this.querySelector('iframe');f.src=f.dataset.src+'?autoplay=1';">
+            <div class="card-media">
+                <img src="https://img.youtube.com/vi/k_XYTOcR-vs/hqdefault.jpg" alt="1979: Everything Ends Tomorrow thumbnail" loading="lazy">
+                <div class="play-overlay"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+                <iframe data-src="https://www.youtube.com/embed/k_XYTOcR-vs" title="1979: Everything Ends Tomorrow" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
             <div class="card-content">
                 <div>
                     <h4>1979: Everything Ends Tomorrow</h4>
                     <div class="meta">May 5, 2026 · 0:38</div>
                 </div>
-                <a href="https://youtu.be/k_XYTOcR-vs" target="_blank">Watch</a>
             </div>
         </div>
-        <div class="card">
-            <img src="https://img.youtube.com/vi/nDo8An7YmAk/hqdefault.jpg" alt="1979 | The Fall (Part 1) thumbnail" loading="lazy">
+        <div class="card" onclick="this.classList.add('playing');var f=this.querySelector('iframe');f.src=f.dataset.src+'?autoplay=1';">
+            <div class="card-media">
+                <img src="https://img.youtube.com/vi/nDo8An7YmAk/hqdefault.jpg" alt="1979 | The Fall (Part 1) thumbnail" loading="lazy">
+                <div class="play-overlay"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+                <iframe data-src="https://www.youtube.com/embed/nDo8An7YmAk" title="1979 | The Fall (Part 1)" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
             <div class="card-content">
                 <div>
                     <h4>1979 | The Fall (Part 1)</h4>
                     <div class="meta">May 3, 2026 · 2:17</div>
                 </div>
-                <a href="https://youtu.be/nDo8An7YmAk" target="_blank">Watch</a>
             </div>
         </div>
     </div>
