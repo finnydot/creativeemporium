@@ -3,6 +3,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Isaac Meyer (Finny): author, musician, and filmmaker. Reel, catalogue, books, music, and resume.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Isaac Meyer (Finny) | Author, Musician, Filmmaker">
+<meta property="og:description" content="Reel, video catalogue, books, music, and resume.">
+<meta property="og:image" content="https://finnydot.github.io/creativeemporium/FINNY%20HERO.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='40' fill='%23e01b1b'/%3E%3C/svg%3E">
 <title>Isaac Meyer (Finny) | Author, Musician, Filmmaker</title>
 <style>
 :root{--bg:#000;--panel:#0c0c0c;--ink:#fff;--mute:#b4b4b4;--line:#2a2a2a;--red:#e01b1b;
@@ -109,11 +116,21 @@ nav{position:fixed;top:0;left:0;right:0;z-index:5;padding:20px clamp(20px,5vw,48
 @media(max-width:900px){.hero .in{display:block}.hero .in>.slot{display:none}}
 @media(max-width:720px){.arrow{display:none}.disc,.about{grid-template-columns:1fr}nav{justify-content:flex-start;flex-wrap:wrap}}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;scroll-behavior:auto}}
+.slot.photo{border:0;background:none;padding:0}
+.bookgrid{display:grid;grid-template-columns:repeat(6,minmax(0,108px));gap:18px 14px;align-content:start}@media(max-width:720px){.bookgrid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.grp{grid-column:1/-1;font:400 15px/1.3 var(--serif);color:var(--mute);margin:12px 0 0;padding-bottom:4px;border-bottom:1px solid var(--line)}
+.grp:first-child{margin-top:0}
+.book{display:flex;flex-direction:column;gap:8px;transition:transform .25s}
+.book:hover{transform:translateY(-4px)}
+.cover{position:relative;aspect-ratio:2/3;border:1px solid var(--line);border-radius:8px;background:var(--panel);display:grid;place-items:center;text-align:center;padding:8px;font:400 14px/1.3 var(--serif);color:var(--mute);overflow:hidden}
+.cover img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.cap{font-size:12px;line-height:1.35;color:var(--mute)}.cap b{display:block;color:var(--ink);font-weight:600}
+.read{display:inline-block;padding:6px 12px;background:var(--red);color:#fff;text-decoration:none;border-radius:999px;font-size:12px;font-weight:600;align-self:flex-start}
 </style>
 </head>
 <body>
 <div class="progress"><i></i></div>
-<nav aria-label="Sections"><a href="#reel">Reel</a><a href="#about">About</a><a href="#d-resume">Resume</a><a href="#d-catalogue">Catalogue</a><a href="#contact">Contact</a></nav>
+<nav aria-label="Sections"><a href="#reel">Reel</a><a href="#about">About</a><a href="#d-books">Books</a><a href="#d-resume">Resume</a><a href="#d-catalogue">Catalogue</a><a href="#contact">Contact</a></nav>
 <button class="arrow prev off" type="button" aria-label="Previous panel"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
 <button class="arrow next" type="button" aria-label="Next panel"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
 <main class="track" id="track" tabindex="0" aria-label="Portfolio">
@@ -123,11 +140,11 @@ nav{position:fixed;top:0;left:0;right:0;z-index:5;padding:20px clamp(20px,5vw,48
 <p class="tag">Author, musician, and filmmaker, working as <b>Finny</b>. I build whole worlds, then write them, score them, and put them on screen.</p>
 <div class="btns"><a class="btn p" href="#reel">Watch the reel</a><a class="btn s" href="#d-catalogue">Explore catalogue</a></div>
 <div class="lineup" aria-label="Disciplines"><a class="chip l" href="#d-catalogue"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M8 5v14M16 5v14M3 10h5M3 14h5M16 10h5M16 14h5"/></svg><span>Video Catalogue</span></a><a class="chip r" href="#d-resume"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h13a1 1 0 0 1 1 1v14H6a2 2 0 0 0-2 2V5a1 1 0 0 1 1-1z"/></svg><span>Resume</span></a></div>
-<div class="slot" data-slot="hero-still" style="--ar:4/5"><img src="FINNY HERO.jpg" alt="Finny hero portrait"></div></div></header>
+<div class="slot photo" data-slot="hero-still" style="--ar:4/5"><img src="FINNY%20HERO.jpg" alt="Finny hero portrait"></div></div></header>
 
 <section class="panel" id="reel"><div class="in">
 <h2>The reel</h2>
-<p class="lede">A short cut of my film and music video work, ending with an original voice sample.</p>
+<p class="lede">A short cut of my film and music video work. It ends with Finny’s Creative Emporium, a 30-second original spec commercial.</p>
 <div class="reel">
   <iframe width="100%" height="100%" src="https://www.youtube.com/embed/4ZozYCie1jI" title="Finny Reel" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 </div>
@@ -136,37 +153,50 @@ nav{position:fixed;top:0;left:0;right:0;z-index:5;padding:20px clamp(20px,5vw,48
 <section class="panel" id="about"><div class="in">
 <h2>About</h2>
 <div class="about">
-<div class="slot" data-slot="about-portrait" style="--ar:4/5"><img src="IMG_20220914_135202758_HDR (1).jpg" alt="Isaac Meyer full-length portrait"></div>
+<div class="slot photo" data-slot="about-portrait" style="--ar:4/5"><img src="finny3.jpg" alt="Isaac Meyer full-length portrait"></div>
 <div><p>I build stories from the ground up, whether that means mapping out multi-book sci-fi sagas, writing and producing the tracks behind them, or directing the visual worlds that bring them to life. For me, the medium is just a different tool for the same job.</p>
 <p>When I'm creating under the moniker Finny, the workflow is hands-on and obsessive—handling everything from the narrative structure down to the final master.</p></div>
 <div><p>I lean into modern tools across AI video, multi-track audio, and prose to execute ideas quickly and uncompromisingly. If a world is worth building, it's worth seeing all the way through to the final cut.</p></div>
 </div>
 </div></section>
 
+<!-- BOOKS PANEL -->
+<section class="panel disc" id="d-books">
+  <h3><em>Books</em><small>Specimen 884: a nine-book science fiction saga spanning roughly 280 years on the planet Asylia, plus three side stories</small></h3>
+  <div class="bookgrid">
+<div class="book"><div class="cover"><span>The Salt, The Spine, and the Re-Engine</span><img src="Specimen%20884%20-%20Book%201.jpeg" alt="The Salt, The Spine, and the Re-Engine cover" onerror="this.remove()"></div><div class="cap"><b>Book 1</b>The Salt, The Spine, and the Re-Engine</div></div><div class="book"><div class="cover"><span>The Re-Engine Corps</span><img src="Specimen%20884%20-%20Book%202.jpeg" alt="The Re-Engine Corps cover" onerror="this.remove()"></div><div class="cap"><b>Book 2</b>The Re-Engine Corps</div></div><div class="book"><div class="cover"><span>The War of Years</span><img src="Specimen%20884%20-%20Book%203.jpeg" alt="The War of Years cover" onerror="this.remove()"></div><div class="cap"><b>Book 3</b>The War of Years</div></div><div class="book"><div class="cover"><span>The Brink</span><img src="SPECIMEN_884_-_THE_BRINK_.jpeg" alt="The Brink cover" onerror="this.remove()"></div><div class="cap"><b>Book 4</b>The Brink</div></div><div class="book"><div class="cover"><span>The Black Corridors</span><img src="SPECIMEN_884_-_THE_BLACK_.jpeg" alt="The Black Corridors cover" onerror="this.remove()"></div><div class="cap"><b>Book 5</b>The Black Corridors</div></div><div class="book"><div class="cover"><span>The Bloom</span><img src="SPECIMEN_884_-_THE_BLOOM_.jpeg" alt="The Bloom cover" onerror="this.remove()"></div><div class="cap"><b>Book 6</b>The Bloom</div></div><div class="book"><div class="cover"><span>C.E. -79</span><img src="SPECIMEN_884_BOOK_7_LOCKED.jpg" alt="C.E. -79 cover" onerror="this.remove()"></div><div class="cap"><b>Book 7</b>C.E. -79</div></div><div class="book"><div class="cover"><span>C.E. -64</span><img src="SPECIMEN_884_BOOK_8_CE_MINUS_64_LOCKED.jpg" alt="C.E. -64 cover" onerror="this.remove()"></div><div class="cap"><b>Book 8</b>C.E. -64</div></div><div class="book"><div class="cover"><span>C.E. +200</span><img src="SPECIMEN_884_BOOK_9_LOCKED.jpg" alt="C.E. +200 cover" onerror="this.remove()"></div><div class="cap"><b>Book 9</b>C.E. +200</div></div><div class="book"><div class="cover"><span>The Last Thing We Keep</span><img src="covers/the-last-thing-we-keep.jpg" alt="The Last Thing We Keep cover" onerror="this.remove()"></div><div class="cap"><b>Side story</b>The Last Thing We Keep</div></div><div class="book"><div class="cover"><span>The Last War</span><img src="covers/the-last-war.jpg" alt="The Last War cover" onerror="this.remove()"></div><div class="cap"><b>Side story</b>The Last War</div></div><div class="book"><div class="cover"><span>Vaelen-Khor</span><img src="covers/vaelen-khor.jpg" alt="Vaelen-Khor cover" onerror="this.remove()"></div><div class="cap"><b>Graphic novel</b>Vaelen-Khor</div></div>
+  </div>
+</section>
+
 <!-- RESUME PANEL -->
 <section class="panel disc" id="d-resume">
-  <h3><em>Resume</em><small>Professional background & competencies</small></h3>
+  <h3><em>Resume</em><small>Professional background &amp; competencies</small></h3>
   <div>
     <div class="item">
       <h4>Core Capabilities</h4>
-      <p>Narrative architecture, songwriting & audio production, voice performance, advanced editing, client communication, and technical support (CompTIA A+ certified).</p>
+      <p>Narrative architecture, songwriting and audio production, voice performance, editing, client communication, and customer support. CompTIA A+ certified.</p>
     </div>
     <div class="item">
-      <h4>Creative Production & Support <span>2007–Present</span></h4>
-      <p><strong>eSource (Orem, UT):</strong> Creative media production, multi-track audio editing, and technical support for open-source development.</p>
+      <h4>eSource <span>2007–Present</span></h4>
+      <p><strong>Orem, UT:</strong> Contract creative and web support for an open-source development group, including audio editing and creative input.</p>
     </div>
     <div class="item">
       <h4>Assistant Manager <span>2013–2015</span></h4>
-      <p><strong>Wendy's (Kansas City, MO):</strong> Directed shift execution, staff scheduling, cash management, and high-volume customer relations.</p>
+      <p><strong>Wendy’s, Kansas City, MO:</strong> Promoted from crew to shift manager within four months. Led shifts, scheduling, and cash handling, and kept customers happy.</p>
     </div>
     <div class="item">
       <h4>Head of Customer Service <span>2012–2013</span></h4>
-      <p><strong>Virpus Networks (Kansas City, MO):</strong> Managed customer support, sales pipelines, billing, and owner workflows for an enterprise hosting provider.</p>
+      <p><strong>Virpus Networks, Kansas City, MO:</strong> Led customer support, sales, and billing for a hosting company and supported the owner on day-to-day operations.</p>
     </div>
     <div class="item">
-      <h4>Enterprise Technical Support <span>2007–2012</span></h4>
-      <p><strong>Cosentry, Bluehost, Server Plus (KC):</strong> Specialized technical support across web hosting and hardware; trained onboarding staff and supported major accounts like HP and Ford.</p>
+      <h4>Cosentry <span>2011–2012</span></h4>
+      <p><strong>Kansas City, MO:</strong> Supported enterprise clients including Hewlett-Packard and Ford while monitoring data-center operations and security.</p>
     </div>
+    <div class="item">
+      <h4>Earlier customer support <span>2007–2011</span></h4>
+      <p><strong>Server Plus, ISPN, Teleperformance USA, Bluehost.com:</strong> Support by phone, chat, and email across internet service, hardware, and web hosting; trained newer teammates.</p>
+    </div>
+    <div class="item"><a class="btn p" href="resume.pdf" download>Download resume (PDF)</a></div>
   </div>
 </section>
 
@@ -313,7 +343,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:5;padding:20px clamp(20px,5vw,48
 <h2>Let's talk</h2>
 <p class="lede">Available for commercial, voice, and on-camera work.</p>
 <p class="contact"><a href="mailto:isaacesource@gmail.com">isaacesource@gmail.com</a><br><a href="tel:8163286654">816-328-6654</a></p>
-<div class="files"><div class="slot" data-slot="resume" style="--ar:16/5"><b>FILE</b><span>Resume (PDF)</span><small>download button target · resume.pdf</small></div></div>
+<div class="files"><a class="btn p" href="resume.pdf" download>Download resume (PDF)</a></div>
 <p class="foot">© Isaac Meyer. Finny's Creative Emporium is an original spec sample.</p></div></section>
 
 </main>
