@@ -113,7 +113,19 @@ nav{position:fixed;top:0;left:0;right:0;z-index:5;padding:20px clamp(20px,5vw,48
 .card .meta{font-size:12px;color:var(--mute);margin-bottom:12px}
 .card a{display:inline-block;padding:6px 14px;background:var(--red);color:#fff;text-decoration:none;border-radius:999px;font-size:12px;font-weight:600;align-self:flex-start}
 
-@media(max-width:900px){.hero .in{display:block}.hero .in>.slot{display:none}}
+@media(max-width:900px){
+  .hero .in{display:block}
+  .hero .in>.slot{
+    display:flex;
+    width:100%;
+    max-width:320px;
+    height:auto;
+    aspect-ratio:4/5;
+    margin:28px auto 0;
+    justify-self:center;
+    grid-column:1;
+  }
+}
 @media(max-width:720px){.arrow{display:none}.disc,.about{grid-template-columns:1fr}nav{justify-content:flex-start;flex-wrap:wrap}}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;scroll-behavior:auto}}
 .slot.photo{border:0;background:none;padding:0}
