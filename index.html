@@ -117,15 +117,16 @@ nav{position:fixed;top:0;left:0;right:0;z-index:5;padding:20px clamp(20px,5vw,48
 @media(max-width:720px){.arrow{display:none}.disc,.about{grid-template-columns:1fr}nav{justify-content:flex-start;flex-wrap:wrap}}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;scroll-behavior:auto}}
 .slot.photo{border:0;background:none;padding:0}
-.bookgrid{display:grid;grid-template-columns:repeat(6,minmax(0,108px));gap:18px 14px;align-content:start}@media(max-width:720px){.bookgrid{grid-template-columns:repeat(3,minmax(0,1fr))}}
-.grp{grid-column:1/-1;font:400 15px/1.3 var(--serif);color:var(--mute);margin:12px 0 0;padding-bottom:4px;border-bottom:1px solid var(--line)}
-.grp:first-child{margin-top:0}
-.book{display:flex;flex-direction:column;gap:8px;transition:transform .25s}
-.book:hover{transform:translateY(-4px)}
-.cover{position:relative;aspect-ratio:2/3;border:1px solid var(--line);border-radius:8px;background:var(--panel);display:grid;place-items:center;text-align:center;padding:8px;font:400 14px/1.3 var(--serif);color:var(--mute);overflow:hidden}
-.cover img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-.cap{font-size:12px;line-height:1.35;color:var(--mute)}.cap b{display:block;color:var(--ink);font-weight:600}
-.read{display:inline-block;padding:6px 12px;background:var(--red);color:#fff;text-decoration:none;border-radius:999px;font-size:12px;font-weight:600;align-self:flex-start}
+
+/* Rebuilt Clean Book Grid CSS */
+.bookgrid{display:grid;grid-template-columns:repeat(6,minmax(0,108px));gap:18px 14px;align-content:start}
+@media(max-width:720px){.bookgrid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.book-card{display:flex;flex-direction:column;gap:8px;transition:transform .25s}
+.book-card:hover{transform:translateY(-4px)}
+.book-cover{position:relative;aspect-ratio:2/3;border:1px solid var(--line);border-radius:8px;background:var(--panel);overflow:hidden;display:block}
+.book-cover img{width:100%;height:100%;object-fit:cover;display:block}
+.book-info{font-size:12px;line-height:1.35;color:var(--mute)}
+.book-info b{display:block;color:var(--ink);font-weight:600}
 </style>
 </head>
 <body>
@@ -160,22 +161,22 @@ nav{position:fixed;top:0;left:0;right:0;z-index:5;padding:20px clamp(20px,5vw,48
 </div>
 </div></section>
 
-<!-- BOOKS PANEL -->
+<!-- REBUILT BOOKS PANEL -->
 <section class="panel disc" id="d-books">
   <h3><em>Books</em><small>Specimen 884: a nine-book science fiction saga on the planet Asylia that spans over an eon, plus side stories</small></h3>
   <div class="bookgrid">
-    <div class="book"><div class="cover"><span>The Salt, The Spine, and the Re-Engine</span><img src="https://finnydot.github.io/creativeemporium/Specimen%20884%20-%20Book%201.jpeg" alt="Book 1 cover" onerror="this.remove()"></div><div class="cap"><b>Book 1</b>The Salt, The Spine, and the Re-Engine</div></div>
-    <div class="book"><div class="cover"><span>The Re-Engine Corps</span><img src="https://finnydot.github.io/creativeemporium/Specimen%20884%20-%20Book%202.jpeg" alt="Book 2 cover" onerror="this.remove()"></div><div class="cap"><b>Book 2</b>The Re-Engine Corps</div></div>
-    <div class="book"><div class="cover"><span>The War of Years</span><img src="https://finnydot.github.io/creativeemporium/Specimen%20884%20-%20Book%203.jpeg" alt="Book 3 cover" onerror="this.remove()"></div><div class="cap"><b>Book 3</b>The War of Years</div></div>
-    <div class="book"><div class="cover"><span>The Brink</span><img src="https://finnydot.github.io/creativeemporium/the-brink.jpeg" alt="Book 4 cover" onerror="this.remove()"></div><div class="cap"><b>Book 4</b>The Brink</div></div>
-    <div class="book"><div class="cover"><span>The Black Corridors</span><img src="https://finnydot.github.io/creativeemporium/the-black-corridors.jpeg" alt="Book 5 cover" onerror="this.remove()"></div><div class="cap"><b>Book 5</b>The Black Corridors</div></div>
-    <div class="book"><div class="cover"><span>The Bloom</span><img src="https://finnydot.github.io/creativeemporium/the-bloom.jpeg" alt="Book 6 cover" onerror="this.remove()"></div><div class="cap"><b>Book 6</b>The Bloom</div></div>
-    <div class="book"><div class="cover"><span>C.E. -79</span><img src="https://finnydot.github.io/creativeemporium/SPECIMEN_884_BOOK_7_LOCKED.jpg" alt="Book 7 cover" onerror="this.remove()"></div><div class="cap"><b>Book 7</b>C.E. -79</div></div>
-    <div class="book"><div class="cover"><span>C.E. -64</span><img src="https://finnydot.github.io/creativeemporium/SPECIMEN_884_BOOK_8_CE_MINUS_64_LOCKED.jpg" alt="Book 8 cover" onerror="this.remove()"></div><div class="cap"><b>Book 8</b>C.E. -64</div></div>
-    <div class="book"><div class="cover"><span>C.E. +200</span><img src="https://finnydot.github.io/creativeemporium/SPECIMEN_884_BOOK_9_LOCKED.jpg" alt="Book 9 cover" onerror="this.remove()"></div><div class="cap"><b>Book 9</b>C.E. +200</div></div>
-    <div class="book"><div class="cover"><span>The Last Thing We Keep</span><img src="https://finnydot.github.io/creativeemporium/The_Last_Thing_We_Keep_Cover.jpg" alt="Side story cover" onerror="this.remove()"></div><div class="cap"><b>Side story</b>The Last Thing We Keep</div></div>
-    <div class="book"><div class="cover"><span>The Last War</span><img src="https://finnydot.github.io/creativeemporium/THE%20LAST%20WAR.jpg" alt="Side story cover" onerror="this.remove()"></div><div class="cap"><b>Side story</b>The Last War</div></div>
-    <div class="book"><div class="cover"><span>Vaelen-Khor</span><img src="https://finnydot.github.io/creativeemporium/VAELEN-KHOR.jpg" alt="Graphic novel cover" onerror="this.remove()"></div><div class="cap"><b>Graphic novel</b>Vaelen-Khor</div></div>
+    <div class="book-card"><a class="book-cover" href="#"><img src="https://finnydot.github.io/creativeemporium/Specimen%20884%20-%20Book%201.jpeg" alt="Book 1 cover"></a><div class="book-info"><b>Book 1</b>The Salt, The Spine, and the Re-Engine</div></div>
+    <div class="book-card"><a class="book-cover" href="#"><img src="https://finnydot.github.io/creativeemporium/Specimen%20884%20-%20Book%202.jpeg" alt="Book 2 cover"></a><div class="book-info"><b>Book 2</b>The Re-Engine Corps</div></div>
+    <div class="book-card"><a class="book-cover" href="#"><img src="https://finnydot.github.io/creativeemporium/Specimen%20884%20-%20Book%203.jpeg" alt="Book 3 cover"></a><div class="book-info"><b>Book 3</b>The War of Years</div></div>
+    <div class="book-card"><a class="book-cover" href="#"><img src="https://finnydot.github.io/creativeemporium/the-brink.jpeg" alt="Book 4 cover"></a><div class="book-info"><b>Book 4</b>The Brink</div></div>
+    <div class="book-card"><a class="book-cover" href="#"><img src="https://finnydot.github.io/creativeemporium/the-black-corridors.jpeg" alt="Book 5 cover"></a><div class="book-info"><b>Book 5</b>The Black Corridors</div></div>
+    <div class="book-card"><a class="book-cover" href="#"><img src="https://finnydot.github.io/creativeemporium/the-bloom.jpeg" alt="Book 6 cover"></a><div class="book-info"><b>Book 6</b>The Bloom</div></div>
+    <div class="book-card"><a class="book-cover" href="#"><img src="https://finnydot.github.io/creativeemporium/SPECIMEN_884_BOOK_7_LOCKED.jpg" alt="Book 7 cover"></a><div class="book-info"><b>Book 7</b>C.E. -79</div></div>
+    <div class="book-card"><a class="book-cover" href="#"><img src="https://finnydot.github.io/creativeemporium/SPECIMEN_884_BOOK_8_CE_MINUS_64_LOCKED.jpg" alt="Book 8 cover"></a><div class="book-info"><b>Book 8</b>C.E. -64</div></div>
+    <div class="book-card"><a class="book-cover" href="#"><img src="https://finnydot.github.io/creativeemporium/SPECIMEN_884_BOOK_9_LOCKED.jpg" alt="Book 9 cover"></a><div class="book-info"><b>Book 9</b>C.E. +200</div></div>
+    <div class="book-card"><a class="book-cover" href="#"><img src="https://finnydot.github.io/creativeemporium/The_Last_Thing_We_Keep_Cover.jpg" alt="Side story cover"></a><div class="book-info"><b>Side story</b>The Last Thing We Keep</div></div>
+    <div class="book-card"><a class="book-cover" href="#"><img src="https://finnydot.github.io/creativeemporium/THE%20LAST%20WAR.jpg" alt="Side story cover"></a><div class="book-info"><b>Side story</b>The Last War</div></div>
+    <div class="book-card"><a class="book-cover" href="#"><img src="https://finnydot.github.io/creativeemporium/VAELEN-KHOR.jpg" alt="Graphic novel cover"></a><div class="book-info"><b>Graphic novel</b>Vaelen-Khor</div></div>
   </div>
 </section>
 
@@ -317,7 +318,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:5;padding:20px clamp(20px,5vw,48
             </div>
         </div>
         <div class="card">
-            <img src="https://img.youtube.com/vi/Zda1iO5VTdc/hqdefault.jpg" alt="1979 - The Reunion thumbnail" target="_blank"">
+            <img src="https://img.youtube.com/vi/Zda1iO5VTdc/hqdefault.jpg" alt="1979 - The Reunion thumbnail" loading="lazy">
             <div class="card-content">
                 <div>
                     <h4>1979 - The Reunion</h4>
