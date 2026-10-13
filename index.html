@@ -13,7 +13,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Cormorant+Garamond:ital,wght@0,500;0,700;1,500&display=swap" rel="stylesheet">
 <!--
-  FINNYVERSE v1.4 (eight worlds in orbit, official mark, Alexander scroll, FinnyScript chat windows) — rough draft, Oct 13 2026
+  FINNYVERSE v1.5 (side arrows, arrow keys, readable scroll) — rough draft, Oct 13 2026
   Pure HTML + CSS + a few lines of JS. No libraries, no backend.
 
   NANO SLOTS (search "NANO:" in this file). Each CSS stand-in is replaced by dropping a
@@ -383,12 +383,15 @@ img{ display:block; max-width:100%; }
 .scroll-sheet{ position:relative; margin:0 calc(var(--rw) * .45); min-height:clamp(260px, 52vw, 420px);
   background:url(scroll-sheet.webp) center / 100% 100% no-repeat; filter:drop-shadow(0 24px 40px rgba(0,0,0,.7));
   clip-path:inset(0 calc((1 - var(--u)) * 50%)); }
-.scroll-text{ padding:clamp(48px, 11vw, 84px) calc(var(--rw) * .75 + clamp(10px, 4vw, 40px)) clamp(58px, 13vw, 96px); display:grid; gap:clamp(12px, 2.4vw, 20px); text-align:center; }
-.ink{ font-family:'Cormorant Garamond', Georgia, serif; font-weight:500; font-size:clamp(16px, 2.3vw, 21px); line-height:1.5; color:#24140a;
+.scroll-sheet::before{ content:""; position:absolute; inset:14% 9% 17%; pointer-events:none; border-radius:40%;
+  background:radial-gradient(ellipse at center, rgba(241,224,190,.88) 0%, rgba(236,216,176,.78) 55%, rgba(232,210,168,0) 100%);
+  filter:blur(6px); }
+.scroll-text{ position:relative; padding:clamp(48px, 11vw, 84px) calc(var(--rw) * .75 + clamp(10px, 4vw, 40px)) clamp(58px, 13vw, 96px); display:grid; gap:clamp(12px, 2.4vw, 20px); text-align:center; }
+.ink{ font-family:'Cormorant Garamond', Georgia, serif; font-weight:700; font-size:clamp(17px, 2.5vw, 23px); line-height:1.4; color:#1c0f06;
   opacity:0; transform:translateY(6px); transition:opacity .9s ease, transform .9s ease;
-  text-shadow:0 0 6px rgba(238,214,170,.95), 0 0 14px rgba(238,214,170,.7); }
+  text-shadow:0 0 4px rgba(241,224,190,.9); }
 .ink b{ font-weight:700; color:#7a1608; }
-.ink-big{ font-weight:700; font-size:clamp(19px, 3vw, 28px); line-height:1.2; }
+.ink-big{ font-weight:700; font-size:clamp(21px, 3.4vw, 31px); line-height:1.15; }
 .scroll.read .ink{ opacity:1; transform:none; }
 .scroll.read .ink:nth-child(2){ transition-delay:.35s; } .scroll.read .ink:nth-child(3){ transition-delay:.7s; }
 .rod{ position:absolute; top:calc(var(--kt) * -1); bottom:calc(var(--kb) * -1); width:var(--rw); box-sizing:border-box;
@@ -520,6 +523,16 @@ img{ display:block; max-width:100%; }
 .signoff span{ font-family:var(--mono); font-size:10px; letter-spacing:.3em; color:var(--gray); }
 .fs-emblem{ width:clamp(90px, 16vw, 150px); height:auto; margin-bottom:6px; animation:spin 60s linear infinite; filter:drop-shadow(0 0 20px rgba(224,27,27,.45)); }
 .orb.small img{ transform:scale(.82); }
+
+/* side arrows: step between worlds (mouse/keyboard devices) */
+.side-arrow{ all:unset; position:fixed; z-index:21; top:50%; transform:translateY(-50%); width:44px; height:72px; display:grid; place-items:center; cursor:pointer;
+  font-family:var(--mono); font-size:30px; line-height:1; color:var(--hud); background:rgba(10,0,4,.7); border:1px solid rgb(var(--hud-rgb) / .7);
+  clip-path:polygon(10px 0,100% 0,100% calc(100% - 10px),calc(100% - 10px) 100%,0 100%,0 10px); transition:opacity .3s, background .2s, color .2s; }
+.side-arrow.prev{ left:14px; } .side-arrow.next{ right:14px; }
+.side-arrow:hover, .side-arrow:focus-visible{ background:var(--hud); color:var(--hud-ink); }
+.side-arrow[hidden]{ display:none; }
+body.theater-open .side-arrow{ opacity:0; pointer-events:none; }
+@media (hover:none), (max-width:700px){ .side-arrow{ display:none; } }
 
 /* ---------- mini-map (worlds only; the dial replaces it on the core) ---------- */
 .minimap{ position:fixed; z-index:20; left:50%; bottom:max(16px, env(safe-area-inset-bottom)); transform:translateX(-50%);
@@ -859,6 +872,8 @@ body.at-core .minimap{ opacity:0; pointer-events:none; transform:translate(-50%,
 </main>
 
 <nav class="minimap" id="minimap" aria-label="FINNYVERSE map"></nav>
+<button class="side-arrow prev" id="prevW" type="button" aria-label="Previous world">‹</button>
+<button class="side-arrow next" id="nextW" type="button" aria-label="Next world">›</button>
 
 <div class="theater" id="theater" hidden role="dialog" aria-modal="true" aria-labelledby="thTitle">
   <div class="th-frame">
@@ -1001,7 +1016,9 @@ body.at-core .minimap{ opacity:0; pointer-events:none; transform:translate(-50%,
   map.innerHTML = panels.map((p,i)=>`<button type="button" data-go="${i}" aria-label="${p.dataset.label}"><i></i><span>${p.dataset.label}</span></button>`).join('');
   const btns = [...map.children];
   let current = 0;
-  const go = i => { i = Math.max(0, Math.min(panels.length-1, i)); track.scrollTo({ left: i * track.clientWidth }); };
+  let navTarget = null;
+  const go = i => { i = Math.max(0, Math.min(panels.length-1, i)); navTarget = i; track.scrollTo({ left: i * track.clientWidth }); };
+  const base = () => navTarget != null ? navTarget : current;
   document.addEventListener('click', e => { const t = e.target.closest('[data-go]'); if(!t) return; e.preventDefault();
     const v = t.dataset.go; go(isNaN(v) ? panels.findIndex(p => p.id === v) : +v); });
 
@@ -1196,7 +1213,8 @@ body.at-core .minimap{ opacity:0; pointer-events:none; transform:translate(-50%,
       const i = Math.round(x / track.clientWidth);
       if (i !== current) { current = i; document.body.classList.toggle('at-core', current === 0); if (current === 0) startOrbit();
         clearTimeout(settleT); settleT = setTimeout(syncDial, 220); }   // only remember the world you land on, not the ones you fly past
-      btns.forEach((b,k)=>b.classList.toggle('on', k===current));
+      if (Math.abs(x - (navTarget ?? -1) * track.clientWidth) < 2) navTarget = null;
+      btns.forEach((b,k)=>b.classList.toggle('on', k===current)); syncArrows();
       ticking = false;
     });
   }, { passive:true });
@@ -1228,17 +1246,21 @@ body.at-core .minimap{ opacity:0; pointer-events:none; transform:translate(-50%,
     if (lock || Math.abs(e.deltaY) < 12) return;
     lock = true; go(current + (e.deltaY > 0 ? 1 : -1)); setTimeout(()=>lock=false, 650);
   }, { passive:false });
+  const prevW = document.getElementById('prevW'), nextW = document.getElementById('nextW');
+  function syncArrows(){ prevW.hidden = current === 0; nextW.hidden = current === panels.length - 1; }
+  prevW.addEventListener('click', () => go(base() - 1)); nextW.addEventListener('click', () => go(base() + 1));
+  syncArrows();
   document.addEventListener('keydown', e => {
     if (document.body.classList.contains('theater-open')) return;
     if (current === 0) {                                           // on the core, arrows turn the dial
-      if (e.key === 'ArrowRight') { e.preventDefault(); openHud(); turnTo(sel < 0 ? 0 : mod(sel + 1, N)); return; }
-      if (e.key === 'ArrowLeft')  { e.preventDefault(); openHud(); turnTo(sel < 0 ? N-1 : mod(sel - 1, N)); return; }
+      if (isOpen() && e.key === 'ArrowRight') { e.preventDefault(); turnTo(sel < 0 ? 0 : mod(sel + 1, N)); return; }
+      if (isOpen() && e.key === 'ArrowLeft')  { e.preventDefault(); turnTo(sel < 0 ? N-1 : mod(sel - 1, N)); return; }
       if (e.key === 'Escape' && isOpen()) { closeHud(); return; }
       if (e.key === 'Enter' && !e.target.closest('button,a,.seg')) { e.preventDefault(); engage(); return; }
     }
     if (e.key === 'Escape') { go(0); return; }
-    if (e.key === 'ArrowRight' || e.key === 'PageDown') { e.preventDefault(); go(current+1); }
-    if (e.key === 'ArrowLeft'  || e.key === 'PageUp')   { e.preventDefault(); go(current-1); }
+    if (e.key === 'ArrowRight' || e.key === 'PageDown') { e.preventDefault(); go(base()+1); }
+    if (e.key === 'ArrowLeft'  || e.key === 'PageUp')   { e.preventDefault(); go(base()-1); }
   });
   window.addEventListener('resize', () => track.scrollTo({ left: current * track.clientWidth, behavior:'instant' }));
 })();
