@@ -1,4 +1,3 @@
-
 <!doctype html>
 <html lang="en">
 <head>
@@ -11,7 +10,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <!--
-  FINNYVERSE TEST SITE v1.1 (built-in theater + The Dead Batch) — rough draft, Oct 13 2026
+  FINNYVERSE v1.2 (solar system core: orbiting planets, collapsible HUD, lock-on) — rough draft, Oct 13 2026
   Pure HTML + CSS + a few lines of JS. No libraries, no backend.
 
   NANO SLOTS (search "NANO:" in this file). Each CSS stand-in is replaced by dropping a
@@ -108,8 +107,8 @@ img{ display:block; max-width:100%; }
 .hud.focused .focus{ opacity:1; transform:none; filter:none; pointer-events:auto; }
 .hud.refocus .focus{ transition:none; opacity:0; transform:scale(.8); filter:blur(10px); }
 .f-kicker{ font-family:var(--mono); font-size:calc(var(--D) * .019); letter-spacing:.25em; color:var(--hud); opacity:.8; }
-.f-name{ font-family:var(--display); font-weight:800; font-size:calc(var(--D) * .032); line-height:1.05; letter-spacing:.02em; color:var(--white); }
-.f-line{ font-size:calc(var(--D) * .021); line-height:1.35; color:#c9c9cf; max-width:24ch; }
+.f-name{ font-family:var(--display); font-weight:800; font-size:calc(var(--D) * .03); line-height:1.05; letter-spacing:.02em; color:var(--white); }
+.f-line{ font-size:calc(var(--D) * .02); line-height:1.3; color:#c9c9cf; max-width:24ch; }
 .engage{ all:unset; cursor:pointer; margin-top:calc(var(--D) * .012); font-family:var(--mono); font-size:calc(var(--D) * .023); letter-spacing:.2em;
   padding:calc(var(--D) * .014) calc(var(--D) * .032); color:var(--hud-ink); background:var(--hud); box-shadow:0 0 18px rgb(var(--hud-rgb) / .55);
   clip-path:polygon(8px 0,100% 0,100% calc(100% - 8px),calc(100% - 8px) 100%,0 100%,0 8px); }
@@ -131,7 +130,51 @@ img{ display:block; max-width:100%; }
 
 /* the dial — thick segmented ring on the outskirts */
 .dial{ position:absolute; z-index:2; inset:0; border-radius:50%; touch-action:none; cursor:grab; user-select:none; -webkit-user-select:none;
-  transform:rotate(var(--R)); transition:transform .45s cubic-bezier(.25,1.4,.4,1); animation:hudIn 1s 1.2s both; }
+  --S:1; transform:scale(var(--S)) rotate(var(--R)); transition:transform .45s cubic-bezier(.25,1.4,.4,1), opacity .5s; animation:hudIn 1s 1.2s both; }
+/* orbit mode: the HUD is a slim, quiet ring hugging the black hole */
+.hud:not(.open) .dial{ --S:.74; opacity:.5; cursor:pointer; transition:transform .6s cubic-bezier(.3,.7,.2,1), opacity .5s; }
+.hud:not(.open) .seg text{ opacity:0; }
+.hud:not(.open) .seg .band{ stroke:rgba(3,10,14,.55); }
+.hud:not(.open) .seg.on .band{ stroke:rgb(var(--hud-rgb) / .35); filter:none; }
+.hud:not(.open) .pointer, .hud:not(.open) .hud-corner{ opacity:0; transition:opacity .4s; }
+.hud.open .pointer, .hud.open .hud-corner{ transition:opacity .4s .2s; }
+.seg text{ transition:fill .25s, opacity .4s; }
+.hud-open-btn, .hud-close{ all:unset; position:absolute; z-index:7; cursor:pointer; font-family:var(--mono); font-size:10px; letter-spacing:.24em; color:var(--hud);
+  border:1px solid rgb(var(--hud-rgb) / .8); background:rgba(10,0,4,.75); padding:8px 12px; white-space:nowrap;
+  clip-path:polygon(7px 0,100% 0,100% calc(100% - 7px),calc(100% - 7px) 100%,0 100%,0 7px); transition:opacity .35s, background .2s, color .2s; }
+.hud-open-btn{ left:50%; top:calc(50% + var(--D) * .405); transform:translate(-50%,-50%); animation:fadeUp .8s 2.2s both; }
+.hud-close{ right:calc(var(--D) * -.02); top:calc(var(--D) * -.02); opacity:0; pointer-events:none; }
+.hud.open .hud-open-btn{ visibility:hidden; pointer-events:none; }
+.hud.open .hud-close{ opacity:1; pointer-events:auto; transition-delay:.25s; }
+.hud-open-btn:hover, .hud-open-btn:focus-visible, .hud-close:hover, .hud-close:focus-visible{ background:var(--hud); color:var(--hud-ink); }
+
+/* orbiting planets (positioned every frame by JS) */
+.orb{ all:unset; position:absolute; left:50%; top:50%; --ps:clamp(46px, calc(var(--D) * .15), 104px); width:var(--ps); height:var(--ps);
+  margin:calc(var(--ps) / -2); cursor:pointer; will-change:transform, opacity; z-index:0; }
+.orb img{ width:100%; height:100%; object-fit:contain; pointer-events:none; user-select:none; -webkit-user-drag:none; }
+.orb.wide img{ transform:scale(1.45); }
+.orb-label{ position:absolute; left:50%; top:100%; transform:translateX(-50%); margin-top:2px; font-family:var(--mono); font-size:9px; letter-spacing:.2em;
+  color:#fff; background:rgba(10,0,4,.75); border:1px solid rgb(var(--hud-rgb) / .6); padding:3px 6px; white-space:nowrap; opacity:0; transition:opacity .2s; pointer-events:none; }
+.orb:hover .orb-label, .orb:focus-visible .orb-label, .orb.target .orb-label{ opacity:1; }
+@media (hover:none){ .orb-label{ opacity:.85; font-size:8px; } }
+.hud.open .orb{ pointer-events:none; }
+.hud.open .orb img{ filter:blur(1.5px); transition:filter .5s; }
+.orb img{ transition:filter .5s; }
+.orb:focus-visible{ outline:2px solid var(--hud); outline-offset:4px; border-radius:50%; }
+/* lock-on bracket */
+.orb::before, .orb::after{ content:""; position:absolute; inset:-14%; pointer-events:none; opacity:0;
+  border:2px solid var(--hud); clip-path:polygon(0 0,28% 0,28% 6%,6% 6%,6% 28%,0 28%, 0 72%,6% 72%,6% 94%,28% 94%,28% 100%,0 100%,
+    100% 100%,72% 100%,72% 94%,94% 94%,94% 72%,100% 72%,100% 28%,94% 28%,94% 6%,72% 6%,72% 0,100% 0); }
+.orb.target::before{ opacity:1; animation:lock .35s cubic-bezier(.2,.9,.3,1.3) both; filter:drop-shadow(0 0 6px var(--hud)); }
+@keyframes lock{ from{ transform:scale(1.8) rotate(45deg); opacity:0; } to{ transform:none; opacity:1; } }
+.engage.fire{ animation:fire .45s ease-out; }
+@keyframes fire{ 0%{ background:#fff; box-shadow:0 0 0 0 rgba(255,255,255,.9); transform:scale(1); } 40%{ transform:scale(.92); }
+  100%{ background:var(--hud); box-shadow:0 0 0 22px rgba(255,255,255,0); transform:scale(1); } }
+/* planet preview inside the black hole */
+.f-planet{ width:calc(var(--D) * .1); height:calc(var(--D) * .1); object-fit:contain; margin-bottom:calc(var(--D) * .004); filter:drop-shadow(0 0 8px rgba(255,106,42,.5)); }
+.f-planet[hidden]{ display:none; }
+@media (prefers-reduced-motion:reduce){ .orb.target::before{ animation:none; } .engage.fire{ animation:none; } }
+
 .dial.dragging{ transition:none; cursor:grabbing; }
 @keyframes hudIn{ from{ opacity:0; scale:.92; } to{ opacity:1; scale:1; } }
 .dial svg{ position:absolute; inset:0; width:100%; height:100%; overflow:visible; }
@@ -185,6 +228,9 @@ img{ display:block; max-width:100%; }
   box-shadow:0 0 70px -10px var(--p2), inset -18px -18px 40px rgba(0,0,0,.7);
   animation:float 9s ease-in-out infinite; }
 .planet img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; border-radius:50%; }
+.planet.has-img{ background:none; box-shadow:none; border-radius:0; }
+.planet.has-img img{ object-fit:contain; border-radius:0; filter:drop-shadow(0 10px 30px rgba(0,0,0,.6)); }
+.planet.has-img.wide{ width:clamp(150px, 40vw, 440px); }
 .planet.ringed::after{ content:""; position:absolute; inset:38% -28%; border-radius:50%; border:3px solid rgba(255,214,168,.55); transform:rotate(-18deg); }
 @keyframes float{ 0%,100%{ transform:translateY(0);} 50%{ transform:translateY(-10px);} }
 
@@ -449,7 +495,7 @@ body.at-core .minimap{ opacity:0; pointer-events:none; transform:translate(-50%,
 
   <!-- 0 · CORE -->
   <section class="panel core" id="core" data-label="Core">
-    <div class="hud" id="hud">
+    <div class="hud" id="hud" data-mode="orbit">
       <span class="hud-corner tl"></span><span class="hud-corner tr"></span><span class="hud-corner bl"></span><span class="hud-corner br"></span>
       <div class="bh-fx" aria-hidden="true">
         <img class="bh-haze" src="haze.webp" alt="">
@@ -457,10 +503,13 @@ body.at-core .minimap{ opacity:0; pointer-events:none; transform:translate(-50%,
       </div>
       <div class="dial" id="dial" style="--R:0deg"><svg id="dialSvg" viewBox="-200 -200 400 400" role="group" aria-label="World selector dial"></svg></div>
       <div class="pointer"></div>
+      <button class="hud-open-btn" id="hudOpen" type="button" aria-label="Open the controls">◆ CONTROLS</button>
+      <button class="hud-close" id="hudClose" type="button" aria-label="Close the controls">CLOSE ✕</button>
       <div class="bh-wrap">
         <div class="horizon">
           <div class="layer splash"><div class="bh-name">ISAAC<span>MEYER</span></div></div>
           <div class="layer focus" aria-live="polite">
+            <img class="f-planet" id="fPlanet" src="" alt="" hidden>
             <div class="f-kicker" id="fKick">WORLD 01</div>
             <div class="f-name" id="fName">The Reel</div>
             <div class="f-line" id="fLine"></div>
@@ -475,14 +524,14 @@ body.at-core .minimap{ opacity:0; pointer-events:none; transform:translate(-50%,
       </div>
     </div>
     <div class="banner"><img class="logo" src="finnyverse-logo.webp" alt="FINNYVERSE"></div>
-    <div class="ro-hint">TURN THE DIAL TO GO DEEPER</div>
+    <div class="ro-hint" id="roHint">TAP A PLANET · OR OPEN THE CONTROLS</div>
   </section>
 
   <!-- 1 · REEL -->
   <section class="panel" id="reel" data-label="Reel">
     <div class="world">
       <div class="world-head">
-        <div class="planet" style="--p1:#ffd6a8;--p2:#E01B1B"><!-- NANO: <img src="planet-reel.webp" alt=""> --></div>
+        <div class="planet has-img"><img src="planet-reel.webp" alt=""></div>
         <div><div class="kicker">World 01</div><h2>The Reel</h2></div>
       </div>
       <div>
@@ -502,7 +551,7 @@ body.at-core .minimap{ opacity:0; pointer-events:none; transform:translate(-50%,
   <section class="panel" id="films" data-label="Films">
     <div class="world">
       <div class="world-head">
-        <div class="planet" style="--p1:#ff9c6b;--p2:#8a1010"><!-- NANO: <img src="planet-films.webp" alt=""> --></div>
+        <div class="planet has-img"><img src="planet-films.webp" alt=""></div>
         <div><div class="kicker">World 02</div><h2>Films</h2><p class="lede">AI-filmed, Finny-directed. The 1979–1983 trilogy, short films and music videos.</p></div>
       </div>
       <div>
@@ -538,7 +587,7 @@ body.at-core .minimap{ opacity:0; pointer-events:none; transform:translate(-50%,
   <!-- 4 · SPECIMEN 884 -->
   <section class="panel gallery" id="s884" data-label="SPECIMEN 884">
     <div class="saga-hero">
-      <div class="planet ringed" style="--p1:#f1c58a;--p2:#a2361a"><!-- NANO: <img src="planet-s884.webp" alt=""> --></div>
+      <div class="planet has-img wide"><img src="planet-s884.webp" alt=""></div>
       <div class="kicker">World 04 · The Saga</div>
       <h2 class="saga-title">SPECIMEN 884</h2>
       <p class="saga-tag">One man wakes on an alien world. An eon stands between him and home.</p>
@@ -565,7 +614,7 @@ body.at-core .minimap{ opacity:0; pointer-events:none; transform:translate(-50%,
   <section class="panel" id="books" data-label="Books">
     <div class="world">
       <div class="world-head">
-        <div class="planet" style="--p1:#e8e2d6;--p2:#5b1a1a"><!-- NANO: <img src="planet-books.webp" alt=""> --></div>
+        <div class="planet has-img"><img src="planet-books.webp" alt=""></div>
         <div><div class="kicker">World 05</div><h2>Books</h2>
           <p class="lede">Companion stories, standalone novels and the graphic novel.</p>
           <span class="draft">COPY: DRAFT · ADD EARLY WORKS</span></div>
@@ -613,7 +662,7 @@ body.at-core .minimap{ opacity:0; pointer-events:none; transform:translate(-50%,
   <section class="panel" id="music" data-label="Music">
     <div class="world">
       <div class="world-head">
-        <div class="planet" style="--p1:#ff5a5a;--p2:#6a0606"><!-- NANO: <img src="planet-music.webp" alt=""> --></div>
+        <div class="planet has-img"><img src="planet-music.webp" alt=""></div>
         <div><div class="kicker">World 06 · Finny</div><h2>Music</h2>
           <p class="lede">Twenty-four years of independent production. Songwriting, recording, mixing, mastering.</p></div>
       </div>
@@ -676,7 +725,7 @@ body.at-core .minimap{ opacity:0; pointer-events:none; transform:translate(-50%,
   <section class="panel" id="station" data-label="Contact">
     <div class="world">
       <div class="world-head">
-        <div class="planet" style="--p1:#c9c9cf;--p2:#3a3a44"><!-- NANO: <img src="station.webp" alt=""> --></div>
+        <div class="planet has-img"><img src="station.webp" alt=""></div>
         <div><div class="kicker">Mission Control</div><h2>Info &amp; Resume</h2></div>
       </div>
       <div class="cols">
@@ -855,7 +904,9 @@ body.at-core .minimap{ opacity:0; pointer-events:none; transform:translate(-50%,
     { name:'MISSION CONTROL', title:'Mission Control', line:'Contact info and resume.',        color:'#FF1F4B' } ];
   const N = W.length, STEP = 360 / N, HALF = STEP / 2;
   const hud = document.getElementById('hud'), dial = document.getElementById('dial'), dsvg = document.getElementById('dialSvg');
-  const fKick = document.getElementById('fKick'), fName = document.getElementById('fName'), fLine = document.getElementById('fLine');
+  const fKick = document.getElementById('fKick'), fName = document.getElementById('fName'), fLine = document.getElementById('fLine'), fPlanet = document.getElementById('fPlanet');
+  const PLANET = { 0:'planet-reel.webp', 1:'planet-films.webp', 3:'planet-s884.webp', 4:'planet-books.webp', 5:'planet-music.webp', 7:'station.webp' };
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const mod = (n,m) => ((n % m) + m) % m;
   const pt = (a, r) => [ (Math.sin(a*Math.PI/180)*r).toFixed(2), (-Math.cos(a*Math.PI/180)*r).toFixed(2) ];
   const arc = (a0, a1, r, cw) => { const [x0,y0]=pt(cw?a0:a1,r), [x1,y1]=pt(cw?a1:a0,r); return `M${x0},${y0} A${r},${r} 0 0,${cw?1:0} ${x1},${y1}`; };
@@ -874,11 +925,11 @@ body.at-core .minimap{ opacity:0; pointer-events:none; transform:translate(-50%,
   dsvg.innerHTML = g;
   const segs = [...dsvg.querySelectorAll('.seg')];
 
-  let R = 0, sel = -1, idleT = null;
+  let R = 0, sel = -1, idleT = null, locking = false;
   // keep every label reading left-to-right, wherever it sits on the ring
   const orient = () => segs.forEach((sg,i) => { const a = mod(i*STEP + R, 360); sg.querySelector('textPath').setAttribute('href', (a > 90 && a < 270) ? `#rp${i}` : `#fp${i}`); });
   const setR = r => { R = r; dial.style.setProperty('--R', r + 'deg'); orient(); };
-  const armIdle = () => { clearTimeout(idleT); idleT = setTimeout(() => hud.classList.remove('focused'), 7000); };
+  const armIdle = () => { clearTimeout(idleT); idleT = setTimeout(() => { if (!locking) hud.classList.remove('focused'); }, 7000); };
   const focusWorld = i => {
     if (i !== sel) {
       sel = i;
@@ -886,6 +937,7 @@ body.at-core .minimap{ opacity:0; pointer-events:none; transform:translate(-50%,
       hud.classList.add('refocus'); void hud.offsetWidth;            // restart the "coming into focus" effect
       fKick.textContent = 'WORLD ' + String(i+1).padStart(2,'0');
       fName.textContent = W[i].title; fLine.textContent = W[i].line;
+      if (PLANET[i]) { fPlanet.src = PLANET[i]; fPlanet.hidden = false; } else { fPlanet.hidden = true; }
       hud.style.setProperty('--wc', W[i].color);
       hud.classList.remove('refocus');
       if (navigator.vibrate) { try { navigator.vibrate(12); } catch(_){} }
@@ -893,7 +945,7 @@ body.at-core .minimap{ opacity:0; pointer-events:none; transform:translate(-50%,
     hud.classList.add('focused'); armIdle();
   };
   const turnTo = i => { const d = mod(-i*STEP - R + 180, 360) - 180; setR(R + d); focusWorld(i); };
-  const engage = () => { if (sel >= 0) go(sel + 1); };
+  const engage = () => { if (sel < 0) return; go(sel + 1); setTimeout(() => closeHud(true), 700); };
   orient();
 
   // drag with detents: the dial hangs on each world, then clicks to the next
@@ -902,7 +954,8 @@ body.at-core .minimap{ opacity:0; pointer-events:none; transform:translate(-50%,
     return { base, shown: base + Math.sign(x) * HALF * Math.pow(Math.abs(x) / HALF, HOLD) }; };
   let drag = null;
   const angleAt = e => { const b = dial.getBoundingClientRect(); return Math.atan2(e.clientY - (b.top + b.height/2), e.clientX - (b.left + b.width/2)) * 180 / Math.PI; };
-  dial.addEventListener('pointerdown', e => { drag = { last: angleAt(e), raw: R, moved: 0, id: e.pointerId, captured:false }; });
+  let swallowClick = false;
+  dial.addEventListener('pointerdown', e => { if (!isOpen()) { openHud(); swallowClick = true; return; } drag = { last: angleAt(e), raw: R, moved: 0, id: e.pointerId, captured:false }; });
   dial.addEventListener('pointermove', e => {
     if (!drag || e.pointerId !== drag.id) return;
     const a = angleAt(e); const d = mod(a - drag.last + 180, 360) - 180; drag.last = a; drag.raw += d; drag.moved += Math.abs(d);
@@ -918,16 +971,83 @@ body.at-core .minimap{ opacity:0; pointer-events:none; transform:translate(-50%,
   };
   dial.addEventListener('pointerup', endDrag); dial.addEventListener('pointercancel', endDrag);
   // tap a segment: first tap brings it into focus, second tap engages
-  dial.addEventListener('click', e => { const sg = e.target.closest('.seg'); if (!sg) return; const i = +sg.dataset.seg; (i === sel && hud.classList.contains('focused')) ? engage() : turnTo(i); });
+  dial.addEventListener('click', e => { if (swallowClick) { swallowClick = false; return; } const sg = e.target.closest('.seg'); if (!sg) return; const i = +sg.dataset.seg; (i === sel && hud.classList.contains('focused')) ? engage() : turnTo(i); });
   dsvg.addEventListener('keydown', e => { const sg = e.target.closest('.seg'); if (sg && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); const i = +sg.dataset.seg; i === sel ? engage() : turnTo(i); } });
   document.getElementById('engage').addEventListener('click', engage);
   hud.addEventListener('pointermove', () => { if (hud.classList.contains('focused')) armIdle(); });
   // coming back from a world: that world is in focus
-  const syncDial = () => { if (current > 0) turnTo(current - 1); document.body.classList.toggle('at-core', current === 0); };
+  const silentSet = i => { const d = mod(-i*STEP - R + 180, 360) - 180; setR(R + d); sel = i; segs.forEach((sg,k) => sg.classList.toggle('on', k === i)); };
+  const syncDial = () => { if (current > 0) silentSet(current - 1); document.body.classList.toggle('at-core', current === 0); if (current === 0) startOrbit(); };
+
+  // ---- orbit mode / control mode ----
+  const hint = document.getElementById('roHint');
+  const isOpen = () => hud.classList.contains('open');
+  let recedeTarget = 0;
+  function openHud(){ if (isOpen()) return; hud.classList.add('open'); hud.dataset.mode = 'controls'; recedeTarget = 1; hint.textContent = 'TURN THE DIAL TO GO DEEPER'; }
+  function closeHud(quiet){ hud.classList.remove('open', 'focused'); hud.dataset.mode = 'orbit'; recedeTarget = 0; hint.textContent = 'TAP A PLANET · OR OPEN THE CONTROLS';
+    if (!quiet) document.getElementById('hudOpen').focus({ preventScroll:true }); }
+  document.getElementById('hudOpen').addEventListener('click', () => { openHud(); if (sel < 0) turnTo(0); });
+  document.getElementById('hudClose').addEventListener('click', () => closeHud());
+
+  // ---- the solar system: planets burst out of the black hole, then orbit ----
+  const ORBS = [ { w:0, src:'planet-reel.webp', label:'THE REEL' }, { w:1, src:'planet-films.webp', label:'FILMS' },
+    { w:3, src:'planet-s884.webp', label:'SPECIMEN 884', wide:true }, { w:4, src:'planet-books.webp', label:'BOOKS' },
+    { w:5, src:'planet-music.webp', label:'MUSIC' }, { w:7, src:'station.webp', label:'MISSION CONTROL' } ];
+  hud.insertAdjacentHTML('beforeend', ORBS.map((o,k) => `<button class="orb${o.wide?' wide':''}" type="button" data-orb="${k}" aria-label="Go to ${W[o.w].title}"><img src="${o.src}" alt=""><span class="orb-label">${o.label}</span></button>`).join(''));
+  const orbEls = [...hud.querySelectorAll('.orb')];
+  const TAU = Math.PI * 2, LAP = 75, TILT = -10 * Math.PI / 180, cosT = Math.cos(TILT), sinT = Math.sin(TILT);
+  let orbitA = 0, paused = false, recede = 0, last = 0, raf = null; const born = performance.now();
+  const easeOutBack = x => { const c = 1.4; return 1 + (c + 1) * Math.pow(x - 1, 3) + c * Math.pow(x - 1, 2); };
+  function frame(now){
+    const dt = last ? Math.min((now - last) / 1000, .05) : 0; last = now;
+    if (!paused) orbitA += dt * TAU / LAP;
+    recede += (recedeTarget - recede) * Math.min(1, dt * 6);
+    const Dp = hud.clientWidth, Rx = Math.min(innerWidth * .46, Dp * 1.22), Ry = Rx * .34;
+    orbEls.forEach((el, k) => {
+      const b = reduced ? 1 : Math.min(1, Math.max(0, (now - born - 1100 - k * 120) / 1400));
+      const e = reduced ? 1 : easeOutBack(b);
+      const th = orbitA + k * TAU / orbEls.length + (1 - b) * 2.6;           // spiral out of the core
+      const r = e * (1 + recede * .32);
+      const x0 = Rx * r * Math.cos(th), y0 = Ry * r * Math.sin(th);
+      const x = x0 * cosT - y0 * sinT, y = x0 * sinT + y0 * cosT;
+      const depth = Math.sin(th);                                            // -1 behind the core, +1 in front
+      const sc = (.6 + .4 * (depth + 1) / 2) * (1 - .45 * recede) * (.15 + .85 * Math.min(1, b * 1.4));
+      const op = (.5 + .5 * (depth + 1) / 2) * (1 - .72 * recede) * Math.min(1, b * 3);
+      el.style.transform = `translate(${x.toFixed(1)}px,${y.toFixed(1)}px) scale(${sc.toFixed(3)})`;
+      el.style.opacity = op.toFixed(3);
+      el.style.zIndex = (depth > 0 && recede < .5) ? 6 : 0;
+    });
+    raf = current === 0 && !document.hidden ? requestAnimationFrame(frame) : null; if (!raf) last = 0;
+  }
+  function startOrbit(){ if (!raf) raf = requestAnimationFrame(frame); }
+  document.addEventListener('visibilitychange', () => { if (!document.hidden && current === 0) startOrbit(); });
+  startOrbit();
+  orbEls.forEach(el => { el.addEventListener('pointerenter', () => { if (!locking) paused = true; }); el.addEventListener('pointerleave', () => { if (!locking) paused = false; }); });
+
+  // ---- tap a planet: lock coordinates, ENGAGE fires itself, jump ----
+  let lockTimers = [];
+  const clearLock = () => { lockTimers.forEach(clearTimeout); lockTimers = []; orbEls.forEach(o => o.classList.remove('target')); document.getElementById('engage').classList.remove('fire'); locking = false; paused = false; };
+  const later = (fn, ms) => lockTimers.push(setTimeout(fn, ms));
+  hud.addEventListener('click', e => {
+    const el = e.target.closest('.orb'); if (!el) return;
+    const w = ORBS[+el.dataset.orb].w;
+    if (locking || reduced) { clearLock(); go(w + 1); setTimeout(() => closeHud(true), 700); return; }   // second tap skips the show
+    locking = true; paused = true; el.classList.add('target');
+    later(() => {
+      openHud();
+      const from = sel < 0 ? 0 : sel; let d = mod(w - from + N/2, N) - N/2; const dir = Math.sign(d) || 1; const steps = Math.abs(d);
+      let k = 0; const stepT = 110;
+      const step = () => { if (k < steps) { k++; turnTo(mod(from + dir * k, N)); fKick.textContent = 'LOCKING…'; later(step, stepT); } else { turnTo(w); fKick.textContent = 'LOCKED · WORLD ' + String(w+1).padStart(2,'0'); later(fire, 260); } };
+      if (steps === 0) { turnTo(w); fKick.textContent = 'LOCKED · WORLD ' + String(w+1).padStart(2,'0'); later(fire, 300); } else step();
+    }, 300);
+    const fire = () => { const eng = document.getElementById('engage'); eng.classList.remove('fire'); void eng.offsetWidth; eng.classList.add('fire');
+      if (navigator.vibrate) { try { navigator.vibrate([10, 40, 20]); } catch(_){} }
+      later(() => { go(w + 1); later(() => { clearLock(); closeHud(true); }, 700); }, 380); };
+  });
 
   // active state + parallax starfield
   const s1 = document.getElementById('s1'), s2 = document.getElementById('s2');
-  let ticking = false;
+  let ticking = false, settleT = null;
   track.addEventListener('scroll', () => {
     if (ticking) return; ticking = true;
     requestAnimationFrame(() => {
@@ -935,7 +1055,8 @@ body.at-core .minimap{ opacity:0; pointer-events:none; transform:translate(-50%,
       s1.style.transform = `translate3d(${-x*0.04}px,0,0)`;
       s2.style.transform = `translate3d(${-x*0.10}px,0,0)`;
       const i = Math.round(x / track.clientWidth);
-      if (i !== current) { current = i; syncDial(); }
+      if (i !== current) { current = i; document.body.classList.toggle('at-core', current === 0); if (current === 0) startOrbit();
+        clearTimeout(settleT); settleT = setTimeout(syncDial, 220); }   // only remember the world you land on, not the ones you fly past
       btns.forEach((b,k)=>b.classList.toggle('on', k===current));
       ticking = false;
     });
@@ -952,6 +1073,8 @@ body.at-core .minimap{ opacity:0; pointer-events:none; transform:translate(-50%,
       wheelAcc += e.deltaY;
       if (dialLock || Math.abs(wheelAcc) < 40) return;
       const dir = wheelAcc > 0 ? 1 : -1; wheelAcc = 0; dialLock = true;
+      if (locking) return;
+      openHud();
       turnTo(sel < 0 ? (dir > 0 ? 0 : N-1) : mod(sel + dir, N));
       setTimeout(() => { dialLock = false; wheelAcc = 0; }, 260);
       return;
@@ -969,8 +1092,9 @@ body.at-core .minimap{ opacity:0; pointer-events:none; transform:translate(-50%,
   document.addEventListener('keydown', e => {
     if (document.body.classList.contains('theater-open')) return;
     if (current === 0) {                                           // on the core, arrows turn the dial
-      if (e.key === 'ArrowRight') { e.preventDefault(); turnTo(sel < 0 ? 0 : mod(sel + 1, N)); return; }
-      if (e.key === 'ArrowLeft')  { e.preventDefault(); turnTo(sel < 0 ? N-1 : mod(sel - 1, N)); return; }
+      if (e.key === 'ArrowRight') { e.preventDefault(); openHud(); turnTo(sel < 0 ? 0 : mod(sel + 1, N)); return; }
+      if (e.key === 'ArrowLeft')  { e.preventDefault(); openHud(); turnTo(sel < 0 ? N-1 : mod(sel - 1, N)); return; }
+      if (e.key === 'Escape' && isOpen()) { closeHud(); return; }
       if (e.key === 'Enter' && !e.target.closest('button,a,.seg')) { e.preventDefault(); engage(); return; }
     }
     if (e.key === 'Escape') { go(0); return; }
