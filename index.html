@@ -534,6 +534,12 @@ img{ display:block; max-width:100%; }
 body.theater-open .side-arrow{ opacity:0; pointer-events:none; }
 @media (hover:none), (max-width:700px){ .side-arrow{ display:none; } }
 
+@media (max-width:700px){
+  .scroll-sheet::before{ inset:9% 4% 12%; border-radius:28%; background:radial-gradient(ellipse at center, rgba(241,224,190,.92) 0%, rgba(238,218,180,.86) 65%, rgba(232,210,168,0) 100%); }
+  .scroll-text{ padding-left:calc(var(--rw) * .75 + 22px); padding-right:calc(var(--rw) * .75 + 22px); }
+  .ink{ text-shadow:0 0 5px rgba(241,224,190,1), 0 0 10px rgba(241,224,190,.8); }
+}
+
 /* ---------- mini-map (worlds only; the dial replaces it on the core) ---------- */
 .minimap{ position:fixed; z-index:20; left:50%; bottom:max(16px, env(safe-area-inset-bottom)); transform:translateX(-50%);
   display:flex; gap:2px; padding:5px; background:rgba(0,10,14,.82); border:1px solid rgb(var(--hud-rgb) / .35);
@@ -701,8 +707,7 @@ body.at-core .minimap{ opacity:0; pointer-events:none; transform:translate(-50%,
       <div class="world-head">
         <div class="planet has-img"><img src="planet-books.webp" alt=""></div>
         <div><div class="kicker">World 05</div><h2>Books</h2>
-          <p class="lede">Companion stories, standalone novels and the graphic novel.</p>
-          <span class="draft">COPY: DRAFT · ADD EARLY WORKS</span></div>
+          <p class="lede">Companion stories, standalone novels and the graphic novel.</p></div>
       </div>
       <div>
         <article class="feature">
@@ -758,7 +763,6 @@ body.at-core .minimap{ opacity:0; pointer-events:none; transform:translate(-50%,
           <div class="release"><b>Finny Does The Internet!</b><i>20 tracks · completed</i></div>
         </div>
         <p class="credit">Released with WeGoFar2. Infinity Tha relliK is a WeGoFar2 brand. Music rights held by WeGoFar2 / KO.</p>
-        <span class="draft">CREDIT LINE: CONFIRM WORDING</span>
         <div class="subhead">Watch</div>
         <div class="grid" id="musicVids"></div>
       </div>
@@ -927,7 +931,7 @@ body.at-core .minimap{ opacity:0; pointer-events:none; transform:translate(-50%,
         <div class="t-num" aria-hidden="true">${String(i+1).padStart(2,'0')}</div>
         <div class="t-kicker">BOOK ${WORDS[i].toUpperCase()}</div>
         <div class="t-title">${t}</div>
-        <p class="t-line"><span class="draftmark">LOGLINE · PENDING</span></p>
+        
       </div>
     </li>`).join('');
 
