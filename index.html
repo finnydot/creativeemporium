@@ -1,403 +1,982 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="description" content="Isaac Meyer (Finny): author, musician, and filmmaker. Reel, catalogue, books, music, and resume.">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Isaac Meyer (Finny) | Author, Musician, Filmmaker">
-<meta property="og:description" content="Reel, video catalogue, books, music, and resume.">
+<title>FINNYVERSE · Isaac Meyer</title>
+<meta name="description" content="Isaac Meyer — author, filmmaker, musician. Enter the FINNYVERSE.">
 <meta property="og:image" content="https://finnydot.github.io/creativeemporium/FINNY%20HERO.jpg">
-<meta name="twitter:card" content="summary_large_image">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='40' fill='%23e01b1b'/%3E%3C/svg%3E">
-<title>Isaac Meyer (Finny) | Author, Musician, Filmmaker</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<!--
+  FINNYVERSE TEST SITE v1.1 (built-in theater + The Dead Batch) — rough draft, Oct 13 2026
+  Pure HTML + CSS + a few lines of JS. No libraries, no backend.
+
+  NANO SLOTS (search "NANO:" in this file). Each CSS stand-in is replaced by dropping a
+  .webp into /images and uncommenting the <img> line next to it:
+    blackhole.webp      core black hole + red accretion disk (square, ~300KB)
+    finny.webp          Finny, transparent background (~100KB)
+    finnyverse-banner.webp  FINNYVERSE wordmark, transparent (~80KB)
+    planet-reel.webp    planet-films.webp   planet-s884.webp
+    planet-books.webp   planet-music.webp   station.webp
+  Existing covers/photos load from the live site (absolute URLs).
+-->
 <style>
-:root{--bg:#000;--panel:#0c0c0c;--ink:#fff;--mute:#b4b4b4;--line:#2a2a2a;--red:#e01b1b;
---serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;--sans:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
-*{box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.6 var(--sans);-webkit-font-smoothing:antialiased}
-a{color:inherit}
-a:focus-visible{outline:2px solid var(--red);outline-offset:3px}
-.wrap{max-width:1040px;margin:0 auto;padding:0 clamp(20px,5vw,48px)}
-nav{display:flex;gap:22px;justify-content:flex-end;padding:22px 0;font-size:14px;color:var(--mute)}
-nav a{text-decoration:none}
-nav a:hover{color:var(--ink);text-decoration:underline;text-decoration-color:var(--red);text-decoration-thickness:2px;text-underline-offset:6px}
-.hero{position:relative;padding:clamp(48px,11vw,120px) 0 clamp(56px,9vw,96px);overflow:hidden}
-.hero::before{content:"";position:absolute;right:-10%;top:-8%;width:62%;aspect-ratio:1;border-radius:50%;
-background:radial-gradient(closest-side,rgba(224,27,27,.22),rgba(224,27,27,0) 72%);filter:blur(6px);animation:drift 14s ease-in-out infinite alternate}
-@keyframes drift{to{transform:translate(-6%,7%) scale(1.08)}}
-h1{position:relative;font:400 clamp(40px,min(8vw,15vh),100px)/.95 var(--serif);letter-spacing:-.025em;margin:0 0 18px;animation:rise .9s cubic-bezier(.2,.7,.2,1) both}
-@keyframes rise{from{opacity:0;transform:translateY(18px)}}
-.tag{position:relative;font:400 clamp(17px,2vw,22px)/1.35 var(--serif);color:var(--mute);max-width:26em;margin:0 0 24px;animation:rise .9s .15s cubic-bezier(.2,.7,.2,1) both}
-.tag b{font-weight:400;color:var(--ink)}
-.btns{position:relative;display:flex;flex-wrap:wrap;gap:14px;animation:rise .9s .3s cubic-bezier(.2,.7,.2,1) both}
-.btn{display:inline-block;padding:10px 20px;border-radius:999px;text-decoration:none;font-weight:600;font-size:14px}
-.btn.p{background:var(--red);color:#fff}
-.btn.s{border:1px solid var(--line)}
-.btn:hover{filter:brightness(1.1)}
-section{padding:clamp(48px,8vw,88px) 0;border-top:1px solid var(--line)}
-h2{font:400 clamp(26px,3.4vw,36px)/1.1 var(--serif);margin:0 0 10px}
-.lede{color:var(--mute);max-width:36em;margin:0 0 34px}
-
-/* Hard 16:9 Reel Styling */
-.reel{width:100%;max-width:min(100%,calc(60vh * 16 / 9));aspect-ratio:16/9;background:var(--panel);border:1px solid var(--line);border-radius:14px;display:grid;place-items:center;padding:0;overflow:hidden;margin:0 auto}
-.reel iframe{width:100%;height:100%;border:0;display:block}
-
-.disc{display:grid;grid-template-columns:minmax(150px,240px) 1fr;gap:clamp(20px,5vw,64px);padding:34px 0;border-top:1px solid var(--line)}
-.disc:first-of-type{border-top:0;padding-top:0}
-.disc h3{font:400 22px/1.2 var(--serif);margin:0;color:var(--ink)}.disc h3 em{font-style:normal;text-decoration:underline;text-decoration-color:var(--red);text-decoration-thickness:2px;text-underline-offset:8px}
-.disc h3 small{display:block;font:400 14px/1.5 var(--sans);color:var(--mute);margin-top:6px}
-.item{margin:0 0 14px}
-.item:last-child{margin:0}
-.item h4{margin:0 0 2px;font:600 15px/1.35 var(--sans)}
-.item h4 span{font-weight:400;color:var(--mute);font-size:12.5px;margin-left:8px}
-.item p{margin:0;color:#d6d6d6;font-size:14px;max-width:40em}
-.about{display:grid;grid-template-columns:200px 1fr 1fr;gap:clamp(24px,5vw,64px)}
-.about p{margin:0 0 16px;max-width:34em}
-.contact{font:400 clamp(22px,3vw,30px)/1.3 var(--serif)}
-.contact a{text-decoration:none;border-bottom:1px solid var(--red)}
-footer{padding:36px 0 56px;color:var(--mute);font-size:14px;border-top:1px solid var(--line)}
-
-body{overflow:hidden;height:100vh;height:100dvh}
-.lineup{position:relative;display:flex;flex-wrap:wrap;gap:12px;margin-top:30px}
-.chip{display:flex;align-items:center;gap:10px;padding:10px 16px;border:1px solid var(--line);border-radius:12px;text-decoration:none;background:var(--panel);transition:transform .25s,border-color .25s,box-shadow .25s}
-.chip span{font-size:14px}.chip svg{width:22px;height:22px;fill:none;stroke:var(--red);stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;transition:transform .25s}
-.chip:hover,.chip:focus-visible{transform:translateY(-6px);border-color:var(--red);box-shadow:0 12px 26px -12px rgba(224,27,27,.6)}
-.chip:hover svg,.chip:focus-visible svg{transform:translateY(-2px) rotate(-6deg)}
-.chip.l,nav a:nth-child(odd){animation:fromL 1s cubic-bezier(.2,.8,.2,1) backwards}
-.chip.r,nav a:nth-child(even){animation:fromR 1s cubic-bezier(.2,.8,.2,1) backwards}
-.chip:nth-child(1){animation-delay:.35s}.chip:nth-child(2){animation-delay:.5s}.chip:nth-child(3){animation-delay:.65s}.chip:nth-child(4){animation-delay:.8s}
-nav a:nth-child(1){animation-delay:.1s}nav a:nth-child(2){animation-delay:.2s}nav a:nth-child(3){animation-delay:.3s}nav a:nth-child(4){animation-delay:.4s}
-@keyframes fromL{from{opacity:0;transform:translateX(-70vw) rotate(-8deg)}}
-@keyframes fromR{from{opacity:0;transform:translateX(70vw) rotate(8deg)}}
-.item{transition:transform .25s}.item:hover{transform:translateY(-4px)}
-
-nav{position:fixed;top:0;left:0;right:0;z-index:5;padding:20px clamp(20px,5vw,48px);background:linear-gradient(#000 40%,rgba(0,0,0,0))}
-.progress{position:fixed;left:0;bottom:0;width:100%;height:3px;background:#1a1a1a;z-index:5}
-.progress i{display:block;height:100%;width:0;background:var(--red)}
-.track{display:flex;height:100vh;height:100dvh;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;scroll-behavior:smooth;outline:none;scrollbar-width:none}
-.track::-webkit-scrollbar{display:none}
-.panel{flex:0 0 100vw;height:100vh;height:100dvh;scroll-snap-align:start;overflow-y:auto;display:flex;align-items:center;padding:84px 0 48px;border-top:0}
-.hero.panel{overflow:hidden}
-.in{width:100%;max-width:1040px;margin:0 auto;padding:0 clamp(20px,5vw,48px)}
-.panel.disc{display:grid;align-content:start;border:0;padding:100px max(clamp(20px,5vw,48px),calc((100vw - 1040px)/2)) 56px}
-.foot{margin:44px 0 0;color:var(--mute);font-size:14px}
-
-.arrow{position:fixed;top:calc(50% - 22px);z-index:4;width:44px;height:44px;border-radius:50%;border:1px solid var(--line);background:rgba(0,0,0,.65);display:grid;place-items:center;cursor:pointer;padding:0;transition:transform .25s,border-color .25s,box-shadow .25s,opacity .3s}
-.arrow.prev{left:14px}.arrow.next{right:14px}
-.arrow svg{width:22px;height:22px;fill:none;stroke:var(--red);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-.arrow:hover,.arrow:focus-visible{transform:translateY(-5px);border-color:var(--red);box-shadow:0 12px 24px -12px rgba(224,27,27,.65);outline:none}
-.arrow.off{opacity:0;pointer-events:none}
-
-.slot{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;text-align:center;width:100%;aspect-ratio:var(--ar,16/9);border:2px dashed var(--red);background:rgba(224,27,27,.07);border-radius:8px;padding:6px;color:var(--ink);overflow:hidden;font-size:11px;line-height:1.3}
-.slot b{color:var(--red);font-size:11px}.slot span{font-weight:600}.slot small{color:var(--mute);font-size:10px}
-.item.has{display:grid;grid-template-columns:var(--w,150px) 1fr;gap:18px;align-items:start}
-.thumbs{display:grid;gap:8px}
-.hero .in{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,.75fr);column-gap:40px;align-items:center}
-.hero .in>*{grid-column:1}
-.hero .in>.slot{grid-column:2;grid-row:1/span 4;justify-self:end;width:auto;height:min(62vh,520px)}
-.about .slot{max-width:200px}
-.files{margin-top:28px;max-width:340px}
-
-/* Real Photo Styling for Slots */
-.slot img{width:100%;height:100%;object-fit:cover;border-radius:6px;display:block}
-
-/* Catalogue Grid Styling */
-.catalogue-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:18px;margin-top:10px}
-.card{background:var(--panel);border:1px solid var(--line);border-radius:10px;overflow:hidden;display:flex;flex-direction:column;justify-content:space-between;transition:border-color .25s,transform .25s}
-.card:hover{border-color:var(--red);transform:translateY(-2px)}
-.card img{width:100%;aspect-ratio:16/9;object-fit:cover;display:block;background:#111}
-.card-content{padding:14px 16px;display:flex;flex-direction:column;flex-grow:1;justify-content:space-between}
-.card h4{font:600 14px/1.35 var(--sans);margin:0 0 4px;color:var(--ink)}
-.card .meta{font-size:12px;color:var(--mute);margin-bottom:12px}
-.card a{display:inline-block;padding:6px 14px;background:var(--red);color:#fff;text-decoration:none;border-radius:999px;font-size:12px;font-weight:600;align-self:flex-start}
-
-@media(max-width:900px){
-  .hero .in{display:block}
-  .hero .in>.slot{
-    display:flex;
-    width:100%;
-    max-width:320px;
-    height:auto;
-    aspect-ratio:4/5;
-    margin:28px auto 0;
-    justify-self:center;
-    grid-column:1;
-  }
+:root{
+  --black:#000; --ink:#0a0a0c; --white:#f5f5f2; --gray:#9a9aa2; --line:#26262c;
+  --red:#E01B1B; --ember:#ff6a2a; --flare:#ffd6a8;
+  --hud-rgb:255 31 75; --hud:rgb(var(--hud-rgb)); --hud-ink:#16000a; /* interface color — controls only; change --hud-rgb to recolor the whole HUD */
+  --display:'Syne', 'Arial Black', sans-serif;
+  --body:'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --mono:'JetBrains Mono', ui-monospace, Consolas, monospace;
+  --h:100vh;
 }
-@media(max-width:720px){.arrow{display:none}.disc,.about{grid-template-columns:1fr}nav{justify-content:flex-start;flex-wrap:wrap}}
-@media(prefers-reduced-motion:reduce){*{animation:none!important;scroll-behavior:auto}}
-.slot.photo{border:0;background:none;padding:0}
+@supports (height:100dvh){ :root{ --h:100dvh; } }
+*{ box-sizing:border-box; margin:0; padding:0; }
+html,body{ height:100%; background:var(--black); color:var(--white); font-family:var(--body); overflow:hidden; }
+a{ color:inherit; }
+img{ display:block; max-width:100%; }
 
-/* Clean Book Grid CSS */
-.bookgrid{display:grid;grid-template-columns:repeat(6,minmax(0,108px));gap:18px 14px;align-content:start}
-@media(max-width:720px){.bookgrid{grid-template-columns:repeat(3,minmax(0,1fr))}}
-.book-card{display:flex;flex-direction:column;gap:8px;transition:transform .25s}
-.book-card:hover{transform:translateY(-4px)}
-.book-cover{position:relative;aspect-ratio:2/3;border:1px solid var(--line);border-radius:8px;background:var(--panel);overflow:hidden;display:block}
-.book-cover img{width:100%;height:100%;object-fit:cover;display:block}
-.book-info{font-size:12px;line-height:1.35;color:var(--mute)}
-.book-info b{display:block;color:var(--ink);font-weight:600}
+/* ---------- starfield (parallax layers, moved by JS) ---------- */
+.stars{ position:fixed; inset:-10% -50%; pointer-events:none; z-index:0; will-change:transform; }
+.stars.s1{ background-image:
+  radial-gradient(1px 1px at 20px 30px,#fff,transparent),
+  radial-gradient(1px 1px at 140px 90px,#ddd,transparent),
+  radial-gradient(1.5px 1.5px at 260px 180px,#fff,transparent),
+  radial-gradient(1px 1px at 330px 40px,#bbb,transparent),
+  radial-gradient(1px 1px at 90px 230px,#eee,transparent);
+  background-size:380px 280px; opacity:.55; }
+.stars.s2{ background-image:
+  radial-gradient(2px 2px at 60px 120px,#fff,transparent),
+  radial-gradient(1.5px 1.5px at 420px 300px,#ffd9c9,transparent),
+  radial-gradient(2px 2px at 700px 60px,#fff,transparent);
+  background-size:820px 460px; opacity:.7; }
+.nebula{ position:fixed; inset:0; pointer-events:none; z-index:0;
+  background:
+    radial-gradient(60vmax 40vmax at 15% 80%, rgba(224,27,27,.10), transparent 70%),
+    radial-gradient(50vmax 35vmax at 90% 10%, rgba(255,106,42,.07), transparent 70%); }
+
+/* ---------- top bar ---------- */
+.topbar{ position:fixed; top:0; left:0; right:0; z-index:20; display:flex; justify-content:space-between; align-items:center;
+  padding:max(14px, env(safe-area-inset-top)) 18px 10px; pointer-events:none; }
+.topbar > *{ pointer-events:auto; }
+.brand{ font-family:var(--display); font-weight:800; letter-spacing:.18em; font-size:12px; text-decoration:none; opacity:.9; }
+.brand b{ color:var(--red); }
+.quick{ font-family:var(--mono); font-size:11px; letter-spacing:.2em; text-transform:uppercase; text-decoration:none; color:var(--hud);
+  border:1px solid var(--hud); padding:8px 14px; background:rgba(0,10,14,.6);
+  clip-path:polygon(8px 0,100% 0,100% calc(100% - 8px),calc(100% - 8px) 100%,0 100%,0 8px); }
+.quick:hover{ background:var(--hud); color:var(--hud-ink); }
+
+/* ---------- horizontal track ---------- */
+.track{ position:relative; z-index:1; display:flex; height:var(--h); overflow-x:auto; overflow-y:hidden;
+  scroll-snap-type:x mandatory; scroll-behavior:smooth; scrollbar-width:none; overscroll-behavior-x:contain; }
+.track::-webkit-scrollbar{ display:none; }
+.panel{ flex:0 0 100vw; height:100%; scroll-snap-align:start; scroll-snap-stop:always; position:relative;
+  overflow-y:auto; overflow-x:hidden; padding:84px 20px 120px; -webkit-overflow-scrolling:touch; }
+
+/* ---------- CORE: black hole + HUD dial ---------- */
+.core{ display:flex; flex-direction:column; align-items:center; justify-content:center; gap:clamp(6px,1.6vh,18px); padding:54px 0 10px; overflow:hidden; }
+.hud{ --D:min(92vw, 56vh, 620px); --wc:#E01B1B; position:relative; width:var(--D); height:var(--D); flex:0 0 auto; }
+@supports (height:100dvh){ .hud{ --D:min(92vw, 56dvh, 620px); } }
+
+/* black hole: haze + accretion disk are images (they counter-rotate); the event horizon + photon ring are code */
+.bh-wrap{ position:absolute; z-index:3; left:50%; top:50%; width:calc(var(--D) * .66); aspect-ratio:1; margin:calc(var(--D) * -.33);
+  border-radius:50%; touch-action:pan-x pan-y; animation:wormhole 1.6s cubic-bezier(.2,.7,.2,1) both; }
+@keyframes wormhole{ 0%{ transform:scale(2.6); opacity:0; filter:blur(18px);} 60%{ opacity:1; filter:blur(2px);} 100%{ transform:scale(1); filter:blur(0);} }
+.bh-fx{ position:absolute; z-index:1; inset:0; pointer-events:none; animation:wormhole 1.6s cubic-bezier(.2,.7,.2,1) both; }
+.bh-haze, .bh-disk{ position:absolute; left:50%; top:50%; pointer-events:none; user-select:none; -webkit-user-drag:none; max-width:none; }
+.bh-haze{ --s:calc(var(--D) * 1.32); width:var(--s); height:var(--s); margin:calc(var(--s) / -2); opacity:.9; animation:spin 140s linear infinite reverse; }
+.bh-disk{ --s:calc(var(--D) * 1.06); width:var(--s); height:var(--s); margin:calc(var(--s) / -2); animation:spin 48s linear infinite; }
+.horizon{ position:absolute; left:50%; top:50%; --h:calc(var(--D) * .372); width:var(--h); height:var(--h); margin:calc(var(--h) / -2);
+  border-radius:50%; background:#000; overflow:hidden;
+  box-shadow:0 0 0 1.5px rgba(255,236,210,.85), 0 0 14px 2px rgba(255,190,140,.55), 0 0 40px 6px rgba(255,106,42,.25), inset 0 0 24px #000; }
+.horizon::before{ content:""; position:absolute; inset:0; border-radius:50%; opacity:0; transition:opacity .5s;
+  background:radial-gradient(circle at 50% 60%, var(--wc), transparent 70%); }
+.hud.focused .horizon::before{ opacity:.28; }
+.layer{ position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center;
+  padding:0 8%; transition:opacity .45s ease, transform .45s ease, filter .45s ease; }
+/* splash: your name */
+.splash{ animation:fadeUp .8s 1s both; }
+.bh-name{ font-family:var(--display); font-weight:800; line-height:.95; letter-spacing:.06em; font-size:calc(var(--D) * .05);
+  color:var(--white); text-shadow:0 0 18px rgba(255,214,168,.35); }
+.bh-name span{ display:block; color:var(--red); }
+.hud.focused .splash{ opacity:0; transform:scale(1.25); filter:blur(8px); pointer-events:none; }
+/* focus: the selected world surfacing */
+.focus{ opacity:0; transform:scale(.8); filter:blur(10px); pointer-events:none; gap:calc(var(--D) * .012); }
+.hud.focused .focus{ opacity:1; transform:none; filter:none; pointer-events:auto; }
+.hud.refocus .focus{ transition:none; opacity:0; transform:scale(.8); filter:blur(10px); }
+.f-kicker{ font-family:var(--mono); font-size:calc(var(--D) * .019); letter-spacing:.25em; color:var(--hud); opacity:.8; }
+.f-name{ font-family:var(--display); font-weight:800; font-size:calc(var(--D) * .032); line-height:1.05; letter-spacing:.02em; color:var(--white); }
+.f-line{ font-size:calc(var(--D) * .021); line-height:1.35; color:#c9c9cf; max-width:24ch; }
+.engage{ all:unset; cursor:pointer; margin-top:calc(var(--D) * .012); font-family:var(--mono); font-size:calc(var(--D) * .023); letter-spacing:.2em;
+  padding:calc(var(--D) * .014) calc(var(--D) * .032); color:var(--hud-ink); background:var(--hud); box-shadow:0 0 18px rgb(var(--hud-rgb) / .55);
+  clip-path:polygon(8px 0,100% 0,100% calc(100% - 8px),calc(100% - 8px) 100%,0 100%,0 8px); }
+.engage:hover, .engage:focus-visible{ background:#fff; }
+.draftmark{ font-family:var(--mono); font-size:8px; letter-spacing:.2em; color:var(--gray); opacity:.6; }
+
+/* Finny: tumbles out big, then settles smaller into orbit over the disk */
+.finny-orbit{ position:absolute; z-index:4; inset:0; animation:spin 52s linear 2.6s infinite; pointer-events:none; --orbit-r:calc(var(--D) * .3); }
+.finny{ --fs:calc(var(--D) * .24); position:absolute; top:50%; left:50%; width:var(--fs); height:var(--fs); margin:calc(var(--fs) / -2);
+  pointer-events:auto; cursor:pointer; text-decoration:none; animation:tumble 2.4s .6s cubic-bezier(.3,.6,.3,1) both; }
+.finny-spin{ display:block; width:100%; height:100%; animation:spin 17s linear 3s infinite reverse; }
+.finny img{ width:100%; height:100%; object-fit:contain; filter:drop-shadow(0 0 10px rgba(255,106,42,.45)); pointer-events:none; }
+@keyframes tumble{
+  0%  { transform:translate(0,0) scale(.04) rotate(0); opacity:0; }
+  10% { opacity:1; }
+  65% { transform:translate(var(--orbit-r),0) scale(1) rotate(900deg); }
+  100%{ transform:translate(var(--orbit-r),0) scale(.55) rotate(1080deg); opacity:1; }
+}
+
+/* the dial — thick segmented ring on the outskirts */
+.dial{ position:absolute; z-index:2; inset:0; border-radius:50%; touch-action:none; cursor:grab; user-select:none; -webkit-user-select:none;
+  transform:rotate(var(--R)); transition:transform .45s cubic-bezier(.25,1.4,.4,1); animation:hudIn 1s 1.2s both; }
+.dial.dragging{ transition:none; cursor:grabbing; }
+@keyframes hudIn{ from{ opacity:0; scale:.92; } to{ opacity:1; scale:1; } }
+.dial svg{ position:absolute; inset:0; width:100%; height:100%; overflow:visible; }
+.dial .edge{ fill:none; stroke:var(--hud); stroke-width:1.6; opacity:.95; }
+.dial .notch{ stroke:var(--hud); stroke-width:3; opacity:.9; }
+.dial .tick{ stroke:var(--hud); stroke-width:1; opacity:.45; }
+.seg{ cursor:pointer; }
+.seg .band{ fill:none; stroke:rgba(3,10,14,.80); stroke-width:34; transition:stroke .25s; }
+.seg:hover .band{ stroke:rgba(8,34,42,.9); }
+.seg text{ font-family:var(--mono); font-weight:500; font-size:11.5px; letter-spacing:1.4px; fill:var(--hud); dominant-baseline:central; pointer-events:none; transition:fill .25s; }
+.seg.on .band{ stroke:var(--hud); filter:drop-shadow(0 0 8px rgb(var(--hud-rgb) / .8)); }
+.seg.on text{ fill:var(--hud-ink); font-weight:700; }
+.seg, .seg:focus, .dial svg:focus{ outline:none; } .seg:focus-visible:not(.on) .band{ stroke:rgba(255,255,255,.35); }
+.pointer{ position:absolute; z-index:5; left:50%; top:calc(var(--D) * -.03); width:0; height:0; transform:translateX(-50%);
+  border-left:9px solid transparent; border-right:9px solid transparent; border-top:13px solid var(--hud); filter:drop-shadow(0 0 6px var(--hud));
+  animation:hudIn 1s 1.2s both; pointer-events:none; }
+.hud-corner{ position:absolute; width:18px; height:18px; border-color:var(--hud); border-style:solid; opacity:.6; pointer-events:none; animation:hudIn 1s 1.3s both; }
+.hud-corner.tl{ top:-6px; left:-6px; border-width:1px 0 0 1px; } .hud-corner.tr{ top:-6px; right:-6px; border-width:1px 1px 0 0; }
+.hud-corner.bl{ bottom:-6px; left:-6px; border-width:0 0 1px 1px; } .hud-corner.br{ bottom:-6px; right:-6px; border-width:0 1px 1px 0; }
+
+/* FINNYVERSE banner — NANO: replace .banner-text with <img src="finnyverse-banner.webp" alt="FINNYVERSE"> */
+.banner{ display:flex; align-items:center; gap:14px; animation:fadeUp .8s 1.3s both; }
+.banner .logo{ width:min(72vw, 440px, 52vh); height:auto; display:block; }
+.banner::before, .banner::after{ content:""; height:1px; width:clamp(24px, 8vw, 90px); background:linear-gradient(90deg, transparent, var(--red)); }
+.banner::after{ background:linear-gradient(270deg, transparent, var(--red)); }
+.banner-text{ font-family:var(--display); font-weight:800; font-size:clamp(26px, 7.4vw, 60px); letter-spacing:.14em; line-height:1;
+  background:linear-gradient(180deg, #fff 0%, var(--flare) 55%, var(--ember) 100%); -webkit-background-clip:text; background-clip:text; color:transparent;
+  filter:drop-shadow(0 0 14px rgba(224,27,27,.45)); }
+.ro-hint{ font-family:var(--mono); color:var(--hud); font-size:10px; letter-spacing:.3em; opacity:.55; animation:fadeUp .8s 1.5s both; }
+
+@keyframes fadeUp{ from{ opacity:0; transform:translateY(14px);} to{ opacity:1; transform:none;} }
+@keyframes spin{ to{ transform:rotate(360deg);} }
+
+/* ---------- WORLD panels ---------- */
+.world{ display:grid; grid-template-columns:minmax(0,1fr); gap:28px; align-content:start; max-width:1200px; margin:0 auto; }
+@media (min-width:900px){
+  .panel{ padding:96px 56px 120px; }
+  .world{ grid-template-columns:minmax(260px, 38%) 1fr; align-items:start; gap:56px; }
+  .world-head{ position:sticky; top:0; }
+}
+.world-head{ display:flex; flex-direction:column; align-items:center; text-align:center; gap:18px; }
+@media (max-width:899px){ .world-head{ flex-direction:row; text-align:left; gap:18px; } .world-head .planet{ flex:0 0 auto; } }
+.kicker{ font-size:11px; letter-spacing:.3em; text-transform:uppercase; color:var(--red); font-weight:600; }
+.world h2{ font-family:var(--display); font-weight:800; font-size:clamp(28px, 6vw, 56px); line-height:1; margin-top:6px; }
+.lede{ color:#cfcfd4; font-size:15px; line-height:1.6; max-width:52ch; margin-top:10px; }
+.draft{ display:inline-block; margin-top:10px; font-size:10px; letter-spacing:.2em; color:var(--gray); border:1px dashed #444; padding:3px 8px; border-radius:4px; }
+
+/* planets — CSS stand-ins. NANO: put <img src="planet-xxx.webp" alt=""> inside .planet */
+.planet{ position:relative; width:clamp(96px, 26vw, 300px); aspect-ratio:1; border-radius:50%;
+  background:radial-gradient(circle at 32% 30%, var(--p1), var(--p2) 46%, #050505 78%);
+  box-shadow:0 0 70px -10px var(--p2), inset -18px -18px 40px rgba(0,0,0,.7);
+  animation:float 9s ease-in-out infinite; }
+.planet img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; border-radius:50%; }
+.planet.ringed::after{ content:""; position:absolute; inset:38% -28%; border-radius:50%; border:3px solid rgba(255,214,168,.55); transform:rotate(-18deg); }
+@keyframes float{ 0%,100%{ transform:translateY(0);} 50%{ transform:translateY(-10px);} }
+
+/* reel */
+.video{ position:relative; width:100%; aspect-ratio:16/9; border-radius:12px; overflow:hidden; background:#111; border:1px solid var(--line); }
+.video button{ all:unset; cursor:pointer; position:absolute; inset:0; }
+.video button img{ width:100%; height:100%; object-fit:cover; opacity:.85; transition:opacity .2s; }
+.video button:hover img{ opacity:1; }
+.play{ position:absolute; left:50%; top:50%; width:72px; height:72px; margin:-36px; border-radius:50%; background:var(--red);
+  display:grid; place-items:center; box-shadow:0 0 30px rgba(224,27,27,.7); }
+.play::after{ content:""; margin-left:6px; border-left:20px solid #fff; border-top:12px solid transparent; border-bottom:12px solid transparent; }
+.video iframe{ position:absolute; inset:0; width:100%; height:100%; border:0; }
+.textlink{ display:inline-block; margin-top:12px; font-size:13px; color:var(--flare); }
+
+/* cards */
+.grid{ display:grid; gap:14px; grid-template-columns:repeat(auto-fill, minmax(150px, 1fr)); }
+.grid.books{ grid-template-columns:repeat(auto-fill, minmax(110px, 1fr)); }
+.card{ text-decoration:none; display:block; border-radius:10px; overflow:hidden; background:var(--ink); border:1px solid var(--line);
+  transition:transform .2s, border-color .2s; }
+.card:hover{ transform:translateY(-4px); border-color:var(--red); }
+.card img{ width:100%; aspect-ratio:16/9; object-fit:cover; background:#151518; }
+.books .card img{ aspect-ratio:2/3; }
+.card span{ display:block; padding:9px 10px 11px; font-size:12px; line-height:1.35; }
+.card span em{ display:block; font-style:normal; color:var(--gray); font-size:10px; letter-spacing:.15em; text-transform:uppercase; margin-bottom:3px; }
+.subhead{ font-size:11px; letter-spacing:.3em; text-transform:uppercase; color:var(--gray); margin:26px 0 12px; }
+.subhead:first-child{ margin-top:0; }
+
+/* music */
+.releases{ display:grid; gap:10px; }
+.release{ display:flex; justify-content:space-between; gap:12px; align-items:baseline; padding:14px 16px; border:1px solid var(--line); border-radius:10px; background:var(--ink); }
+.release b{ font-family:var(--display); font-size:17px; }
+.release i{ font-style:normal; color:var(--gray); font-size:12px; white-space:nowrap; }
+.credit{ margin-top:14px; font-size:12px; color:var(--gray); line-height:1.6; }
+
+/* mission control */
+.cols{ display:grid; gap:22px; }
+@media (min-width:700px){ .cols{ grid-template-columns:1fr 1fr; } }
+.box{ border:1px solid var(--line); border-radius:12px; padding:18px; background:rgba(10,10,12,.8); }
+.box h3{ font-size:11px; letter-spacing:.3em; text-transform:uppercase; color:var(--red); margin-bottom:12px; }
+.box p, .box li{ font-size:14px; line-height:1.6; color:#d6d6da; }
+.box ul{ list-style:none; display:grid; gap:10px; }
+.box li b{ color:var(--white); }
+.box li small{ display:block; color:var(--gray); font-size:12px; }
+.cta{ display:flex; flex-wrap:wrap; gap:10px; margin-top:6px; }
+.btn{ display:inline-block; text-decoration:none; font-weight:600; font-size:14px; padding:12px 18px; border-radius:999px; background:var(--red); color:#fff; }
+.btn.ghost{ background:transparent; border:1px solid var(--line); }
+.portrait{ width:84px; height:84px; border-radius:50%; object-fit:cover; border:2px solid var(--red); margin-bottom:12px; }
+
+
+/* ---------- SPECIMEN 884 gallery: every book gets its own plate ---------- */
+.gallery{ padding-left:0; padding-right:0; }
+.saga-hero{ display:flex; flex-direction:column; align-items:center; text-align:center; gap:10px; padding:0 20px 20px; max-width:760px; margin:0 auto; }
+.saga-hero .planet{ margin-bottom:10px; }
+.saga-title{ font-family:var(--display); font-weight:800; font-size:clamp(38px, 10vw, 104px); letter-spacing:.06em; line-height:.95; }
+.scroll-cue{ margin-top:18px; font-family:var(--mono); font-size:10px; letter-spacing:.3em; color:var(--hud); opacity:.6; animation:bob 2s ease-in-out infinite; }
+@keyframes bob{ 50%{ transform:translateY(5px);} }
+.saga{ list-style:none; position:relative; max-width:1100px; margin:40px auto 0; padding:0 20px; }
+.saga::before{ content:""; position:absolute; top:0; bottom:0; left:50%; width:2px; transform:translateX(-50%);
+  background:linear-gradient(180deg, transparent, var(--red) 6%, var(--red) 94%, transparent); opacity:.55; }
+.tome{ position:relative; display:grid; grid-template-columns:1fr; justify-items:center; text-align:center; gap:14px; padding:46px 0;
+  opacity:0; transform:translateY(30px); transition:opacity .7s ease, transform .7s ease; }
+.tome.in{ opacity:1; transform:none; }
+.tome::before{ content:""; position:absolute; top:22px; left:50%; width:12px; height:12px; transform:translateX(-50%) rotate(45deg);
+  background:#000; border:2px solid var(--red); box-shadow:0 0 12px var(--red); }
+.t-num{ font-family:var(--display); font-weight:800; font-size:clamp(70px, 20vw, 170px); line-height:.8; color:transparent;
+  -webkit-text-stroke:1px rgba(255,214,168,.35); letter-spacing:.02em; user-select:none; }
+.t-cover{ position:relative; width:min(64vw, 300px); aspect-ratio:2/3; perspective:1200px; }
+.t-cover .book{ position:absolute; inset:0; border-radius:3px 7px 7px 3px; overflow:hidden; background:linear-gradient(135deg,#1a0606,#000);
+  box-shadow:0 30px 60px -20px rgba(0,0,0,.9), 0 0 70px -18px rgba(224,27,27,.55), 0 0 0 1px rgba(255,255,255,.06);
+  transform:rotateY(-14deg); transform-origin:left center; transition:transform .5s cubic-bezier(.2,.8,.2,1); }
+.t-cover .book::after{ content:""; position:absolute; inset:0; pointer-events:none;
+  background:linear-gradient(90deg, rgba(0,0,0,.55) 0, rgba(255,255,255,.12) 2.5%, rgba(0,0,0,.25) 5%, transparent 9%, transparent 85%, rgba(255,255,255,.06)); }
+.t-cover img{ width:100%; height:100%; object-fit:cover; }
+.tome:hover .book{ transform:rotateY(0deg); }
+.t-text{ max-width:36ch; }
+.t-kicker{ font-family:var(--mono); font-size:11px; letter-spacing:.3em; color:var(--red); }
+.t-title{ font-family:var(--display); font-weight:800; font-size:clamp(22px, 5.4vw, 38px); line-height:1.05; margin-top:8px; }
+.t-line{ margin-top:10px; font-size:14px; line-height:1.6; color:#bfbfc6; }
+.t-line .draftmark{ display:block; margin-top:6px; }
+@media (min-width:900px){
+  .saga-hero{ padding-top:10px; }
+  .tome{ grid-template-columns:1fr 1fr; align-items:center; column-gap:110px; text-align:left; padding:70px 0; }
+  .tome::before{ top:50%; margin-top:-6px; }
+  .tome:nth-child(odd) .t-cover{ grid-column:1; justify-self:end; }
+  .tome:nth-child(odd) .t-text{ grid-column:2; grid-row:1; justify-self:start; }
+  .tome:nth-child(even) .t-cover{ grid-column:2; justify-self:start; }
+  .tome:nth-child(even) .t-text{ grid-column:1; grid-row:1; justify-self:end; text-align:right; }
+  .tome:nth-child(even) .book{ transform:rotateY(14deg); transform-origin:right center; }
+  .tome:nth-child(even):hover .book{ transform:rotateY(0); }
+}
+@media (max-width:899px){
+  .saga::before{ left:22px; transform:none; }
+  .tome{ padding:40px 0 40px 26px; }
+  .tome::before{ left:23px; top:46px; transform:translateX(-50%) rotate(45deg); }
+  .t-cover{ width:min(56vw, 260px); }
+  .t-num{ font-size:clamp(56px, 16vw, 90px); }
+}
+@media (prefers-reduced-motion:reduce){ .tome{ opacity:1; transform:none; } }
+
+
+/* ---------- THE GHOST OF ALEXANDER: recovered codex ---------- */
+.ghost{ background:
+  radial-gradient(120% 70% at 50% 0%, rgba(120,40,10,.22), transparent 60%),
+  radial-gradient(90% 60% at 50% 100%, rgba(224,27,27,.10), transparent 70%),
+  linear-gradient(180deg, #0b0705, #050302); }
+.g-wrap{ max-width:720px; margin:0 auto; padding:6vh 4px 40px; display:flex; flex-direction:column; align-items:center; text-align:center; gap:clamp(28px, 7vh, 64px); }
+.g-wrap .kicker{ font-family:var(--mono); color:var(--ember); }
+.g-open{ font-family:var(--display); font-weight:800; font-size:clamp(30px, 8vw, 72px); line-height:1.02; min-height:38vh; display:flex; align-items:center;
+  color:#f3e6d2; text-shadow:0 0 30px rgba(255,106,42,.35); }
+.g-line{ font-size:clamp(16px, 2.2vw, 20px); line-height:1.7; color:#d9cdbd; max-width:34ch; }
+.g-line b{ color:var(--ember); font-weight:600; }
+.g-big{ font-family:var(--display); font-weight:800; font-size:clamp(26px, 6vw, 52px); line-height:1.1; color:#f3e6d2; }
+.g-title{ font-family:var(--display); font-weight:800; font-size:clamp(30px, 7vw, 64px); line-height:1; letter-spacing:.02em; }
+.g-status{ font-family:var(--mono); font-size:12px; letter-spacing:.3em; text-transform:uppercase; color:var(--ember);
+  border:1px solid rgba(255,106,42,.5); padding:10px 16px; }
+.g-cover{ width:min(66vw, 320px); aspect-ratio:2/3; }
+.g-cover img, .g-cover-stand{ width:100%; height:100%; object-fit:cover; border-radius:4px; box-shadow:0 30px 70px -20px #000, 0 0 80px -20px rgba(255,106,42,.6); }
+.g-cover-stand{ display:flex; flex-direction:column; justify-content:center; align-items:center; gap:12px;
+  background:radial-gradient(circle at 50% 40%, #3a1c0c, #0d0604 70%); border:1px dashed rgba(255,214,168,.25); }
+.g-cover-stand span{ font-family:var(--display); font-weight:800; font-size:clamp(18px,4.6vw,26px); line-height:1.1; color:#e9d6bb; }
+.g-cover-stand small{ font-family:var(--mono); font-size:9px; letter-spacing:.3em; color:var(--gray); }
+/* the scan: each line is read off the papyrus as it comes into view */
+.g-scan{ opacity:.12; filter:blur(3px);
+  -webkit-mask-image:linear-gradient(90deg, #000 40%, rgba(0,0,0,.15) 55%, rgba(0,0,0,.15)); mask-image:linear-gradient(90deg, #000 40%, rgba(0,0,0,.15) 55%, rgba(0,0,0,.15));
+  -webkit-mask-size:260% 100%; mask-size:260% 100%; -webkit-mask-position:100% 0; mask-position:100% 0;
+  transition:opacity .6s ease, filter 1s ease, -webkit-mask-position 1.6s cubic-bezier(.3,.6,.3,1), mask-position 1.6s cubic-bezier(.3,.6,.3,1); }
+.g-scan.in{ opacity:1; filter:none; -webkit-mask-position:0 0; mask-position:0 0; }
+@media (prefers-reduced-motion:reduce){ .g-scan{ opacity:1; filter:none; -webkit-mask:none; mask:none; } }
+
+/* SPECIMEN 884 synopsis */
+.saga-tag{ font-family:var(--display); font-weight:800; font-size:clamp(18px, 3.4vw, 28px); line-height:1.25; max-width:30ch; margin-top:6px; }
+.saga-syn{ max-width:60ch; margin-top:14px; display:grid; gap:12px; font-size:15px; line-height:1.7; color:#cfcfd4; }
+.saga-q{ font-family:var(--display); font-weight:800; font-size:clamp(18px, 3vw, 24px); line-height:1.35; color:var(--white); margin-top:4px; }
+
+/* featured book */
+.feature{ display:grid; gap:22px; align-items:center; justify-items:center; text-align:center; padding:8px 0 10px; }
+.feature + .feature{ margin-top:44px; padding-top:44px; border-top:1px solid var(--line); }
+.feature .t-cover{ width:min(56vw, 260px); }
+.f-body{ max-width:52ch; display:grid; gap:12px; font-size:15px; line-height:1.7; color:#cfcfd4; }
+.f-body .t-title{ margin-top:0; }
+.f-tag{ font-family:var(--display); font-weight:800; font-size:clamp(17px, 2.6vw, 22px); line-height:1.35; color:var(--white); }
+@media (min-width:700px){ .feature{ grid-template-columns:auto 1fr; text-align:left; justify-items:start; gap:40px; }
+  .feature:nth-of-type(even){ grid-template-columns:1fr auto; }
+  .feature:nth-of-type(even) .t-cover{ grid-column:2; }
+  .feature:nth-of-type(even) .f-body{ grid-column:1; grid-row:1; text-align:left; justify-self:end; }
+  .feature:nth-of-type(even) .book{ transform:rotateY(14deg); transform-origin:right center; } }
+
+
+/* ---------- FINNYSCRIPT: concept showcase (no machinery shown) ---------- */
+.fs{ padding-left:0; padding-right:0; }
+.fs-open{ min-height:calc(var(--h) - 160px); display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; gap:14px; padding:0 22px; }
+.fs-head{ font-family:var(--display); font-weight:800; font-size:clamp(36px, 9.5vw, 92px); line-height:.98; letter-spacing:.01em; }
+.fs-head span{ color:var(--red); }
+.fs-sub{ max-width:34ch; font-size:clamp(16px, 2.2vw, 20px); line-height:1.55; color:#d4d4d9; }
+.fs-journey{ position:relative; max-width:1180px; margin:0 auto; padding:0 20px; }
+.fs-stage{ position:sticky; top:56px; z-index:2; height:34vh; display:flex; align-items:center; justify-content:center;
+  margin:0 -20px; padding:0 20px; background:linear-gradient(180deg, rgba(0,0,0,.92) 0%, rgba(0,0,0,.92) 78%, rgba(0,0,0,0) 100%); }
+.fs-svg{ width:100%; max-width:640px; height:100%; overflow:visible; }
+.fs-beats{ position:relative; z-index:1; }
+.fs-beat{ min-height:62vh; padding-top:8vh; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; gap:8px;
+  opacity:.25; transition:opacity .5s; }
+.fs-beat.on{ opacity:1; }
+.fs-n{ font-family:var(--mono); font-size:11px; letter-spacing:.3em; color:var(--red); }
+.fs-beat h3{ font-family:var(--display); font-weight:800; font-size:clamp(28px, 6vw, 52px); line-height:1.05; }
+.fs-beat p{ font-size:clamp(16px, 2vw, 19px); color:#cfcfd4; max-width:30ch; line-height:1.5; }
+@media (min-width:900px){
+  .fs-journey{ display:grid; grid-template-columns:1.15fr 1fr; gap:40px; }
+  .fs-stage{ top:15vh; height:70vh; background:none; margin:0; padding:0; }
+  .fs-beat{ padding-top:0; }
+  .fs-beat{ min-height:80vh; align-items:flex-start; text-align:left; }
+}
+.fs-close{ display:flex; flex-direction:column; align-items:center; text-align:center; gap:22px; padding:12vh 22px 6vh; }
+.fs-status{ font-family:var(--mono); font-size:12px; letter-spacing:.18em; text-transform:uppercase; color:var(--gray); max-width:44ch; line-height:1.8; }
+.fs-cta{ font-family:var(--mono); font-size:13px; letter-spacing:.24em; text-transform:uppercase; text-decoration:none; color:var(--hud-ink); background:var(--hud);
+  padding:14px 26px; clip-path:polygon(10px 0,100% 0,100% calc(100% - 10px),calc(100% - 10px) 100%,0 100%,0 10px); box-shadow:0 0 22px rgb(var(--hud-rgb) / .5); }
+.fs-cta:hover{ background:#fff; }
+/* the stage */
+.w-fill{ fill:url(#gWorld); }
+.w-edge{ fill:none; stroke:#fff; stroke-width:1.5; opacity:.55; transition:opacity .6s, stroke-width .6s; }
+.w-tex{ opacity:.14; transition:opacity .6s; }
+.w-ring{ fill:none; stroke:#fff; stroke-width:1.2; }
+.fs-world{ transition:filter .6s; }
+.fs-stage[data-step="1"] .w1 .w-edge, .fs-stage[data-step="2"] .w2 .w-edge, .fs-stage[data-step="3"] .w3 .w-edge{ opacity:1; stroke-width:2.2; }
+.fs-stage[data-step="1"] .w1 .w-tex, .fs-stage[data-step="2"] .w2 .w-tex, .fs-stage[data-step="3"] .w3 .w-tex{ opacity:.32; }
+.fs-stage[data-step="1"] .w1, .fs-stage[data-step="2"] .w2, .fs-stage[data-step="3"] .w3{ filter:drop-shadow(0 0 12px rgba(255,255,255,.35)); }
+.fs-thread{ fill:none; stroke:var(--red); stroke-width:3; stroke-linecap:round; filter:drop-shadow(0 0 6px rgba(224,27,27,.9)); }
+.obj-core{ fill:#fff; }
+.obj-halo{ fill:none; stroke:var(--ember); stroke-width:1.5; opacity:.7; transform-box:fill-box; transform-origin:center; animation:halo 2.2s ease-out infinite; }
+@keyframes halo{ from{ transform:scale(.6); opacity:.9; } to{ transform:scale(1.8); opacity:0; } }
+.gate-ring{ fill:none; stroke:#fff; stroke-width:2; opacity:.5; transition:opacity .3s, stroke-width .3s; }
+.gate-label{ font-family:var(--mono); font-size:11px; letter-spacing:3px; fill:#fff; text-anchor:middle; opacity:.5; transition:opacity .3s; }
+.fs-gate.pass .gate-ring{ opacity:1; stroke-width:3.5; filter:drop-shadow(0 0 10px #fff); }
+.fs-gate.pass .gate-label, .fs-stage[data-step="3"] .gate-label{ opacity:1; }
+@media (prefers-reduced-motion:reduce){ .fs-beat{ opacity:1; } }
+
+
+/* ---------- built-in theater ---------- */
+.theater{ position:fixed; inset:0; z-index:60; display:grid; place-items:center; padding:16px;
+  background:rgba(0,0,0,.92); -webkit-backdrop-filter:blur(6px); backdrop-filter:blur(6px); opacity:0; transition:opacity .25s; }
+.theater.show{ opacity:1; }
+.theater[hidden]{ display:none; }
+.th-frame{ width:min(100%, calc((var(--h) - 120px) * 16 / 9), 1200px); transform:scale(.96); transition:transform .25s; }
+.theater.show .th-frame{ transform:none; }
+.th-bar{ display:flex; justify-content:space-between; align-items:center; gap:12px; padding:0 0 10px; font-family:var(--mono); }
+.th-title{ font-size:12px; letter-spacing:.24em; text-transform:uppercase; color:var(--white); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.th-close{ all:unset; cursor:pointer; flex:0 0 auto; font-family:var(--mono); font-size:11px; letter-spacing:.24em; color:var(--hud); border:1px solid var(--hud);
+  padding:9px 14px; clip-path:polygon(8px 0,100% 0,100% calc(100% - 8px),calc(100% - 8px) 100%,0 100%,0 8px); }
+.th-close:hover, .th-close:focus-visible{ background:var(--hud); color:var(--hud-ink); }
+.th-video{ position:relative; aspect-ratio:16/9; background:#000; border:1px solid rgb(var(--hud-rgb) / .6); box-shadow:0 0 50px rgb(var(--hud-rgb) / .25); }
+.th-video iframe{ position:absolute; inset:0; width:100%; height:100%; border:0; }
+.card[data-yt]{ position:relative; }
+.card[data-yt]::after{ content:""; position:absolute; left:50%; top:calc(50% - 18px); width:42px; height:42px; margin:-21px; border-radius:50%;
+  background:rgb(var(--hud-rgb) / .9) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M9 6l9 6-9 6z' fill='white'/%3E%3C/svg%3E") center/20px no-repeat;
+  opacity:0; transform:scale(.85); transition:opacity .2s, transform .2s; pointer-events:none; }
+.card[data-yt]:hover::after, .card[data-yt]:focus-visible::after{ opacity:1; transform:none; }
+@media (hover:none){ .card[data-yt]::after{ opacity:.9; transform:none; } }
+/* SPECIMEN 884 film feature */
+.film-feature{ all:unset; box-sizing:border-box; cursor:pointer; position:relative; display:block; width:min(100%, 640px); aspect-ratio:16/9; margin-top:26px;
+  border-radius:10px; overflow:hidden; border:1px solid var(--line); background:#111; box-shadow:0 30px 60px -25px #000, 0 0 60px -20px rgba(224,27,27,.5); }
+.film-feature img{ width:100%; height:100%; object-fit:cover; opacity:.8; transition:opacity .25s, transform .6s; }
+.film-feature:hover img{ opacity:1; transform:scale(1.03); }
+.film-feature .play{ background:var(--hud); box-shadow:0 0 30px rgb(var(--hud-rgb) / .7); }
+.ff-cap{ position:absolute; left:0; right:0; bottom:0; padding:28px 16px 14px; text-align:left; font-family:var(--display); font-weight:800; font-size:clamp(18px,3vw,26px);
+  background:linear-gradient(0deg, rgba(0,0,0,.85), transparent); }
+.ff-cap em{ display:block; font-style:normal; font-family:var(--mono); font-weight:500; font-size:10px; letter-spacing:.25em; color:var(--hud); margin-bottom:4px; }
+.film-feature:focus-visible{ outline:2px solid var(--hud); outline-offset:3px; }
+
+/* ---------- mini-map (worlds only; the dial replaces it on the core) ---------- */
+.minimap{ position:fixed; z-index:20; left:50%; bottom:max(16px, env(safe-area-inset-bottom)); transform:translateX(-50%);
+  display:flex; gap:2px; padding:5px; background:rgba(0,10,14,.82); border:1px solid rgb(var(--hud-rgb) / .35);
+  clip-path:polygon(10px 0,100% 0,100% calc(100% - 10px),calc(100% - 10px) 100%,0 100%,0 10px);
+  -webkit-backdrop-filter:blur(8px); backdrop-filter:blur(8px); transition:opacity .3s, transform .3s; }
+body.at-core .minimap{ opacity:0; pointer-events:none; transform:translate(-50%, 20px); }
+.minimap button{ all:unset; cursor:pointer; display:flex; align-items:center; gap:7px; padding:8px 10px;
+  font-family:var(--mono); font-size:10px; letter-spacing:.16em; text-transform:uppercase; color:rgb(var(--hud-rgb) / .6); white-space:nowrap; }
+.minimap button i{ width:6px; height:6px; transform:rotate(45deg); background:rgb(var(--hud-rgb) / .35); flex:0 0 auto; transition:background .2s, box-shadow .2s; }
+.minimap button.on{ color:var(--hud-ink); background:var(--hud); }
+.minimap button.on i{ background:var(--hud-ink); }
+.minimap button:focus-visible{ outline:2px solid #fff; }
+@media (max-width:899px){ .minimap button span{ display:none; } .minimap button.on span{ display:inline; } }
+
+/* ---------- reduced motion ---------- */
+@media (prefers-reduced-motion:reduce){
+  *, *::before, *::after{ animation:none !important; transition:none !important; scroll-behavior:auto !important; }
+  .finny{ transform:translate(var(--orbit-r),0) scale(.55); }
+  .dial{ transition:none !important; }
+}
 </style>
 </head>
 <body>
-<div class="progress"><i></i></div>
-<nav aria-label="Sections"><a href="#reel">Reel</a><a href="#about">About</a><a href="#d-books">Books</a><a href="#d-resume">Resume</a><a href="#d-catalogue">Catalogue</a><a href="#contact">Contact</a></nav>
-<button class="arrow prev off" type="button" aria-label="Previous panel"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
-<button class="arrow next" type="button" aria-label="Next panel"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
-<main class="track" id="track" tabindex="0" aria-label="Portfolio">
 
-<header class="panel hero" id="top"><div class="in">
-<h1>Isaac Meyer</h1>
-<p class="tag">Author, musician, and filmmaker, working as <b>Finny</b>. I build whole worlds, then write them, score them, and put them on screen.</p>
-<div class="btns"><a class="btn p" href="#reel">Watch the reel</a><a class="btn s" href="#d-catalogue">Explore catalogue</a></div>
-<div class="lineup" aria-label="Disciplines"><a class="chip l" href="#d-catalogue"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M8 5v14M16 5v14M3 10h5M3 14h5M16 10h5M16 14h5"/></svg><span>Video Catalogue</span></a><a class="chip r" href="#d-resume"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h13a1 1 0 0 1 1 1v14H6a2 2 0 0 0-2 2V5a1 1 0 0 1 1-1z"/></svg><span>Resume</span></a></div>
-<div class="slot photo" data-slot="hero-still" style="--ar:4/5"><img src="FINNY%20HERO.jpg" alt="Finny hero portrait"></div></div></header>
+<div class="stars s1" id="s1"></div>
+<div class="stars s2" id="s2"></div>
+<div class="nebula"></div>
 
-<section class="panel" id="reel"><div class="in">
-<h2>The reel</h2>
-<p class="lede">A short cut of my film and music video work. It ends with Finny’s Creative Emporium, a 30-second original spec commercial.</p>
-<div class="reel">
-  <iframe width="100%" height="100%" src="https://www.youtube.com/embed/4ZozYCie1jI" title="Finny Reel" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-</div>
-</div></section>
+<header class="topbar">
+  <a class="brand" href="#core" data-go="core">ISAAC MEYER <b>·</b> FINNYVERSE</a>
+  <a class="quick" href="#station" data-go="station">Contact</a>
+</header>
 
-<section class="panel" id="about"><div class="in">
-<h2>About</h2>
-<div class="about">
-<div class="slot photo" data-slot="about-portrait" style="--ar:4/5"><img src="https://finnydot.github.io/creativeemporium/finny1.jpg" alt="Isaac Meyer full-length portrait"></div>
-<div><p>I build stories from the ground up, whether that means mapping out multi-book sci-fi sagas, writing and producing the tracks behind them, or directing the visual worlds that bring them to life. For me, the medium is just a different tool for the same job.</p>
-<p>When I'm creating under the moniker Finny, the workflow is hands-on and obsessive—handling everything from the narrative structure down to the final master.</p></div>
-<div><p>I lean into modern tools across AI video, multi-track audio, and prose to execute ideas quickly and uncompromisingly. If a world is worth building, it's worth seeing all the way through to the final cut.</p></div>
-</div>
-</div></section>
+<main class="track" id="track">
 
-<!-- BOOKS PANEL -->
-<section class="panel disc" id="d-books">
-  <h3><em>Books</em><small>Specimen 884: a nine-book science fiction saga on the planet Asylia that spans over an eon, plus side stories</small></h3>
-  <div class="bookgrid">
-    <div class="book-card"><a class="book-cover" href="#"><img src="https://finnydot.github.io/creativeemporium/Specimen%20884%20-%20Book%201.jpeg" alt="Book 1 cover"></a><div class="book-info"><b>Book 1</b>The Salt, The Spine, and the Re-Engine</div></div>
-    <div class="book-card"><a class="book-cover" href="#"><img src="https://finnydot.github.io/creativeemporium/Specimen%20884%20-%20Book%202.jpeg" alt="Book 2 cover"></a><div class="book-info"><b>Book 2</b>The Re-Engine Corps</div></div>
-    <div class="book-card"><a class="book-cover" href="#"><img src="https://finnydot.github.io/creativeemporium/Specimen%20884%20-%20Book%203.jpeg" alt="Book 3 cover"></a><div class="book-info"><b>Book 3</b>The War of Years</div></div>
-    <div class="book-card"><a class="book-cover" href="#"><img src="https://finnydot.github.io/creativeemporium/the-brink.jpeg" alt="Book 4 cover"></a><div class="book-info"><b>Book 4</b>The Brink</div></div>
-    <div class="book-card"><a class="book-cover" href="#"><img src="https://finnydot.github.io/creativeemporium/the-black-corridors.jpeg" alt="Book 5 cover"></a><div class="book-info"><b>Book 5</b>The Black Corridors</div></div>
-    <div class="book-card"><a class="book-cover" href="#"><img src="https://finnydot.github.io/creativeemporium/the-bloom.jpeg" alt="Book 6 cover"></a><div class="book-info"><b>Book 6</b>The Bloom</div></div>
-    <div class="book-card"><a class="book-cover" href="#"><img src="https://finnydot.github.io/creativeemporium/SPECIMEN_884_BOOK_7_LOCKED.jpg" alt="Book 7 cover"></a><div class="book-info"><b>Book 7</b>C.E. -79</div></div>
-    <div class="book-card"><a class="book-cover" href="#"><img src="https://finnydot.github.io/creativeemporium/SPECIMEN_884_BOOK_8_CE_MINUS_64_LOCKED.jpg" alt="Book 8 cover"></a><div class="book-info"><b>Book 8</b>C.E. -64</div></div>
-    <div class="book-card"><a class="book-cover" href="#"><img src="https://finnydot.github.io/creativeemporium/SPECIMEN_884_BOOK_9_LOCKED.jpg" alt="Book 9 cover"></a><div class="book-info"><b>Book 9</b>C.E. +200</div></div>
-    <div class="book-card"><a class="book-cover" href="#"><img src="https://finnydot.github.io/creativeemporium/The_Last_Thing_We_Keep_Cover.jpg" alt="Side story cover"></a><div class="book-info"><b>Side story</b>The Last Thing We Keep</div></div>
-    <div class="book-card"><a class="book-cover" href="#"><img src="https://finnydot.github.io/creativeemporium/THE%20LAST%20WAR.jpg" alt="Side story cover"></a><div class="book-info"><b>Side story</b>The Last War</div></div>
-    <div class="book-card"><a class="book-cover" href="#"><img src="https://finnydot.github.io/creativeemporium/VAELEN-KHOR.jpg" alt="Graphic novel cover"></a><div class="book-info"><b>Graphic novel</b>Vaelen-Khor</div></div>
-  </div>
-</section>
+  <!-- 0 · CORE -->
+  <section class="panel core" id="core" data-label="Core">
+    <div class="hud" id="hud">
+      <span class="hud-corner tl"></span><span class="hud-corner tr"></span><span class="hud-corner bl"></span><span class="hud-corner br"></span>
+      <div class="bh-fx" aria-hidden="true">
+        <img class="bh-haze" src="haze.webp" alt="">
+        <img class="bh-disk" src="accretion-disk.webp" alt="">
+      </div>
+      <div class="dial" id="dial" style="--R:0deg"><svg id="dialSvg" viewBox="-200 -200 400 400" role="group" aria-label="World selector dial"></svg></div>
+      <div class="pointer"></div>
+      <div class="bh-wrap">
+        <div class="horizon">
+          <div class="layer splash"><div class="bh-name">ISAAC<span>MEYER</span></div></div>
+          <div class="layer focus" aria-live="polite">
+            <div class="f-kicker" id="fKick">WORLD 01</div>
+            <div class="f-name" id="fName">The Reel</div>
+            <div class="f-line" id="fLine"></div>
+            <button class="engage" id="engage" type="button">ENGAGE →</button>
+          </div>
+        </div>
+      </div>
+      <div class="finny-orbit">
+        <a class="finny" href="#music" data-go="music" aria-label="Finny — go to the music">
+          <span class="finny-spin"><img src="finny.webp" alt="Finny"></span>
+        </a>
+      </div>
+    </div>
+    <div class="banner"><img class="logo" src="finnyverse-logo.webp" alt="FINNYVERSE"></div>
+    <div class="ro-hint">TURN THE DIAL TO GO DEEPER</div>
+  </section>
 
-<!-- RESUME PANEL -->
-<section class="panel disc" id="d-resume">
-  <h3><em>Resume</em><small>Professional background &amp; competencies</small></h3>
-  <div>
-    <div class="item">
-      <h4>Core Capabilities</h4>
-      <p>Singer, songwriter, music producer, and recording engineer. Narrative architecture, voice performance, audio editing, client communication, and customer support. CompTIA A+ certified.</p>
-    </div>
-    <div class="item">
-      <h4>Independent Music Production <span>24 Years Experience</span></h4>
-      <p><strong>Independent / We Go Far 2 (Wichita, KS):</strong> Singer, songwriter, producer, and recording engineer with 24 years of self-directed recording experience (signed in 2021). Managed end-to-end studio production, mixing, and mastering, including the <em>Call Me Finny EP</em> (2021) and the <em>Lord Forgive Me EP</em> (February 2026).</p>
-    </div>
-    <div class="item">
-      <h4>eSource <span>2007–Present</span></h4>
-      <p><strong>Orem, UT:</strong> Contract creative and web support for an open-source development group, including audio editing and creative input.</p>
-    </div>
-    <div class="item">
-      <h4>Assistant Manager <span>2013–2015</span></h4>
-      <p><strong>Wendy’s, Kansas City, MO:</strong> Promoted from crew to shift manager within four months. Led shifts, scheduling, and cash handling, and kept customers happy.</p>
-    </div>
-    <div class="item">
-      <h4>Head of Customer Service <span>2012–2013</span></h4>
-      <p><strong>Virpus Networks, Kansas City, MO:</strong> Led customer support, sales, and billing for a hosting company and supported the owner on day-to-day operations.</p>
-    </div>
-    <div class="item">
-      <h4>Cosentry <span>2011–2012</span></h4>
-      <p><strong>Kansas City, MO:</strong> Supported enterprise clients including Hewlett-Packard and Ford while monitoring data-center operations and security.</p>
-    </div>
-    <div class="item">
-      <h4>Earlier customer support <span>2007–2011</span></h4>
-      <p><strong>Server Plus, ISPN, Teleperformance USA, Bluehost.com:</strong> Support by phone, chat, and email across internet service, hardware, and web hosting; trained newer teammates.</p>
-    </div>
-  </div>
-</section>
+  <!-- 1 · REEL -->
+  <section class="panel" id="reel" data-label="Reel">
+    <div class="world">
+      <div class="world-head">
+        <div class="planet" style="--p1:#ffd6a8;--p2:#E01B1B"><!-- NANO: <img src="planet-reel.webp" alt=""> --></div>
+        <div><div class="kicker">World 01</div><h2>The Reel</h2></div>
+      </div>
+      <div>
+        <div class="video" id="reelVideo">
+          <button type="button" data-yt="4ZozYCie1jI" data-title="The Reel" aria-label="Play the reel">
+            <img src="https://img.youtube.com/vi/4ZozYCie1jI/hqdefault.jpg" alt="Reel thumbnail" loading="lazy">
+            <span class="play"></span>
+          </button>
+        </div>
+        <p class="lede">Film and music-video work, ending with <i>Finny's Creative Emporium</i>, a 30-second original spec commercial.</p>
 
-<!-- CATALOGUE PANEL -->
-<section class="panel disc" id="d-catalogue">
-  <h3><em>Catalogue</em><small>Complete finished video log (Newest to Oldest)</small></h3>
-  <div>
-    <div class="catalogue-grid">
-        <div class="card">
-            <img src="https://img.youtube.com/vi/yw80nu0nl90/hqdefault.jpg" alt="Bad Days thumbnail" loading="lazy">
-            <div class="card-content">
-                <div>
-                    <h4>Bad Days</h4>
-                    <div class="meta">Aug 28, 2026 · 3:11</div>
-                </div>
-                <a href="https://youtu.be/yw80nu0nl90" target="_blank">Watch</a>
-            </div>
-        </div>
-        <div class="card">
-            <img src="https://img.youtube.com/vi/GhyD1aCg7tk/hqdefault.jpg" alt="INFINITY THA RELLIK - COME HOME thumbnail" loading="lazy">
-            <div class="card-content">
-                <div>
-                    <h4>INFINITY THA RELLIK - COME HOME</h4>
-                    <div class="meta">Jul 31, 2026 · 3:07</div>
-                </div>
-                <a href="https://youtu.be/GhyD1aCg7tk" target="_blank">Watch</a>
-            </div>
-        </div>
-        <div class="card">
-            <img src="https://img.youtube.com/vi/0gCzHF7JdLo/hqdefault.jpg" alt="INFINITY THA RELLIK - LONG ROAD thumbnail" loading="lazy">
-            <div class="card-content">
-                <div>
-                    <h4>INFINITY THA RELLIK - LONG ROAD</h4>
-                    <div class="meta">Jul 30, 2026 · 2:25</div>
-                </div>
-                <a href="https://youtu.be/0gCzHF7JdLo" target="_blank">Watch</a>
-            </div>
-        </div>
-        <div class="card">
-            <img src="https://img.youtube.com/vi/4pX1mM7I0qU/hqdefault.jpg" alt="The Bloomknot | Short Film thumbnail" loading="lazy">
-            <div class="card-content">
-                <div>
-                    <h4>The Bloomknot | Short Film</h4>
-                    <div class="meta">Jul 26, 2026 · 8:33</div>
-                </div>
-                <a href="https://youtu.be/4pX1mM7I0qU" target="_blank">Watch</a>
-            </div>
-        </div>
-        <div class="card">
-            <img src="https://img.youtube.com/vi/70Trj71-EaA/hqdefault.jpg" alt="1983 — The Finale | Original Trilogy thumbnail" loading="lazy">
-            <div class="card-content">
-                <div>
-                    <h4>1983 — The Finale | Original Trilogy</h4>
-                    <div class="meta">May 25, 2026 · 3:02</div>
-                </div>
-                <a href="https://youtu.be/70Trj71-EaA" target="_blank">Watch</a>
-            </div>
-        </div>
-        <div class="card">
-            <img src="https://img.youtube.com/vi/ghpBKlSoi_w/hqdefault.jpg" alt="1983 — Chapter 2 | Trilogy Finale thumbnail" loading="lazy">
-            <div class="card-content">
-                <div>
-                    <h4>1983 — Chapter 2 | Trilogy Finale</h4>
-                    <div class="meta">May 18, 2026 · 1:26</div>
-                </div>
-                <a href="https://youtu.be/ghpBKlSoi_w" target="_blank">Watch</a>
-            </div>
-        </div>
-        <div class="card">
-            <img src="https://img.youtube.com/vi/LW5qAzvUWm8/hqdefault.jpg" alt="1983 — Chapter 1 | Trilogy Finale thumbnail" loading="lazy">
-            <div class="card-content">
-                <div>
-                    <h4>1983 — Chapter 1 | Trilogy Finale</h4>
-                    <div class="meta">May 17, 2026 · 2:22</div>
-                </div>
-                <a href="https://youtu.be/LW5qAzvUWm8" target="_blank">Watch</a>
-            </div>
-        </div>
-        <div class="card">
-            <img src="https://img.youtube.com/vi/AU04cRJpxVA/hqdefault.jpg" alt="1981: The Weight of the Blade thumbnail" loading="lazy">
-            <div class="card-content">
-                <div>
-                    <h4>1981: The Weight of the Blade</h4>
-                    <div class="meta">May 14, 2026 · 3:10</div>
-                </div>
-                <a href="https://youtu.be/AU04cRJpxVA" target="_blank">Watch</a>
-            </div>
-        </div>
-        <div class="card">
-            <img src="https://img.youtube.com/vi/itDSQ4IPHSc/hqdefault.jpg" alt="1981 - Chapter 2: The Truth Beneath thumbnail" loading="lazy">
-            <div class="card-content">
-                <div>
-                    <h4>1981 - Chapter 2: The Truth Beneath</h4>
-                    <div class="meta">May 11, 2026 · 1:30</div>
-                </div>
-                <a href="https://youtu.be/itDSQ4IPHSc" target="_blank">Watch</a>
-            </div>
-        </div>
-        <div class="card">
-            <img src="https://img.youtube.com/vi/SWEhb16rxsM/hqdefault.jpg" alt="1981: Chapter 1 — Wide Awake thumbnail" loading="lazy">
-            <div class="card-content">
-                <div>
-                    <h4>1981: Chapter 1 — Wide Awake</h4>
-                    <div class="meta">May 10, 2026 · 2:11</div>
-                </div>
-                <a href="https://youtu.be/SWEhb16rxsM" target="_blank">Watch</a>
-            </div>
-        </div>
-        <div class="card">
-            <img src="https://img.youtube.com/vi/Zda1iO5VTdc/hqdefault.jpg" alt="1979 - The Reunion thumbnail" loading="lazy">
-            <div class="card-content">
-                <div>
-                    <h4>1979 - The Reunion</h4>
-                    <div class="meta">May 5, 2026 · 2:17</div>
-                </div>
-                <a href="https://youtu.be/Zda1iO5VTdc" target="_blank">Watch</a>
-            </div>
-        </div>
-        <div class="card">
-            <img src="https://img.youtube.com/vi/k_XYTOcR-vs/hqdefault.jpg" alt="1979: Everything Ends Tomorrow thumbnail" loading="lazy">
-            <div class="card-content">
-                <div>
-                    <h4>1979: Everything Ends Tomorrow</h4>
-                    <div class="meta">May 5, 2026 · 0:38</div>
-                </div>
-                <a href="https://youtu.be/k_XYTOcR-vs" target="_blank">Watch</a>
-            </div>
-        </div>
-        <div class="card">
-            <img src="https://img.youtube.com/vi/nDo8An7YmAk/hqdefault.jpg" alt="1979 | The Fall (Part 1) thumbnail" loading="lazy">
-            <div class="card-content">
-                <div>
-                    <h4>1979 | The Fall (Part 1)</h4>
-                    <div class="meta">May 3, 2026 · 2:17</div>
-                </div>
-                <a href="https://youtu.be/nDo8An7YmAk" target="_blank">Watch</a>
-            </div>
-        </div>
+      </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<section class="panel" id="contact"><div class="in">
-<h2>Let's talk</h2>
-<p class="lede">Available for commercial, voice, and on-camera work.</p>
-<p class="contact"><a href="mailto:isaacesource@gmail.com">isaacesource@gmail.com</a><br><a href="tel:8163286654">816-328-6654</a></p>
-<p class="foot">© Isaac Meyer. Finny's Creative Emporium is an original spec sample.</p></div></section>
+  <!-- 2 · FILMS (catalogue) -->
+  <section class="panel" id="films" data-label="Films">
+    <div class="world">
+      <div class="world-head">
+        <div class="planet" style="--p1:#ff9c6b;--p2:#8a1010"><!-- NANO: <img src="planet-films.webp" alt=""> --></div>
+        <div><div class="kicker">World 02</div><h2>Films</h2><p class="lede">AI-filmed, Finny-directed. The 1979–1983 trilogy, short films and music videos.</p></div>
+      </div>
+      <div>
+        <div class="subhead">Short films</div>
+        <div class="grid" id="filmsShort"></div>
+        <div class="subhead">The trilogy · 1979 → 1983</div>
+        <div class="grid" id="filmsTrilogy"></div>
+        <div class="subhead">Music videos</div>
+        <div class="grid" id="filmsMusic"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3 · THE GHOST OF ALEXANDER -->
+  <section class="panel ghost" id="alexander" data-label="Alexander">
+    <!-- NANO: charred-papyrus texture → set .ghost background-image: url(papyrus.webp) -->
+    <div class="g-wrap">
+      <div class="kicker">World 03 · Recovered Codex</div>
+      <p class="g-open g-scan">Alexander is four miles ahead.</p>
+      <p class="g-line g-scan">Behind him, a young clerk counts grain, copies orders, and learns that a name written on the wrong page can condemn someone—or save them.</p>
+      <p class="g-line g-scan">Around him, lovers hide in the spaces power leaves unwatched. Sealed letters travel after dark. The accounts balance. <b>Something is wrong.</b></p>
+      <p class="g-big g-scan">Alexander never speaks.<br>His empire speaks for him.</p>
+      <div class="g-cover g-scan">
+        <!-- NANO/COVER: <img src="ghost-of-alexander-cover.webp" alt="The Ghost of Alexander — cover"> -->
+        <div class="g-cover-stand"><span>THE GHOST<br>OF ALEXANDER</span><small>COVER SLOT</small></div>
+      </div>
+      <h2 class="g-title g-scan">The Ghost of Alexander</h2>
+      <p class="g-line g-scan">Six charred papyrus rolls preserve what one clerk dared to record—and what he refused to surrender.</p>
+      <p class="g-status g-scan">One finished manuscript. In revision.</p>
+    </div>
+  </section>
+
+  <!-- 4 · SPECIMEN 884 -->
+  <section class="panel gallery" id="s884" data-label="SPECIMEN 884">
+    <div class="saga-hero">
+      <div class="planet ringed" style="--p1:#f1c58a;--p2:#a2361a"><!-- NANO: <img src="planet-s884.webp" alt=""> --></div>
+      <div class="kicker">World 04 · The Saga</div>
+      <h2 class="saga-title">SPECIMEN 884</h2>
+      <p class="saga-tag">One man wakes on an alien world. An eon stands between him and home.</p>
+      <div class="saga-syn">
+        <p>Julian Reyes has lost his wife. Now he has lost Earth.</p>
+        <p>On Asylia, survival means repairing machines he barely understands, trusting strangers with wounds of their own, and discovering why an ancient system has singled him out as Specimen 884.</p>
+        <p>But Julian’s arrival is only the beginning.</p>
+        <p>Across generations, survival becomes civilization. Families inherit the consequences of old sacrifices. Worlds depend on one another. And the people capable of saving millions face a temptation more dangerous than any enemy: believing that the power to save a life grants the right to decide it.</p>
+        <p>Spanning nine books and over an eon, <i>SPECIMEN 884</i> follows engineers, explorers, rulers, and an ancient observer through grief, war, alien frontiers, and a universe that offers no promise of safety.</p>
+        <p>At its heart is a question that grows more urgent with every life saved:</p>
+        <p class="saga-q">When survival demands a choice, who gets to make it—and who gets to say no?</p>
+      </div>
+      <button class="film-feature" type="button" data-yt="hH5eOU9Ca3M" data-title="The Dead Batch" aria-label="Play The Dead Batch">
+        <img src="https://img.youtube.com/vi/hH5eOU9Ca3M/hqdefault.jpg" alt="" loading="lazy">
+        <span class="play"></span>
+        <span class="ff-cap"><em>WATCH · SHORT FILM · 96 SEC</em>The Dead Batch</span>
+      </button>
+      <div class="scroll-cue">SCROLL THE SAGA ↓</div>
+    </div>
+    <ol class="saga" id="s884Books"></ol>
+  </section>
+
+  <!-- 4 · BOOKS -->
+  <section class="panel" id="books" data-label="Books">
+    <div class="world">
+      <div class="world-head">
+        <div class="planet" style="--p1:#e8e2d6;--p2:#5b1a1a"><!-- NANO: <img src="planet-books.webp" alt=""> --></div>
+        <div><div class="kicker">World 05</div><h2>Books</h2>
+          <p class="lede">Companion stories, standalone novels and the graphic novel.</p>
+          <span class="draft">COPY: DRAFT · ADD EARLY WORKS</span></div>
+      </div>
+      <div>
+        <article class="feature">
+          <div class="t-cover"><div class="book"><img src="https://finnydot.github.io/creativeemporium/The_Last_Thing_We_Keep_Cover.jpg" alt="The Last Thing We Keep — cover" loading="lazy"></div></div>
+          <div class="f-body">
+            <div class="t-kicker">A SPECIMEN 884 COMPANION</div>
+            <h3 class="t-title">The Last Thing We Keep</h3>
+            <p class="f-tag">He spent an eon keeping the lives of others. Now he asks someone to understand his own.</p>
+            <p>When Bob makes a request Sam cannot bear to accept, he offers her something no one has ever received: the memories beneath his archives.</p>
+            <p>Together, they enter a history of stolen lives, unexpected kindness, and the moment an ancient observer began to care.</p>
+            <p>An intimate companion to <i>SPECIMEN 884</i>, <i>The Last Thing We Keep</i> asks what we owe the people we love—and what remains when we can no longer hold on.</p>
+          </div>
+        </article>
+        <article class="feature">
+          <div class="t-cover"><div class="book"><img src="https://finnydot.github.io/creativeemporium/THE%20LAST%20WAR.jpg" alt="The Last War — cover" loading="lazy"></div></div>
+          <div class="f-body">
+            <div class="t-kicker">A SPECIMEN 884 COMPANION</div>
+            <h3 class="t-title">The Last War</h3>
+            <p class="f-tag">Earth is dying. Escape cannot carry everyone.</p>
+            <p>Colonel Naomi Sato survives nuclear war underground with her daughter, Hana. As Hana fights to keep patients alive, Naomi helps scattered survivors assemble humanity’s last chance to leave Earth.</p>
+            <p>But the shelters are failing. The fleet has no destination. And some of the people building it will never have a seat.</p>
+            <p>A companion to <i>SPECIMEN 884</i>, <i>The Last War</i> follows a mother and daughter through the collapse of their world—and the impossible choices that stand between those who escape and those left behind.</p>
+          </div>
+        </article>
+        <article class="feature">
+          <div class="t-cover"><div class="book"><img src="https://finnydot.github.io/creativeemporium/VAELEN-KHOR.jpg" alt="Vaelen-Khor — cover" loading="lazy"></div></div>
+          <div class="f-body">
+            <div class="t-kicker">A VISUAL COMPANION · GRAPHIC NOVEL</div>
+            <h3 class="t-title">Vaelen-Khor</h3>
+            <p class="f-tag">A civilization carved into stone. A friendship caught in its fractures.</p>
+            <p>For Ashel and Doruun, Vaelen-Khor is home: familiar passages, ordinary work, and departures that promise a return.</p>
+            <p>Then something in its rhythm goes wrong.</p>
+            <p>Ashel struggles to keep others alive while the path to his friend falls silent. Years pass. New generations inherit an old wound. And the hands that maintain a civilization must find another way to hold what it has lost.</p>
+            <p>A visual companion to <i>SPECIMEN 884</i>, <i>Vaelen-Khor</i> explores friendship, endurance, and the need to leave a trace when the universe offers no answer.</p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5 · MUSIC (Finny's planet) -->
+  <section class="panel" id="music" data-label="Music">
+    <div class="world">
+      <div class="world-head">
+        <div class="planet" style="--p1:#ff5a5a;--p2:#6a0606"><!-- NANO: <img src="planet-music.webp" alt=""> --></div>
+        <div><div class="kicker">World 06 · Finny</div><h2>Music</h2>
+          <p class="lede">Twenty-four years of independent production. Songwriting, recording, mixing, mastering.</p></div>
+      </div>
+      <div>
+        <div class="releases">
+          <div class="release"><b>Call Me Finny EP</b><i>2021</i></div>
+          <div class="release"><b>Lord Forgive Me EP</b><i>Feb 2026</i></div>
+          <div class="release"><b>Finny Does The Internet!</b><i>20 tracks · completed</i></div>
+        </div>
+        <p class="credit">Released with WeGoFar2. Infinity Tha relliK is a WeGoFar2 brand. Music rights held by WeGoFar2 / KO.</p>
+        <span class="draft">CREDIT LINE: CONFIRM WORDING</span>
+        <div class="subhead">Watch</div>
+        <div class="grid" id="musicVids"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7 · FINNYSCRIPT (concept showcase) -->
+  <section class="panel fs" id="finnyscript" data-label="FinnyScript">
+    <div class="fs-open">
+      <div class="kicker">World 07 · Experiment</div>
+      <h2 class="fs-head">New chat.<br>Same project.<br><span>Keep going.</span></h2>
+      <p class="fs-sub">FinnyScript carries your project between AI conversations, with you in charge.</p>
+      <div class="scroll-cue">SCROLL ↓</div>
+    </div>
+    <div class="fs-journey">
+      <div class="fs-stage" data-step="0" aria-hidden="true">
+        <svg viewBox="0 0 600 300" class="fs-svg">
+          <defs>
+            <pattern id="pDots" width="10" height="10" patternUnits="userSpaceOnUse"><circle cx="5" cy="5" r="1.3" fill="#fff"/></pattern>
+            <pattern id="pLines" width="9" height="9" patternUnits="userSpaceOnUse" patternTransform="rotate(35)"><line x1="0" y1="0" x2="0" y2="9" stroke="#fff" stroke-width="1.2"/></pattern>
+            <radialGradient id="gWorld" cx="50%" cy="45%" r="60%"><stop offset="0" stop-color="#fff" stop-opacity=".16"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient>
+            <filter id="fGlow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+            <clipPath id="c1"><circle cx="100" cy="150" r="60"/></clipPath>
+            <clipPath id="c2"><circle cx="300" cy="150" r="60"/></clipPath>
+          </defs>
+          <g class="fs-world w1"><circle cx="100" cy="150" r="60" class="w-fill"/><rect x="40" y="90" width="120" height="120" fill="url(#pDots)" clip-path="url(#c1)" class="w-tex"/><circle cx="100" cy="150" r="60" class="w-edge"/></g>
+          <g class="fs-world w2"><circle cx="300" cy="150" r="60" class="w-fill"/><rect x="240" y="90" width="120" height="120" fill="url(#pLines)" clip-path="url(#c2)" class="w-tex"/><circle cx="300" cy="150" r="60" class="w-edge"/></g>
+          <g class="fs-world w3"><circle cx="500" cy="150" r="60" class="w-fill"/>
+            <g class="w-tex"><circle cx="500" cy="150" r="46" class="w-ring"/><circle cx="500" cy="150" r="32" class="w-ring"/><circle cx="500" cy="150" r="18" class="w-ring"/></g>
+            <circle cx="500" cy="150" r="60" class="w-edge"/></g>
+          <g class="fs-gate"><ellipse cx="410" cy="150" rx="9" ry="38" class="gate-ring"/><text x="410" y="210" class="gate-label">YOU</text></g>
+          <path id="fsThread" class="fs-thread" d="M100,150 C165,92 235,208 300,150 S 440,96 500,150"/>
+          <g class="fs-obj" id="fsObj"><circle r="15" class="obj-halo"/><circle r="7" class="obj-core" filter="url(#fGlow)"/></g>
+        </svg>
+      </div>
+      <div class="fs-beats">
+        <section class="fs-beat" data-step="1"><span class="fs-n">01</span><h3>Keep your progress.</h3><p>Carry forward the decisions that matter.</p></section>
+        <section class="fs-beat" data-step="2"><span class="fs-n">02</span><h3>Change your AI.</h3><p>Bring the project into another conversation.</p></section>
+        <section class="fs-beat" data-step="3"><span class="fs-n">03</span><h3>Stay in charge.</h3><p>You decide what becomes part of the record.</p></section>
+      </div>
+    </div>
+    <div class="fs-close">
+      <p class="fs-status">An early experiment in better conversations between people and AI.</p>
+      <a class="fs-cta" href="#station" data-go="station">Talk to Isaac →</a>
+    </div>
+  </section>
+
+  <!-- 8 · MISSION CONTROL -->
+  <section class="panel" id="station" data-label="Contact">
+    <div class="world">
+      <div class="world-head">
+        <div class="planet" style="--p1:#c9c9cf;--p2:#3a3a44"><!-- NANO: <img src="station.webp" alt=""> --></div>
+        <div><div class="kicker">Mission Control</div><h2>Info &amp; Resume</h2></div>
+      </div>
+      <div class="cols">
+        <div class="box">
+          <img class="portrait" src="https://finnydot.github.io/creativeemporium/finny1.jpg" alt="Isaac Meyer">
+          <h3>About</h3>
+          <p>Isaac Meyer builds stories across books, music and video. Under the name Finny, he handles the work from narrative structure to final master, using AI video, multi-track audio and prose tools.</p>
+          <div class="cta" style="margin-top:16px">
+            <a class="btn" href="mailto:isaacesource@gmail.com">Email</a>
+            <a class="btn ghost" href="tel:+18163286654">Call 816-328-6654</a>
+          </div>
+        </div>
+        <div class="box">
+          <h3>Resume</h3>
+          <ul>
+            <li><b>Independent music production</b><small>Wichita, KS · 24 years · Call Me Finny EP (2021), Lord Forgive Me EP (2026)</small></li>
+            <li><b>eSource</b><small>Orem, UT · 2007–present · Contract creative &amp; web support</small></li>
+            <li><b>Wendy's</b><small>Kansas City, MO · 2013–2015 · Promoted to assistant manager</small></li>
+            <li><b>Virpus Networks</b><small>Kansas City, MO · 2012–2013 · Head of customer service</small></li>
+            <li><b>Cosentry</b><small>Kansas City, MO · 2011–2012 · Enterprise support &amp; data-center monitoring</small></li>
+            <li><b>Earlier support roles</b><small>2007–2011 · Server Plus, ISPN, Teleperformance USA, Bluehost.com</small></li>
+            <li><b>Skills</b><small>Singing, songwriting, production, recording engineering, narrative design, audio editing · CompTIA A+</small></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
 
 </main>
+
+<nav class="minimap" id="minimap" aria-label="FINNYVERSE map"></nav>
+
+<div class="theater" id="theater" hidden role="dialog" aria-modal="true" aria-labelledby="thTitle">
+  <div class="th-frame">
+    <div class="th-bar"><span class="th-title" id="thTitle"></span><button class="th-close" id="thClose" type="button" aria-label="Close video">CLOSE ✕</button></div>
+    <div class="th-video" id="thVideo"></div>
+  </div>
+</div>
+
 <script>
-(function(){
-var MODE='step'; /* 'step' = one panel per wheel notch, 'glide' = continuous sideways scroll */
-var t=document.getElementById('track'),b=document.querySelector('.progress i'),lock=false;
-if(MODE==='glide'){t.style.scrollSnapType='none';t.style.scrollBehavior='auto'}
-function bar(){var m=t.scrollWidth-t.clientWidth;b.style.width=(m?t.scrollLeft/m*100:0)+'%'}
-t.addEventListener('scroll',bar,{passive:true});bar();
-t.addEventListener('wheel',function(e){
-if(Math.abs(e.deltaX)>Math.abs(e.deltaY))return;
-var p=e.target.closest('.panel');
-if(p&&getComputedStyle(p).overflowY==='auto'&&p.scrollHeight>p.clientHeight+1){
-var top=p.scrollTop<=0,end=p.scrollTop+p.clientHeight>=p.scrollHeight-1;
-if((e.deltaY<0&&!top)||(e.deltaY>0&&!end))return}
-e.preventDefault();
-if(MODE==='glide'){t.scrollLeft+=e.deltaY;return}
-if(lock)return;lock=true;
-var i=Math.round(t.scrollLeft/t.clientWidth)+(e.deltaY>0?1:-1);
-i=Math.max(0,Math.min(i,Math.round((t.scrollWidth-t.clientWidth)/t.clientWidth)));
-t.scrollTo({left:i*t.clientWidth,behavior:'smooth'});
-setTimeout(function(){lock=false},600)},{passive:false});
-var pv=document.querySelector('.arrow.prev'),nx=document.querySelector('.arrow.next');
-function edge(){var m=t.scrollWidth-t.clientWidth;pv.classList.toggle('off',t.scrollLeft<4);nx.classList.toggle('off',t.scrollLeft>m-4)}
-function go(d){var n=Math.round((t.scrollWidth-t.clientWidth)/t.clientWidth);var i=Math.max(0,Math.min(Math.round(t.scrollLeft/t.clientWidth)+d,n));t.scrollTo({left:i*t.clientWidth,behavior:'smooth'})}
-pv.onclick=function(){go(-1)};nx.onclick=function(){go(1)};
-t.addEventListener('scroll',edge,{passive:true});edge();
+(() => {
+  const SITE = 'https://finnydot.github.io/creativeemporium/';
+  const yt = id => ({ href:'https://youtu.be/'+id, thumb:'https://img.youtube.com/vi/'+id+'/hqdefault.jpg' });
+
+  // ---- content (scraped from the live site) ----
+  const shorts  = [['The Bloomknot','Short film','4pX1mM7I0qU']];
+  const trilogy = [
+    ['1979 | The Fall (Part 1)','1979','nDo8An7YmAk'],['1979: Everything Ends Tomorrow','1979','k_XYTOcR-vs'],['1979 — The Reunion','1979','Zda1iO5VTdc'],
+    ['1981: Chapter 1 — Wide Awake','1981','SWEhb16rxsM'],['1981 — Chapter 2: The Truth Beneath','1981','itDSQ4IPHSc'],['1981: The Weight of the Blade','1981','AU04cRJpxVA'],
+    ['1983 — Chapter 1','1983','LW5qAzvUWm8'],['1983 — Chapter 2','1983','ghpBKlSoi_w'],['1983 — The Finale','1983','70Trj71-EaA']];
+  const mvids   = [['Come Home','Infinity Tha relliK','GhyD1aCg7tk'],['Long Road','Infinity Tha relliK','0gCzHF7JdLo']];
+  const filmMvids = [['Bad Days','Music video','yw80nu0nl90'], ...mvids];
+  const s884 = [
+    ['The Salt, The Spine, and the Re-Engine','Book 1','Specimen%20884%20-%20Book%201.jpeg'],
+    ['The Re-Engine Corps','Book 2','Specimen%20884%20-%20Book%202.jpeg'],
+    ['The War of Years','Book 3','Specimen%20884%20-%20Book%203.jpeg'],
+    ['The Brink','Book 4','the-brink.jpeg'],
+    ['The Black Corridors','Book 5','the-black-corridors.jpeg'],
+    ['The Bloom','Book 6','the-bloom.jpeg'],
+    ['C.E. -79','Book 7','SPECIMEN_884_BOOK_7_LOCKED.jpg'],
+    ['C.E. -64','Book 8','SPECIMEN_884_BOOK_8_CE_MINUS_64_LOCKED.jpg'],
+    ['C.E. +200','Book 9','SPECIMEN_884_BOOK_9_LOCKED.jpg']];
+  const others = [
+    ['The Last War','Side story','THE%20LAST%20WAR.jpg'],
+    ['Vaelen-Khor','Graphic novel','VAELEN-KHOR.jpg']];
+
+  const fallback = "this.onerror=null;this.alt='';this.style.background='linear-gradient(135deg,#1a0606,#000)';this.removeAttribute('src')";
+  const videoCard = ([t,tag,id]) => { const v=yt(id);
+    return `<a class="card" href="${v.href}" data-yt="${id}" data-title="${t}"><img src="${v.thumb}" alt="" loading="lazy" onerror="${fallback}"><span><em>${tag}</em>${t}</span></a>`; };
+  const bookCard = ([t,tag,f]) =>
+    `<div class="card"><img src="${SITE+f}" alt="${t} cover" loading="lazy" onerror="${fallback}"><span><em>${tag}</em>${t}</span></div>`;
+  const fill = (id, arr, fn) => { document.getElementById(id).innerHTML = arr.map(fn).join(''); };
+  fill('filmsShort', shorts, videoCard);
+  fill('filmsTrilogy', trilogy, videoCard);
+  fill('filmsMusic', filmMvids, videoCard);
+  fill('musicVids', filmMvids, videoCard);
+  const WORDS = ['One','Two','Three','Four','Five','Six','Seven','Eight','Nine'];
+  document.getElementById('s884Books').innerHTML = s884.map(([t,tag,f],i)=>`
+    <li class="tome">
+      <div class="t-cover"><div class="book"><img src="${SITE+f}" alt="${t} — cover" loading="lazy" onerror="${fallback}"></div></div>
+      <div class="t-text">
+        <div class="t-num" aria-hidden="true">${String(i+1).padStart(2,'0')}</div>
+        <div class="t-kicker">BOOK ${WORDS[i].toUpperCase()}</div>
+        <div class="t-title">${t}</div>
+        <p class="t-line"><span class="draftmark">LOGLINE · PENDING</span></p>
+      </div>
+    </li>`).join('');
+
+  // ---- FinnyScript journey: one object, one unbroken red thread ----
+  (() => {
+    const panel = document.getElementById('finnyscript');
+    const stage = panel.querySelector('.fs-stage'), thread = document.getElementById('fsThread'), obj = document.getElementById('fsObj');
+    const gate = panel.querySelector('.fs-gate'), beats = [...panel.querySelectorAll('.fs-beat')];
+    const L = thread.getTotalLength();
+    // where each step parks the object along the thread (0 = first world, 1 = third world)
+    const lenAtX = x => { let lo = 0, hi = L; for (let k = 0; k < 24; k++) { const m = (lo+hi)/2; (thread.getPointAtLength(m).x < x ? lo = m : hi = m); } return lo; };
+    const STOPS = [0, 0, lenAtX(300) / L, 1], GATE = lenAtX(410) / L;
+    thread.style.strokeDasharray = L; let p = 0, target = 0, raf = null, passed = false;
+    const draw = () => {
+      const pt = thread.getPointAtLength(L * p);
+      obj.setAttribute('transform', `translate(${pt.x.toFixed(1)},${pt.y.toFixed(1)})`);
+      thread.style.strokeDashoffset = (L * (1 - p)).toFixed(1);
+      if (!passed && p >= GATE && target > GATE) { passed = true; gate.classList.add('pass'); setTimeout(() => gate.classList.remove('pass'), 900); }
+      if (p < GATE - .02) passed = false;
+    };
+    const tick = () => { p += (target - p) * 0.06; if (Math.abs(target - p) < .001) { p = target; draw(); raf = null; return; } draw(); raf = requestAnimationFrame(tick); };
+    const setStep = n => { stage.dataset.step = n; beats.forEach(b => b.classList.toggle('on', +b.dataset.step === n));
+      target = STOPS[n] ?? 0; if (matchMedia('(prefers-reduced-motion: reduce)').matches) { p = target; draw(); return; } if (!raf) raf = requestAnimationFrame(tick); };
+    draw();
+    if ('IntersectionObserver' in window) {
+      const io = new IntersectionObserver(es => es.forEach(en => { if (en.isIntersecting) setStep(+en.target.dataset.step); }),
+        { root: panel, rootMargin: matchMedia('(min-width:900px)').matches ? '-45% 0px -45% 0px' : '-62% 0px -30% 0px', threshold: 0 });
+      beats.forEach(b => io.observe(b));
+    } else setStep(3);
+  })();
+
+  // Ghost of Alexander: lines are "scanned" off the papyrus as they come into view
+  const ghost = document.getElementById('alexander');
+  if ('IntersectionObserver' in window) {
+    const gio = new IntersectionObserver(es => es.forEach(en => { if (en.isIntersecting) { en.target.classList.add('in'); gio.unobserve(en.target); } }),
+      { root: ghost, threshold: 0.35 });
+    ghost.querySelectorAll('.g-scan').forEach(el => gio.observe(el));
+  } else { ghost.querySelectorAll('.g-scan').forEach(el => el.classList.add('in')); }
+  // plates rise into view as the saga scrolls
+  const s884Panel = document.getElementById('s884');
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver(es => es.forEach(en => { if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); } }),
+      { root: s884Panel, threshold: 0.2 });
+    s884Panel.querySelectorAll('.tome').forEach(t => io.observe(t));
+  } else { s884Panel.querySelectorAll('.tome').forEach(t => t.classList.add('in')); }
+
+  // ---- built-in theater: every video plays here, nobody is sent off-site ----
+  const theater = document.getElementById('theater'), thVideo = document.getElementById('thVideo'),
+        thTitle = document.getElementById('thTitle'), thClose = document.getElementById('thClose');
+  let lastFocus = null;
+  const openVideo = (id, title) => {
+    lastFocus = document.activeElement;
+    thVideo.innerHTML = `<iframe src="https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0&modestbranding=1&playsinline=1" title="${title}"
+      allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>`;
+    thTitle.textContent = title; theater.hidden = false; document.body.classList.add('theater-open');
+    requestAnimationFrame(() => theater.classList.add('show')); thClose.focus();
+  };
+  const closeVideo = () => {
+    if (theater.hidden) return;
+    theater.classList.remove('show'); document.body.classList.remove('theater-open');
+    setTimeout(() => { thVideo.innerHTML = ''; theater.hidden = true; }, 250);     // removing the iframe stops playback
+    if (lastFocus) lastFocus.focus({ preventScroll:true });
+  };
+  document.addEventListener('click', e => { const v = e.target.closest('[data-yt]'); if (!v) return; e.preventDefault(); openVideo(v.dataset.yt, v.dataset.title || ''); });
+  thClose.addEventListener('click', closeVideo);
+  theater.addEventListener('click', e => { if (e.target === theater) closeVideo(); });
+  document.addEventListener('keydown', e => { if (!theater.hidden && e.key === 'Escape') { e.stopImmediatePropagation(); closeVideo(); } }, true);
+
+  // ---- navigation ----
+  const track = document.getElementById('track');
+  const panels = [...track.querySelectorAll('.panel')];
+  const map = document.getElementById('minimap');
+  map.innerHTML = panels.map((p,i)=>`<button type="button" data-go="${i}" aria-label="${p.dataset.label}"><i></i><span>${p.dataset.label}</span></button>`).join('');
+  const btns = [...map.children];
+  let current = 0;
+  const go = i => { i = Math.max(0, Math.min(panels.length-1, i)); track.scrollTo({ left: i * track.clientWidth }); };
+  document.addEventListener('click', e => { const t = e.target.closest('[data-go]'); if(!t) return; e.preventDefault();
+    const v = t.dataset.go; go(isNaN(v) ? panels.findIndex(p => p.id === v) : +v); });
+
+
+  // ---- HUD dial (core screen) ----
+  // Worlds on the dial. Lines are DRAFT copy (ChatGPT to replace).
+  const W = [
+    { name:'THE REEL',        title:'The Reel',        line:'Film and music-video work, two minutes.', color:'#ffb27a' },
+    { name:'FILMS',           title:'Films',           line:'The 1979–1983 trilogy and short films.',  color:'#ff7a45' },
+    { name:'ALEXANDER',       title:'The Ghost of Alexander', line:'Alexander is four miles ahead.',  color:'#c2410c' },
+    { name:'SPECIMEN 884',    title:'SPECIMEN 884',    line:'Nine books. A saga that spans over an eon.', color:'#e0a050' },
+    { name:'BOOKS',           title:'Books',           line:'Companion stories and standalones.',      color:'#d9cfc0' },
+    { name:'MUSIC',           title:'Music',           line:'Finny. Twenty-four years of production.', color:'#ff4a4a' },
+    { name:'FINNYSCRIPT',     title:'FinnyScript',     line:'New chat. Same project.',             color:'#E01B1B' },
+    { name:'MISSION CONTROL', title:'Mission Control', line:'Contact info and resume.',        color:'#FF1F4B' } ];
+  const N = W.length, STEP = 360 / N, HALF = STEP / 2;
+  const hud = document.getElementById('hud'), dial = document.getElementById('dial'), dsvg = document.getElementById('dialSvg');
+  const fKick = document.getElementById('fKick'), fName = document.getElementById('fName'), fLine = document.getElementById('fLine');
+  const mod = (n,m) => ((n % m) + m) % m;
+  const pt = (a, r) => [ (Math.sin(a*Math.PI/180)*r).toFixed(2), (-Math.cos(a*Math.PI/180)*r).toFixed(2) ];
+  const arc = (a0, a1, r, cw) => { const [x0,y0]=pt(cw?a0:a1,r), [x1,y1]=pt(cw?a1:a0,r); return `M${x0},${y0} A${r},${r} 0 0,${cw?1:0} ${x1},${y1}`; };
+
+  // build the ring: thick segments with full names, edges, detent notches
+  const RB = 176, GAP = 2.5;
+  let g = `<defs>${W.map((w,i)=>`<path id="rp${i}" d="${arc(i*STEP-HALF+GAP, i*STEP+HALF-GAP, RB, false)}"/>`).join('')}</defs>`;
+  g += `<circle class="edge" r="${RB+19}"/><circle class="edge" r="${RB-19}"/>`;
+  for (let k = 0; k < 120; k++) { const a = k*3; if (a % STEP === HALF) continue; const [x0,y0]=pt(a,RB+21),[x1,y1]=pt(a,RB+25); g += `<line class="tick" x1="${x0}" y1="${y0}" x2="${x1}" y2="${y1}"/>`; }
+  W.forEach((w,i) => { const b = i*STEP+HALF; const [x0,y0]=pt(b,RB-22),[x1,y1]=pt(b,RB+27); g += `<line class="notch" x1="${x0}" y1="${y0}" x2="${x1}" y2="${y1}"/>`; });
+  W.forEach((w,i) => {
+    g += `<g class="seg" data-seg="${i}" tabindex="0" role="button" aria-label="${w.title}">
+      <path class="band" id="fp${i}" d="${arc(i*STEP-HALF+GAP, i*STEP+HALF-GAP, RB, true)}"/>
+      <text><textPath href="#fp${i}" startOffset="50%" text-anchor="middle">${w.name}</textPath></text></g>`;
+  });
+  dsvg.innerHTML = g;
+  const segs = [...dsvg.querySelectorAll('.seg')];
+
+  let R = 0, sel = -1, idleT = null;
+  // keep every label reading left-to-right, wherever it sits on the ring
+  const orient = () => segs.forEach((sg,i) => { const a = mod(i*STEP + R, 360); sg.querySelector('textPath').setAttribute('href', (a > 90 && a < 270) ? `#rp${i}` : `#fp${i}`); });
+  const setR = r => { R = r; dial.style.setProperty('--R', r + 'deg'); orient(); };
+  const armIdle = () => { clearTimeout(idleT); idleT = setTimeout(() => hud.classList.remove('focused'), 7000); };
+  const focusWorld = i => {
+    if (i !== sel) {
+      sel = i;
+      segs.forEach((sg,k) => sg.classList.toggle('on', k === i));
+      hud.classList.add('refocus'); void hud.offsetWidth;            // restart the "coming into focus" effect
+      fKick.textContent = 'WORLD ' + String(i+1).padStart(2,'0');
+      fName.textContent = W[i].title; fLine.textContent = W[i].line;
+      hud.style.setProperty('--wc', W[i].color);
+      hud.classList.remove('refocus');
+      if (navigator.vibrate) { try { navigator.vibrate(12); } catch(_){} }
+    }
+    hud.classList.add('focused'); armIdle();
+  };
+  const turnTo = i => { const d = mod(-i*STEP - R + 180, 360) - 180; setR(R + d); focusWorld(i); };
+  const engage = () => { if (sel >= 0) go(sel + 1); };
+  orient();
+
+  // drag with detents: the dial hangs on each world, then clicks to the next
+  const HOLD = 2.6;                                                   // higher = stickier detents
+  const detent = raw => { const base = Math.round(raw / STEP) * STEP, x = raw - base;
+    return { base, shown: base + Math.sign(x) * HALF * Math.pow(Math.abs(x) / HALF, HOLD) }; };
+  let drag = null;
+  const angleAt = e => { const b = dial.getBoundingClientRect(); return Math.atan2(e.clientY - (b.top + b.height/2), e.clientX - (b.left + b.width/2)) * 180 / Math.PI; };
+  dial.addEventListener('pointerdown', e => { drag = { last: angleAt(e), raw: R, moved: 0, id: e.pointerId, captured:false }; });
+  dial.addEventListener('pointermove', e => {
+    if (!drag || e.pointerId !== drag.id) return;
+    const a = angleAt(e); const d = mod(a - drag.last + 180, 360) - 180; drag.last = a; drag.raw += d; drag.moved += Math.abs(d);
+    if (drag.moved < 4) return;
+    if (!drag.captured) { dial.setPointerCapture(e.pointerId); drag.captured = true; dial.classList.add('dragging'); }
+    const { base, shown } = detent(drag.raw);
+    setR(shown); focusWorld(mod(Math.round(-base / STEP), N));
+  });
+  const endDrag = () => {
+    if (!drag) return;
+    if (drag.captured) { dial.classList.remove('dragging'); const { base } = detent(drag.raw); setR(base); focusWorld(mod(Math.round(-base / STEP), N)); }
+    drag = null;
+  };
+  dial.addEventListener('pointerup', endDrag); dial.addEventListener('pointercancel', endDrag);
+  // tap a segment: first tap brings it into focus, second tap engages
+  dial.addEventListener('click', e => { const sg = e.target.closest('.seg'); if (!sg) return; const i = +sg.dataset.seg; (i === sel && hud.classList.contains('focused')) ? engage() : turnTo(i); });
+  dsvg.addEventListener('keydown', e => { const sg = e.target.closest('.seg'); if (sg && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); const i = +sg.dataset.seg; i === sel ? engage() : turnTo(i); } });
+  document.getElementById('engage').addEventListener('click', engage);
+  hud.addEventListener('pointermove', () => { if (hud.classList.contains('focused')) armIdle(); });
+  // coming back from a world: that world is in focus
+  const syncDial = () => { if (current > 0) turnTo(current - 1); document.body.classList.toggle('at-core', current === 0); };
+
+  // active state + parallax starfield
+  const s1 = document.getElementById('s1'), s2 = document.getElementById('s2');
+  let ticking = false;
+  track.addEventListener('scroll', () => {
+    if (ticking) return; ticking = true;
+    requestAnimationFrame(() => {
+      const x = track.scrollLeft;
+      s1.style.transform = `translate3d(${-x*0.04}px,0,0)`;
+      s2.style.transform = `translate3d(${-x*0.10}px,0,0)`;
+      const i = Math.round(x / track.clientWidth);
+      if (i !== current) { current = i; syncDial(); }
+      btns.forEach((b,k)=>b.classList.toggle('on', k===current));
+      ticking = false;
+    });
+  }, { passive:true });
+  btns[0].classList.add('on'); document.body.classList.add('at-core');
+
+  // desktop: mouse wheel / arrow keys move one world at a time
+  let lock = false;
+  let wheelAcc = 0, dialLock = false;
+  track.addEventListener('wheel', e => {
+    if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) return;           // trackpad sideways: native
+    if (current === 0) {                                           // core: each notch turns the dial one world
+      e.preventDefault();
+      wheelAcc += e.deltaY;
+      if (dialLock || Math.abs(wheelAcc) < 40) return;
+      const dir = wheelAcc > 0 ? 1 : -1; wheelAcc = 0; dialLock = true;
+      turnTo(sel < 0 ? (dir > 0 ? 0 : N-1) : mod(sel + dir, N));
+      setTimeout(() => { dialLock = false; wheelAcc = 0; }, 260);
+      return;
+    }
+    const panel = e.target.closest('.panel');
+    const canScroll = panel && /(auto|scroll)/.test(getComputedStyle(panel).overflowY);
+    if (canScroll && panel.scrollHeight > panel.clientHeight + 2) {   // let tall worlds scroll vertically first
+      const atTop = panel.scrollTop <= 0, atBottom = panel.scrollTop + panel.clientHeight >= panel.scrollHeight - 2;
+      if ((e.deltaY > 0 && !atBottom) || (e.deltaY < 0 && !atTop)) return;
+    }
+    e.preventDefault();
+    if (lock || Math.abs(e.deltaY) < 12) return;
+    lock = true; go(current + (e.deltaY > 0 ? 1 : -1)); setTimeout(()=>lock=false, 650);
+  }, { passive:false });
+  document.addEventListener('keydown', e => {
+    if (document.body.classList.contains('theater-open')) return;
+    if (current === 0) {                                           // on the core, arrows turn the dial
+      if (e.key === 'ArrowRight') { e.preventDefault(); turnTo(sel < 0 ? 0 : mod(sel + 1, N)); return; }
+      if (e.key === 'ArrowLeft')  { e.preventDefault(); turnTo(sel < 0 ? N-1 : mod(sel - 1, N)); return; }
+      if (e.key === 'Enter' && !e.target.closest('button,a,.seg')) { e.preventDefault(); engage(); return; }
+    }
+    if (e.key === 'Escape') { go(0); return; }
+    if (e.key === 'ArrowRight' || e.key === 'PageDown') { e.preventDefault(); go(current+1); }
+    if (e.key === 'ArrowLeft'  || e.key === 'PageUp')   { e.preventDefault(); go(current-1); }
+  });
+  window.addEventListener('resize', () => track.scrollTo({ left: current * track.clientWidth, behavior:'instant' }));
 })();
 </script>
 </body>
