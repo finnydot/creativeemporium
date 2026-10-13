@@ -10,7 +10,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <!--
-  FINNYVERSE v1.2 (solar system core: orbiting planets, collapsible HUD, lock-on) — rough draft, Oct 13 2026
+  FINNYVERSE v1.3 (targeting laser, findable controls, click-away close) — rough draft, Oct 13 2026
   Pure HTML + CSS + a few lines of JS. No libraries, no backend.
 
   NANO SLOTS (search "NANO:" in this file). Each CSS stand-in is replaced by dropping a
@@ -142,7 +142,14 @@ img{ display:block; max-width:100%; }
 .hud-open-btn, .hud-close{ all:unset; position:absolute; z-index:7; cursor:pointer; font-family:var(--mono); font-size:10px; letter-spacing:.24em; color:var(--hud);
   border:1px solid rgb(var(--hud-rgb) / .8); background:rgba(10,0,4,.75); padding:8px 12px; white-space:nowrap;
   clip-path:polygon(7px 0,100% 0,100% calc(100% - 7px),calc(100% - 7px) 100%,0 100%,0 7px); transition:opacity .35s, background .2s, color .2s; }
-.hud-open-btn{ left:50%; top:calc(50% + var(--D) * .405); transform:translate(-50%,-50%); animation:fadeUp .8s 2.2s both; }
+.hud-open-btn{ left:0; right:0; margin-inline:auto; width:max-content; top:calc(50% + var(--D) * .405 - 20px); font-size:12px; font-weight:500; letter-spacing:.26em;
+  padding:11px 18px; color:var(--hud-ink); background:var(--hud); border-color:var(--hud);
+  animation:fadeUp .8s 2.2s both, beacon 2.4s ease-in-out 3s infinite; }
+@keyframes beacon{ 0%,100%{ box-shadow:0 0 0 0 rgb(var(--hud-rgb) / .0), 0 0 14px rgb(var(--hud-rgb) / .45); }
+  50%{ box-shadow:0 0 0 6px rgb(var(--hud-rgb) / .18), 0 0 26px rgb(var(--hud-rgb) / .85); } }
+.hud-open-btn:hover, .hud-open-btn:focus-visible{ background:#fff !important; color:var(--hud-ink) !important; }
+.hud:not(.open) .horizon{ cursor:pointer; }
+.hud:not(.open) .horizon:hover{ box-shadow:0 0 0 2px rgba(255,236,210,.95), 0 0 20px 4px rgba(255,190,140,.7), 0 0 50px 8px rgb(var(--hud-rgb) / .35), inset 0 0 24px #000; }
 .hud-close{ right:calc(var(--D) * -.02); top:calc(var(--D) * -.02); opacity:0; pointer-events:none; }
 .hud.open .hud-open-btn{ visibility:hidden; pointer-events:none; }
 .hud.open .hud-close{ opacity:1; pointer-events:auto; transition-delay:.25s; }
@@ -153,14 +160,27 @@ img{ display:block; max-width:100%; }
   margin:calc(var(--ps) / -2); cursor:pointer; will-change:transform, opacity; z-index:0; }
 .orb img{ width:100%; height:100%; object-fit:contain; pointer-events:none; user-select:none; -webkit-user-drag:none; }
 .orb.wide img{ transform:scale(1.45); }
-.orb-label{ position:absolute; left:50%; top:100%; transform:translateX(-50%); margin-top:2px; font-family:var(--mono); font-size:9px; letter-spacing:.2em;
-  color:#fff; background:rgba(10,0,4,.75); border:1px solid rgb(var(--hud-rgb) / .6); padding:3px 6px; white-space:nowrap; opacity:0; transition:opacity .2s; pointer-events:none; }
+.orb-label{ position:absolute; left:50%; top:100%; transform:translateX(-50%); margin-top:4px; font-family:var(--mono); font-size:12px; font-weight:500; letter-spacing:.18em;
+  color:#fff; background:rgba(10,0,4,.82); border:1px solid rgb(var(--hud-rgb) / .75); padding:5px 9px; white-space:nowrap; opacity:0; transition:opacity .2s; pointer-events:none; }
 .orb:hover .orb-label, .orb:focus-visible .orb-label, .orb.target .orb-label{ opacity:1; }
-@media (hover:none){ .orb-label{ opacity:.85; font-size:8px; } }
+@media (hover:none){ .orb-label{ opacity:.9; font-size:10.5px; padding:4px 7px; } }
 .hud.open .orb{ pointer-events:none; }
 .hud.open .orb img{ filter:blur(1.5px); transition:filter .5s; }
-.orb img{ transition:filter .5s; }
+.orb img{ transition:filter .3s; }
+.orb.hot img, .orb.target img{ filter:drop-shadow(0 0 12px rgb(var(--hud-rgb) / .75)) drop-shadow(0 0 30px rgba(255,140,80,.35)); }
 .orb:focus-visible{ outline:2px solid var(--hud); outline-offset:4px; border-radius:50%; }
+/* targeting laser: core -> planet */
+.laser{ position:absolute; z-index:5; left:0; top:0; width:100%; height:100%; overflow:visible; pointer-events:none; }
+.laser line{ stroke-linecap:round; }
+.laser .beam{ stroke:var(--hud); stroke-width:3.2; filter:drop-shadow(0 0 5px var(--hud)) drop-shadow(0 0 14px rgb(var(--hud-rgb) / .85));
+  stroke-dasharray:100; stroke-dashoffset:100; transition:stroke-dashoffset .25s cubic-bezier(.3,.7,.2,1), opacity .25s; opacity:0; }
+.laser .pulse{ stroke:#fff; stroke-width:3.6; stroke-dasharray:5 100; stroke-dashoffset:105; opacity:0; }
+.laser.on .beam{ stroke-dashoffset:0; opacity:1; }
+.laser.on .pulse{ opacity:.95; animation:pulse 1.1s linear .25s infinite; }
+@keyframes pulse{ from{ stroke-dashoffset:105; } to{ stroke-dashoffset:0; } }
+.laser .spark{ fill:#fff; opacity:0; transition:opacity .2s .2s; filter:drop-shadow(0 0 6px var(--hud)); }
+.laser.on .spark{ opacity:1; }
+@media (prefers-reduced-motion:reduce){ .laser .beam{ transition:none; } .laser.on .pulse{ animation:none; opacity:0; } }
 /* lock-on bracket */
 .orb::before, .orb::after{ content:""; position:absolute; inset:-14%; pointer-events:none; opacity:0;
   border:2px solid var(--hud); clip-path:polygon(0 0,28% 0,28% 6%,6% 6%,6% 28%,0 28%, 0 72%,6% 72%,6% 94%,28% 94%,28% 100%,0 100%,
@@ -524,7 +544,7 @@ body.at-core .minimap{ opacity:0; pointer-events:none; transform:translate(-50%,
       </div>
     </div>
     <div class="banner"><img class="logo" src="finnyverse-logo.webp" alt="FINNYVERSE"></div>
-    <div class="ro-hint" id="roHint">TAP A PLANET · OR OPEN THE CONTROLS</div>
+    <div class="ro-hint" id="roHint">TAP A PLANET · OR TAP THE CORE</div>
   </section>
 
   <!-- 1 · REEL -->
@@ -984,10 +1004,16 @@ body.at-core .minimap{ opacity:0; pointer-events:none; transform:translate(-50%,
   const isOpen = () => hud.classList.contains('open');
   let recedeTarget = 0;
   function openHud(){ if (isOpen()) return; hud.classList.add('open'); hud.dataset.mode = 'controls'; recedeTarget = 1; hint.textContent = 'TURN THE DIAL TO GO DEEPER'; }
-  function closeHud(quiet){ hud.classList.remove('open', 'focused'); hud.dataset.mode = 'orbit'; recedeTarget = 0; hint.textContent = 'TAP A PLANET · OR OPEN THE CONTROLS';
+  function closeHud(quiet){ hud.classList.remove('open', 'focused'); hud.dataset.mode = 'orbit'; recedeTarget = 0; hint.textContent = 'TAP A PLANET · OR TAP THE CORE';
     if (!quiet) document.getElementById('hudOpen').focus({ preventScroll:true }); }
   document.getElementById('hudOpen').addEventListener('click', () => { openHud(); if (sel < 0) turnTo(0); });
   document.getElementById('hudClose').addEventListener('click', () => closeHud());
+  hud.querySelector('.horizon').addEventListener('click', e => { if (isOpen() || locking) return; e.stopPropagation(); openHud(); if (sel < 0) turnTo(0); });
+  document.getElementById('core').addEventListener('click', e => {
+    if (!isOpen() || locking) return;
+    if (e.target.closest('.dial, .horizon, .hud-close, .hud-open-btn, .orb, .finny, a, button')) return;
+    closeHud(true);
+  });
 
   // ---- the solar system: planets burst out of the black hole, then orbit ----
   const ORBS = [ { w:0, src:'planet-reel.webp', label:'THE REEL' }, { w:1, src:'planet-films.webp', label:'FILMS' },
@@ -995,6 +1021,16 @@ body.at-core .minimap{ opacity:0; pointer-events:none; transform:translate(-50%,
     { w:5, src:'planet-music.webp', label:'MUSIC' }, { w:7, src:'station.webp', label:'MISSION CONTROL' } ];
   hud.insertAdjacentHTML('beforeend', ORBS.map((o,k) => `<button class="orb${o.wide?' wide':''}" type="button" data-orb="${k}" aria-label="Go to ${W[o.w].title}"><img src="${o.src}" alt=""><span class="orb-label">${o.label}</span></button>`).join(''));
   const orbEls = [...hud.querySelectorAll('.orb')];
+  hud.insertAdjacentHTML('beforeend', `<svg class="laser" id="laser" aria-hidden="true"><line class="beam" pathLength="100"/><line class="pulse" pathLength="100"/><circle class="spark" r="4"/></svg>`);
+  const laser = document.getElementById('laser'), beamEls = [...laser.querySelectorAll('line')], spark = laser.querySelector('.spark');
+  const boost = orbEls.map(() => 0); let hot = -1, laserOn = -1;
+  const setLaser = k => { if (laserOn === k) return; laserOn = k; laser.classList.remove('on');
+    if (k >= 0) { placeLaser(); void laser.getBoundingClientRect(); laser.classList.add('on'); } };
+  const pos = orbEls.map(() => ({ x:0, y:0, sc:1 }));
+  function placeLaser(){ const Wd = hud.clientWidth, Hd = hud.clientHeight; laser.setAttribute('viewBox', `${-Wd/2} ${-Hd/2} ${Wd} ${Hd}`); if (laserOn < 0) return; const p = pos[laserOn], d = Math.hypot(p.x, p.y) || 1, ux = p.x / d, uy = p.y / d;
+    const r0 = hud.clientWidth * .19, r1 = Math.max(r0 + 4, d - orbEls[laserOn].offsetWidth * p.sc * .42);
+    beamEls.forEach(l => { l.setAttribute('x1', (ux*r0).toFixed(1)); l.setAttribute('y1', (uy*r0).toFixed(1)); l.setAttribute('x2', (ux*r1).toFixed(1)); l.setAttribute('y2', (uy*r1).toFixed(1)); });
+    spark.setAttribute('cx', (ux*r1).toFixed(1)); spark.setAttribute('cy', (uy*r1).toFixed(1)); }
   const TAU = Math.PI * 2, LAP = 75, TILT = -10 * Math.PI / 180, cosT = Math.cos(TILT), sinT = Math.sin(TILT);
   let orbitA = 0, paused = false, recede = 0, last = 0, raf = null; const born = performance.now();
   const easeOutBack = x => { const c = 1.4; return 1 + (c + 1) * Math.pow(x - 1, 3) + c * Math.pow(x - 1, 2); };
@@ -1011,35 +1047,41 @@ body.at-core .minimap{ opacity:0; pointer-events:none; transform:translate(-50%,
       const x0 = Rx * r * Math.cos(th), y0 = Ry * r * Math.sin(th);
       const x = x0 * cosT - y0 * sinT, y = x0 * sinT + y0 * cosT;
       const depth = Math.sin(th);                                            // -1 behind the core, +1 in front
-      const sc = (.6 + .4 * (depth + 1) / 2) * (1 - .45 * recede) * (.15 + .85 * Math.min(1, b * 1.4));
+      boost[k] += (((k === hot || orbEls[k].classList.contains('target')) ? 1 : 0) - boost[k]) * Math.min(1, dt * 12);
+      const sc = (.6 + .4 * (depth + 1) / 2) * (1 - .45 * recede) * (.15 + .85 * Math.min(1, b * 1.4)) * (1 + .35 * boost[k]);
+      pos[k].x = x; pos[k].y = y; pos[k].sc = sc;
       const op = (.5 + .5 * (depth + 1) / 2) * (1 - .72 * recede) * Math.min(1, b * 3);
       el.style.transform = `translate(${x.toFixed(1)}px,${y.toFixed(1)}px) scale(${sc.toFixed(3)})`;
       el.style.opacity = op.toFixed(3);
-      el.style.zIndex = (depth > 0 && recede < .5) ? 6 : 0;
+      el.style.zIndex = boost[k] > .05 ? 8 : (depth > 0 && recede < .5) ? 6 : 0;
     });
+    placeLaser();
     raf = current === 0 && !document.hidden ? requestAnimationFrame(frame) : null; if (!raf) last = 0;
   }
   function startOrbit(){ if (!raf) raf = requestAnimationFrame(frame); }
   document.addEventListener('visibilitychange', () => { if (!document.hidden && current === 0) startOrbit(); });
   startOrbit();
-  orbEls.forEach(el => { el.addEventListener('pointerenter', () => { if (!locking) paused = true; }); el.addEventListener('pointerleave', () => { if (!locking) paused = false; }); });
+  orbEls.forEach((el, k) => {
+    el.addEventListener('pointerenter', e => { if (locking || isOpen()) return; paused = true; hot = k; el.classList.add('hot'); if (e.pointerType !== 'touch') setLaser(k); });
+    el.addEventListener('pointerleave', () => { if (locking) return; paused = false; hot = -1; el.classList.remove('hot'); setLaser(-1); });
+  });
 
   // ---- tap a planet: lock coordinates, ENGAGE fires itself, jump ----
   let lockTimers = [];
-  const clearLock = () => { lockTimers.forEach(clearTimeout); lockTimers = []; orbEls.forEach(o => o.classList.remove('target')); document.getElementById('engage').classList.remove('fire'); locking = false; paused = false; };
+  const clearLock = () => { lockTimers.forEach(clearTimeout); lockTimers = []; orbEls.forEach(o => o.classList.remove('target', 'hot')); hot = -1; setLaser(-1); document.getElementById('engage').classList.remove('fire'); locking = false; paused = false; };
   const later = (fn, ms) => lockTimers.push(setTimeout(fn, ms));
   hud.addEventListener('click', e => {
     const el = e.target.closest('.orb'); if (!el) return;
     const w = ORBS[+el.dataset.orb].w;
     if (locking || reduced) { clearLock(); go(w + 1); setTimeout(() => closeHud(true), 700); return; }   // second tap skips the show
-    locking = true; paused = true; el.classList.add('target');
+    locking = true; paused = true; el.classList.add('target'); setLaser(+el.dataset.orb);
     later(() => {
-      openHud();
+      setLaser(-1); openHud();
       const from = sel < 0 ? 0 : sel; let d = mod(w - from + N/2, N) - N/2; const dir = Math.sign(d) || 1; const steps = Math.abs(d);
       let k = 0; const stepT = 110;
       const step = () => { if (k < steps) { k++; turnTo(mod(from + dir * k, N)); fKick.textContent = 'LOCKING…'; later(step, stepT); } else { turnTo(w); fKick.textContent = 'LOCKED · WORLD ' + String(w+1).padStart(2,'0'); later(fire, 260); } };
       if (steps === 0) { turnTo(w); fKick.textContent = 'LOCKED · WORLD ' + String(w+1).padStart(2,'0'); later(fire, 300); } else step();
-    }, 300);
+    }, 520);
     const fire = () => { const eng = document.getElementById('engage'); eng.classList.remove('fire'); void eng.offsetWidth; eng.classList.add('fire');
       if (navigator.vibrate) { try { navigator.vibrate([10, 40, 20]); } catch(_){} }
       later(() => { go(w + 1); later(() => { clearLock(); closeHud(true); }, 700); }, 380); };
