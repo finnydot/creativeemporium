@@ -566,6 +566,9 @@ body.theater-open .side-arrow{ opacity:0; pointer-events:none; }
 
 @media (max-width:700px){ .theater{ padding:0; } .th-bar{ padding:0 10px 10px; } .th-video{ border-left:0; border-right:0; } }
 
+.g-film{ margin-top:0; box-shadow:0 30px 60px -25px #000, 0 0 70px -20px rgba(255,106,42,.55); }
+.g-film .ff-cap em{ color:var(--ember); }
+
 /* ---------- mini-map (worlds only; the dial replaces it on the core) ---------- */
 .minimap{ position:fixed; z-index:20; left:50%; bottom:max(16px, env(safe-area-inset-bottom)); transform:translateX(-50%);
   display:flex; gap:2px; padding:5px; background:rgba(0,10,14,.82); border:1px solid rgb(var(--hud-rgb) / .35);
@@ -682,6 +685,11 @@ body.at-core .minimap{ opacity:0; pointer-events:none; transform:translate(-50%,
         <p class="g-tag">Some secrets are buried deeper than a king.</p>
       </div>
       <div class="g-cover"><img src="ghost-of-alexander-cover.webp" alt="The Ghost of Alexander — cover: six burned scrolls in a wooden chest beside a silver coin of Alexander"></div>
+      <button class="film-feature g-film" type="button" data-yt="GtQmxwkvZwQ" data-title="The Ghost of Alexander · Trailer" aria-label="Play The Ghost of Alexander trailer">
+        <img src="https://img.youtube.com/vi/GtQmxwkvZwQ/maxresdefault.jpg" alt="" loading="lazy" onerror="this.onerror=null;this.src='https://img.youtube.com/vi/GtQmxwkvZwQ/hqdefault.jpg'">
+        <span class="play"></span>
+        <span class="ff-cap"><em>WATCH · THE TRAILER</em>The Ghost of Alexander</span>
+      </button>
       <p class="g-open g-scan">Alexander is four miles ahead.</p>
 
       <div class="scroll" id="gScroll" style="--u:0">
