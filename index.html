@@ -492,11 +492,11 @@ img{ display:block; max-width:100%; }
 
 
 /* ---------- built-in theater ---------- */
-.theater{ position:fixed; inset:0; z-index:60; display:grid; place-items:center; padding:16px;
+.theater{ position:fixed; inset:0; z-index:60; display:grid; place-items:center; padding:12px;
   background:rgba(0,0,0,.92); -webkit-backdrop-filter:blur(6px); backdrop-filter:blur(6px); opacity:0; transition:opacity .25s; }
 .theater.show{ opacity:1; }
 .theater[hidden]{ display:none; }
-.th-frame{ width:min(100%, calc((var(--h) - 120px) * 16 / 9), 1200px); transform:scale(.96); transition:transform .25s; }
+.th-frame{ width:min(100%, calc((var(--h) - 90px) * 16 / 9), 1800px); transform:scale(.96); transition:transform .25s; }
 .theater.show .th-frame{ transform:none; }
 .th-bar{ display:flex; justify-content:space-between; align-items:center; gap:12px; padding:0 0 10px; font-family:var(--mono); }
 .th-title{ font-size:12px; letter-spacing:.24em; text-transform:uppercase; color:var(--white); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
@@ -563,6 +563,8 @@ body.theater-open .side-arrow{ opacity:0; pointer-events:none; }
 .ff-cap{ font-size:clamp(14px, 2.4vw, 20px); }
 .brand{ letter-spacing:.14em; white-space:nowrap; }
 @media (max-width:480px){ .brand{ font-size:9px; letter-spacing:.08em; gap:7px; } .brand-mark{ width:24px; } }
+
+@media (max-width:700px){ .theater{ padding:0; } .th-bar{ padding:0 10px 10px; } .th-video{ border-left:0; border-right:0; } }
 
 /* ---------- mini-map (worlds only; the dial replaces it on the core) ---------- */
 .minimap{ position:fixed; z-index:20; left:50%; bottom:max(16px, env(safe-area-inset-bottom)); transform:translateX(-50%);
@@ -708,7 +710,7 @@ body.at-core .minimap{ opacity:0; pointer-events:none; transform:translate(-50%,
       <p class="saga-tag">One man wakes on an alien world. An eon stands between him and home.</p>
       <div class="saga-syn">
         <p>Julian Reyes has lost his wife. Now he has lost Earth.</p>
-        <p>On Asylia, survival means repairing machines he barely understands, trusting strangers with wounds of their own, and discovering why an ancient system has singled him out as Specimen 884.</p>
+        <p>On Asylia, survival means repairing machines he barely understands, trusting strangers with wounds of their own, and discovering why an ancient system brought him there.</p>
         <p>But Julian’s arrival is only the beginning.</p>
         <p>Across generations, survival becomes civilization. Families inherit the consequences of old sacrifices. Worlds depend on one another. And the people capable of saving millions face a temptation more dangerous than any enemy: believing that the power to save a life grants the right to decide it.</p>
         <p>Spanning nine books and over an eon, <i>SPECIMEN 884</i> follows engineers, explorers, rulers, and an ancient observer through grief, war, alien frontiers, and a universe that offers no promise of safety.</p>
