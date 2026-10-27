@@ -296,6 +296,9 @@ img{ display:block; max-width:100%; }
 .release b{ font-family:var(--display); font-size:17px; }
 .release i{ font-style:normal; color:var(--gray); font-size:12px; white-space:nowrap; }
 .credit{ margin-top:14px; font-size:12px; color:var(--gray); line-height:1.6; }
+.album-art{ margin:0 0 18px; width:min(100%, 420px); }
+.album-art img{ display:block; width:100%; aspect-ratio:1; object-fit:cover; border-radius:8px; border:1px solid var(--line); }
+.album-art figcaption{ margin-top:8px; font-family:var(--mono); font-size:11px; letter-spacing:.2em; color:var(--gray); text-transform:uppercase; }
 
 /* mission control */
 .cols{ display:grid; gap:22px; }
@@ -741,9 +744,31 @@ body.at-core .minimap{ opacity:0; pointer-events:none; transform:translate(-50%,
       <div class="world-head">
         <div class="planet has-img"><img src="planet-books.webp" alt=""></div>
         <div><div class="kicker">World 05</div><h2>Books</h2>
-          <p class="lede">Companion stories, standalone novels and the graphic novel.</p></div>
+          <p class="lede">A memoir, a true story, companion novels and the graphic novel.</p></div>
       </div>
       <div>
+        <article class="feature">
+          <div class="t-cover"><div class="book"><img src="my-life-without-the-soundtrack-cover.jpg" alt="My Life Without The Soundtrack — cover: the hourglass mark and Tha relliK lettering on black" loading="lazy"></div></div>
+          <div class="f-body">
+            <div class="t-kicker">A MEMOIR</div>
+            <h3 class="t-title">My Life Without The Soundtrack</h3>
+            <p class="f-tag">Twenty-four years of music. This is everything that happened between the songs.</p>
+            <p>Isaac Meyer tells his own story in his own voice: the kid who took computers apart with his dad, the teenager recording verses in his bedroom, the moves, the setbacks, and the people who stayed in his corner.</p>
+            <p>Honest, funny and unsanded, <i>My Life Without The Soundtrack</i> is the life behind the name.</p>
+            <p class="t-kicker" style="color:var(--gray)">FINISHED MANUSCRIPT · FINAL PASS UNDERWAY</p>
+          </div>
+        </article>
+        <article class="feature">
+          <div class="t-cover"><div class="book"><img src="no-ai-was-used-cover.jpg" alt="No AI Was Used — cover: white title on black" loading="lazy"></div></div>
+          <div class="f-body">
+            <div class="t-kicker">A TRUE STORY · NARRATED BY CLAUDE</div>
+            <h3 class="t-title">No AI Was Used</h3>
+            <p class="f-tag">The story of an independent artist, told by the collaborator nobody expected.</p>
+            <p>Pitches and pratfalls. Two projects at once. An open house, a coffee mixer, a lunch with a patron, and the push to dream bigger.</p>
+            <p>Narrated by Claude, as told by Isaac Meyer, <i>No AI Was Used</i> is a true account of the work, the people, and what happens when you stop waiting for permission.</p>
+            <p class="t-kicker" style="color:var(--gray)">FINISHED MANUSCRIPT · FINAL PASS UNDERWAY</p>
+          </div>
+        </article>
         <article class="feature">
           <div class="t-cover"><div class="book"><img src="https://finnydot.github.io/creativeemporium/The_Last_Thing_We_Keep_Cover.jpg" alt="The Last Thing We Keep — cover" loading="lazy"></div></div>
           <div class="f-body">
@@ -791,12 +816,13 @@ body.at-core .minimap{ opacity:0; pointer-events:none; transform:translate(-50%,
           <p class="lede">Twenty-four years of independent production. Songwriting, recording, mixing, mastering.</p></div>
       </div>
       <div>
+        <figure class="album-art"><img src="finny-does-the-internet-cover.jpg" alt="Finny Does The Internet! — album cover: a boy at a 90s computer under an amber DOS title bar, a magenta hourglass logo in the middle" loading="lazy"><figcaption>Finny Does The Internet! · Coming Soon</figcaption></figure>
         <div class="releases">
           <div class="release"><b>Call Me Finny EP</b><i>2021</i></div>
           <div class="release"><b>Lord Forgive Me EP</b><i>Feb 2026</i></div>
-          <div class="release"><b>Finny Does The Internet!</b><i>20 tracks · completed</i></div>
+          <div class="release"><b>Finny Does The Internet!</b><i>18 tracks · Coming Soon</i></div>
         </div>
-        <p class="credit">Released with WeGoFar2. Infinity Tha relliK is a WeGoFar2 brand. Music rights held by WeGoFar2 / KO.</p>
+        <p class="credit">Credit: WEGOFAR2 FAMILY AFFAIR RECORDS</p>
         <div class="subhead">Watch</div>
         <div class="grid" id="musicVids"></div>
       </div>
@@ -1068,7 +1094,7 @@ body.at-core .minimap{ opacity:0; pointer-events:none; transform:translate(-50%,
     { name:'FILMS',           title:'Films',           line:'The 1979–1983 trilogy and short films.',  color:'#ff7a45' },
     { name:'ALEXANDER',       title:'The Ghost of Alexander', line:'Alexander is four miles ahead.',  color:'#c2410c' },
     { name:'SPECIMEN 884',    title:'SPECIMEN 884',    line:'Nine books. A saga that spans over an eon.', color:'#e0a050' },
-    { name:'BOOKS',           title:'Books',           line:'Companion stories and standalones.',      color:'#d9cfc0' },
+    { name:'BOOKS',           title:'Books',           line:'A memoir, a true story and the companions.',      color:'#d9cfc0' },
     { name:'MUSIC',           title:'Music',           line:'Finny. Twenty-four years of production.', color:'#ff4a4a' },
     { name:'FINNYSCRIPT',     title:'FinnyScript',     line:'New chat. Same project.',             color:'#E01B1B' },
     { name:'MISSION CONTROL', title:'Mission Control', line:'Contact info and resume.',        color:'#FF1F4B' } ];
